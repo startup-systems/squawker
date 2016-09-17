@@ -69,6 +69,7 @@ Vagrant.configure("2") do |config|
   config.vm.provision "shell", inline: <<-SHELL
     apt-get update
     apt-get install -y git python3-pip
+    git config --global push.default simple
     pip3 install --upgrade pip
   SHELL
 end

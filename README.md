@@ -30,6 +30,7 @@ You will want to have a good internet connection for these. This should only nee
     ```
 
 1. The VM should now be running. You can verify this with `vagrant status`.
+1. [Set up your SSH key for Git](https://help.github.com/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent/); you will need it later.
 
 ## Guest vs host
 
@@ -65,7 +66,8 @@ To work with a Git repository within the VM:
 
     ```bash
     cd /vagrant
-    git clone <repository URL>.git
+    # clone via SSH
+    git clone git@github.com:startup-systems/<repository>.git
     cd <repository name>
     ```
 
