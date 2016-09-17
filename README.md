@@ -37,7 +37,7 @@ The "host machine" is the operating system that your computer is running directl
 
 ## Usage
 
-`host>` means you run the command on your host computer, `guest>` means it should be run within the VM. Within the VM, the terminal prompt will actually look something like `vagrant@vagrant-ubuntu-trusty-64:~$`.
+`host>` means you run the command on your host computer, `guest>` means it should be run within the VM. Within the VM, the terminal prompt will actually look something like `vagrant@vagrant:~$`.
 
 ```bash
 host> cd path/to/this/repository/
