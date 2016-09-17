@@ -65,7 +65,7 @@ Vagrant.configure("2") do |config|
   # Puppet, Chef, Ansible, Salt, and Docker are also available. Please see the
   # documentation for more information about their specific syntax and use.
   config.vm.provision "shell", inline: <<-SHELL
-    apt update
-    apt install -y git python3-pip
+    apt-get update
+    apt-get install -y git python3-pip
   SHELL
 end
