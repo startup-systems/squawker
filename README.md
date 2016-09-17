@@ -1,6 +1,6 @@
 # Startup Systems Virtual Machine
 
-A common VM for the class.
+A common virtual machine (VM) for the class.
 
 ## Goals
 
@@ -31,6 +31,10 @@ You will want to have a good internet connection for these. This should only nee
 
 1. The VM should now be running. You can verify this with `vagrant status`.
 
+## Guest vs host
+
+The "host machine" is the operating system that your computer is running directly (likely Windows or OSX), whereas the "virtual machine" is the one running through Vagrant+VirtualBox, which will be [Ubuntu](http://www.ubuntu.com/desktop) (Linux).
+
 ## Usage
 
 `host>` means you run the command on your host computer, `guest>` means it should be run within the VM. Within the VM, the terminal prompt will actually look something like `vagrant@vagrant-ubuntu-trusty-64:~$`.
@@ -46,23 +50,37 @@ host> vagrant ssh
 # You are now inside the guest VM.
 guest>
 
-# Go back to your host.
+# When you're done, go back to your host.
 guest> exit
-
-# To stop the guest VM (and recover CPU and memory resources on your host):
+# Stop the guest VM (to recover CPU and memory resources on your host).
 host> vagrant suspend
 ```
 
-## Assignments
+## Working with repositories
 
-TODO
+To work with a Git repository within the VM:
+
+1. Start and connect to the VM—see instructions above.
+1. From within the VM, run:
+
+    ```bash
+    cd /vagrant
+    git clone <repository URL>.git
+    cd <repository name>
+    ```
+
+1. Run any of the commands around the assignment (`git`, `python3`, etc.) from within there.
+
+### Using a graphical editor
+
+Vagrant lets you share folder between guest and host via the `/vagrant` folder by default. From the guest VM, you can write to the host machine under `/vagrant`. In other words, you can open the directory for this repository (`vm/`) in your editor on your computer (Sublime Text, Atom, etc.), and any added/changed files will appear in the `/vagrant` directory within the virtual machine. From your host machine, the directory structure will look like this:
+
+```
+vm/
+- assignment1/
+- assignment2/
+```
 
 ## Troubleshooting
 
 If you’re on Windows and you get a **BIOS error**, you may need to change a setting on your machine (in VirtualBox, Control Panel, and/or the BIOS itself) to allow virtual machines to run. Google the error and the make and model of your computer (e.g. `"VT-x is disabled in the BIOS for both all CPU modes" sony vaio`) to find how to enable virtualization. The problem is often that Intel Virtualization Technology needs to be [enabled](http://www.howtogeek.com/213795/how-to-enable-intel-vt-x-in-your-computers-bios-or-uefi-firmware/) in your BIOS settings.
-
-## Guest (the VM) vs Host (your existing machine)
-
-The "host machine" is the operating system that your computer is running directly (likely Windows or OSX), whereas the “virtual machine” is the one running through Vagrant+VirtualBox, which will be [Ubuntu](http://www.ubuntu.com/desktop) (Linux).
-
-Vagrant lets you share folder between guest and host via the /vagrant folder by default. From the guest VM, you can write to the host machine under /vagrant. In other words, you can open the `Building-Startup-Systems` directory in your editor on your computer, and any added/changed files will appear in the `/vagrant` directory within the virtual machine.
