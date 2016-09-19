@@ -69,12 +69,16 @@ Vagrant.configure("2") do |config|
   config.vm.provision "shell", name: "root privisioning", inline: <<-SHELL
     apt-get update
     apt-get install -y git python3-pip
-    git config --global push.default simple
-    pip3 install --upgrade pip
+    pip3 install --upgrade pip virtualenvwrapper
   SHELL
 
   config.vm.provision "shell", name: "user provisioning", privileged: false, inline: <<-SHELL
     git config --global push.default simple
     echo "export EDITOR=vim" >> ~/.bash_profile
+
+    # https://gist.github.com/afeld/4aefc7c9493f1519e141f52b40dc6479
+    wget https://gist.githubusercontent.com/afeld/4aefc7c9493f1519e141f52b40dc6479/raw/e79d750c09dd62b23c1f75647c8da4637cb0ec63/auto_virtualenv.sh
+    chmod a+x auto_virtualenv.sh
+    echo "source ~/auto_virtualenv.sh" >> ~/.bash_profile
   SHELL
 end
