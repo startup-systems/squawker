@@ -67,8 +67,12 @@ Vagrant.configure("2") do |config|
   # Puppet, Chef, Ansible, Salt, and Docker are also available. Please see the
   # documentation for more information about their specific syntax and use.
   config.vm.provision "shell", name: "root privisioning", inline: <<-SHELL
+    # https://nodejs.org/en/download/package-manager/#debian-and-ubuntu-based-linux-distributions
+    curl -sL https://deb.nodesource.com/setup_6.x | bash -
+
     apt-get update
-    apt-get install -y git python3-pip
+    apt-get install -y build-essential git nodejs python3-pip
+
     pip3 install --upgrade pip virtualenvwrapper
   SHELL
 
@@ -81,5 +85,11 @@ Vagrant.configure("2") do |config|
     wget -nv https://gist.githubusercontent.com/afeld/4aefc7c9493f1519e141f52b40dc6479/raw/3731cc202f5e52ea67bcc9c8f7282357849546d8/auto_virtualenv.sh
     chmod a+x auto_virtualenv.sh
     echo "source ~/auto_virtualenv.sh" >> ~/.bash_profile
+
+    # work around NPM permissions issue
+    # https://docs.npmjs.com/getting-started/fixing-npm-permissions#option-2-change-npms-default-directory-to-another-directory
+    mkdir -p ~/.npm-global
+    npm config set prefix '~/.npm-global'
+    echo 'export PATH=~/.npm-global/bin:$PATH' >> ~/.profile
   SHELL
 end
