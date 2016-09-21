@@ -90,6 +90,22 @@ vm/
 - assignment2/
 ```
 
+## Updating
+
+If (you think) there have been changes to this repository on GitHub that aren't reflected in your local copy, do the following:
+
+```bash
+# go into this repository directory (on your host machine)
+cd path/to/vm/repository/
+# get the latest configuration
+git pull https://github.com/startup-systems/vm.git master
+# update your VM
+vagrant provision
+```
+
 ## Troubleshooting
 
 If you’re on Windows and you get a **BIOS error**, you may need to change a setting on your machine (in VirtualBox, Control Panel, and/or the BIOS itself) to allow virtual machines to run. Google the error and the make and model of your computer (e.g. `"VT-x is disabled in the BIOS for both all CPU modes" sony vaio`) to find how to enable virtualization. The problem is often that Intel Virtualization Technology needs to be [enabled](http://www.howtogeek.com/213795/how-to-enable-intel-vt-x-in-your-computers-bios-or-uefi-firmware/) in your BIOS settings.
+
+* [Vagrant Common Issues](https://www.vagrantup.com/docs/virtualbox/common-issues.html)
+* [Vagrant Debugging](https://www.vagrantup.com/docs/other/debugging.html)
