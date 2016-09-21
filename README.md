@@ -10,6 +10,13 @@ A common virtual machine (VM) for the class.
 
 The idea is to have students run a VM on whatever their environment is, i.e. Windows, OSX or Linux.
 
+## What's included
+
+* Node.js
+* Python 3 + pip
+* Automatic Python virtual environment switching
+* Some sane Git default configuration
+
 ## Installation
 
 You will want to have a good internet connection for these. This should only need to be done once.
