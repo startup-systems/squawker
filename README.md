@@ -29,13 +29,31 @@ Visual styling is not considered as part of the score, though feel free to get c
     * The squawks are shown 20 at a time
     * There's a `Next` link to see older squawks, if there are any
 
+## Running the app
+
+1. Update your [VM](https://github.com/startup-systems/vm), if you didn't do so for the [time](https://docs.google.com/document/d/15VzRMLHLGm_l9dzUObQlsOoY12J_jH3U0b9Bu2yi6EI/edit#heading=h.lyptz0o698my) assignment already. From your host machine:
+
+    ```shell
+    cd path/to/vm/
+    git pull -s recursive -X ours https://github.com/startup-systems/vm.git master
+    vagrant reload
+    ```
+
+1. Start the server. From your VM:
+
+    ```shell
+    cd /vagrant/squawker
+    pip3 install -r requirements.txt
+    FLASK_APP=squawker/server.py FLASK_DEBUG=1 flask run --host=0.0.0.0
+    ```
+
+1. Open http://localhost:5000 from your host machine.
+
 ## Running tests locally
 
 Run the following from this directory:
 
 ```shell
-# install dependencies
-pip3 install -r requirements.txt
 # run the pytests
 pytest -v
 # run the pep8 checks
