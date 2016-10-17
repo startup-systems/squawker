@@ -49,6 +49,17 @@ Visual styling is not considered as part of the score, though feel free to get c
 
 1. Open http://localhost:5000 from your host machine.
 
+## Setting up the database
+
+Note that this will delete any existing content.
+
+1. Modify the [`squawker/schema.sql`](squawker/schema.sql) file.
+1. Run
+
+    ```shell
+    FLASK_APP=squawker/server.py flask initdb
+    ```
+
 ## Running tests locally
 
 Run the following from this directory:

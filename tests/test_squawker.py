@@ -11,6 +11,7 @@ def db_fd():
     db_fd, server.app.config['DATABASE'] = tempfile.mkstemp()
     return db_fd
 
+
 @pytest.fixture()
 def db_client(db_fd, request):
     client = server.app.test_client()
@@ -23,6 +24,7 @@ def db_client(db_fd, request):
     request.addfinalizer(teardown)
 
     return client
+
 
 @pytest.fixture()
 def app(db_client):
