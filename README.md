@@ -29,7 +29,20 @@ Visual styling is not considered as part of the score, though feel free to get c
     * The squawks are shown 20 at a time
     * There's a `Next` link to see older squawks, if there are any
 
-## Code Climate checks
+## Running tests locally
+
+Run the following from this directory:
+
+```shell
+# install dependencies
+pip3 install -r requirements.txt
+# run the pytests
+pytest -v
+# run the pep8 checks
+pep8
+```
+
+### Code Climate checks
 
 If you want to try running these locally:
 

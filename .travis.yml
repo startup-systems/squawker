@@ -1,0 +1,13 @@
+language: python
+python:
+- '3.5'
+cache: pip
+script:
+- pytest --json=report.json -v
+- echo "Please ignore the following...this is for grading purposes only."
+# https://github.com/travis-ci/travis-ci/issues/2158#issuecomment-42726890
+- echo "travis_fold:start:SCRIPT folding starts"
+- echo '<MQkrXV>'
+- cat report.json
+- echo '</MQkrXV>'
+- echo "travis_fold:end:SCRIPT folding ends"
