@@ -25,6 +25,15 @@ Visual styling is not considered as part of the score, though feel free to get c
 
 ### Extra credit
 
-* Pagination
+* Pagination (**20%**)
     * The squawks are shown 20 at a time
     * There's a `Next` link to see older squawks, if there are any
+
+## Code Climate checks
+
+If you want to try running these locally:
+
+1. [Install Docker](https://docs.docker.com/engine/installation/linux/ubuntulinux/) (follow the "Ubuntu Xenial 16.04 (LTS)" instructions)
+1. Run the [Code Climate CLI](https://github.com/codeclimate/codeclimate#readme).
+
+Note that **this is advanced**, so don't worry if you have trouble getting it running.
