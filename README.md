@@ -39,6 +39,7 @@ Visual styling is not considered as part of the score, though feel free to get c
     vagrant reload
     ```
 
+1. [Set up the database.](#set-up-the-database)
 1. Start the server. From your VM:
 
     ```shell
@@ -49,7 +50,7 @@ Visual styling is not considered as part of the score, though feel free to get c
 
 1. Open http://localhost:5000 from your host machine.
 
-## Setting up the database
+## Set up the database
 
 Note that this will delete any existing content.
 
@@ -59,6 +60,7 @@ Note that this will delete any existing content.
     ```shell
     FLASK_APP=squawker/server.py flask initdb
     ```
+Repeat these steps when you need to update the schema.
 
 ## Running tests locally
 
@@ -70,6 +72,19 @@ pytest -v
 # run the pep8 checks
 pep8
 ```
+
+**Note the pytests are not yet complete.**
+
+## Things you will need
+
+* [Flask template(s)](http://flask.pocoo.org/docs/0.11/quickstart/#rendering-templates)
+    * [Jinja2 syntax](http://jinja.pocoo.org/docs/dev/templates/)
+* An [HTML form](https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/Forms)
+* Change/addition of routes in Flask
+* Some basic SQL understanding
+* SQLite3 CLI
+    * Useful for inspecting your database
+    * Install in your VM with `sudo apt-get update && sudo apt-get install sqlite3`.
 
 ### Code Climate checks
 
