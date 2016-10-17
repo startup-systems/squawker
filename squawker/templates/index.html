@@ -1,0 +1,26 @@
+{% extends "layout.html" %}
+{% block body %}
+  <h2>Squawk a squawk</h2>
+  <form action="{{ url_for('add_squawk') }}" method="post">
+    <dl>
+      <dt>whats on your mind?
+      <dd><input type="text" name="squawk_text" pattern=".{1,140}" oninvalid="alert('fudge')">
+      <dd><input type="submit" value="submit">
+    </dl>
+  </form>
+
+
+  <div>
+  	<div>
+		Entries
+	</div>
+	<ul class="entries">
+  {% for squawk in squawks %}
+    <li><h2>{{ squawk.text }}</h2>
+  {% else %}
+    <li><em>Unbelievable.  No entries here so far</em>
+  {% endfor %}
+	</ul>
+  </div>
+
+{% endblock %}

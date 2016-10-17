@@ -3,6 +3,9 @@ import sqlite3
 
 
 # -- leave these lines intact --
+
+from flask import render_template, request, redirect, url_for
+
 app = Flask(__name__)
 
 
@@ -41,7 +44,20 @@ def close_connection(exception):
 def root():
     conn = get_db()
     # TODO change this
-    return "Hello World!"
+    db = get_db()
+    squa = db.execute('select text from squawks order by id desc')
+    squawks = squa.fetchall()
+    return render_template('index.html', squawks=squawks)
+
+@app.route('/post', methods=['POST'])
+def add_squawk():
+    # if not session.get('logged_in'):
+    #     abort(400)
+    db = get_db()
+    db.execute('insert into squawks (text) values (?)',
+                 [request.form['squawk_text']])
+    db.commit()
+    return redirect(url_for('root'))
 
 
 if __name__ == '__main__':
