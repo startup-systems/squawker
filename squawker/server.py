@@ -44,19 +44,18 @@ def close_connection(exception):
 def root():
     conn = get_db()
     # TODO change this
-    db = get_db()
-    squa = db.execute('select text from squawks order by id desc')
-    squawks = squa.fetchall()
+    # create cursor object
+    cursor_object = conn.execute('SELECT ID, squawk_text from squawks order by id desc')
+    squawks = cursor_object.fetchall()
     return render_template('index.html', squawks=squawks)
 
-@app.route('/post', methods=['POST'])
+@app.route('/add_squawk', methods=['POST'])
 def add_squawk():
     # if not session.get('logged_in'):
     #     abort(400)
-    db = get_db()
-    db.execute('insert into squawks (text) values (?)',
-                 [request.form['squawk_text']])
-    db.commit()
+    conn = get_db()
+    conn.execute('insert into squawks (squawk_text) values (?)', [request.form['squawk_text']])
+    conn.commit()
     return redirect(url_for('root'))
 
 
