@@ -29,7 +29,7 @@ Visual styling is not considered as part of the score, though feel free to get c
     * The squawks are shown 20 at a time
     * There's a `Next` link to see older squawks, if there are any
 
-## Running the app
+## Setup
 
 1. Update your [VM](https://github.com/startup-systems/vm), if you didn't do so for the [time](https://docs.google.com/document/d/15VzRMLHLGm_l9dzUObQlsOoY12J_jH3U0b9Bu2yi6EI/edit#heading=h.lyptz0o698my) assignment already. From your host machine:
 
@@ -40,6 +40,9 @@ Visual styling is not considered as part of the score, though feel free to get c
     ```
 
 1. [Set up the database.](#set-up-the-database)
+
+## Development workflow
+
 1. Start the server. From your VM:
 
     ```shell
@@ -49,6 +52,8 @@ Visual styling is not considered as part of the score, though feel free to get c
     ```
 
 1. Open http://localhost:5000 from your host machine.
+1. Modify [`squawker/server.py`](squawker/server.py).
+1. Refresh.
 
 ## Set up the database
 
@@ -84,7 +89,12 @@ pep8
 * Some basic SQL understanding
 * SQLite3 CLI
     * Useful for inspecting your database
-    * Install in your VM with `sudo apt-get update && sudo apt-get install sqlite3`.
+    * Install in your VM with
+
+        ```shell
+        sudo apt-get update
+        sudo apt-get install sqlite3
+        ```
 
 ### Code Climate checks
 

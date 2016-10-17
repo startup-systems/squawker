@@ -38,9 +38,9 @@ def close_connection(exception):
 
 
 @app.route('/')
-def hello():
+def root():
     conn = get_db()
-    # ...
+    # TODO change this
     return "Hello World!"
 
 
