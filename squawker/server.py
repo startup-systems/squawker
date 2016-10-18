@@ -5,6 +5,10 @@ from math import ceil
 
 app = Flask(__name__)
 
+# set number of squawks per page
+PER_PAGE = 20
+
+
 # Set up and initialize db
 def get_db():
     if not hasattr(g, 'sqlite_db'):
@@ -36,8 +40,6 @@ def close_connection(exception):
         db.close()
 # ------------------------------
 
-# set number of squawks per page
-PER_PAGE = 20
 
 # pagination object from flask documentation
 class Pagination(object):
@@ -63,10 +65,7 @@ class Pagination(object):
                    right_current=5, right_edge=2):
         last = 0
         for num in xrange(1, self.pages + 1):
-            if num <= left_edge or \
-               (num > self.page - left_current - 1 and \
-                num < self.page + right_current) or \
-               num > self.pages - right_edge:
+            if num <= left_edge or (num > self.page - left_current - 1 and num < self.page + right_current) or num > self.pages - right_edge:
                 if last + 1 != num:
                     yield None
                 yield num
@@ -76,7 +75,7 @@ class Pagination(object):
 # get squawks for page
 def get_squawks_for_page(squawks_list, page, PER_PAGE):
     # iterate over squawks
-    if (page==1):
+    if (page == 1):
         i = 0
         j = 20
     else:
@@ -111,10 +110,7 @@ def root(page, defaults=1):
     if not squawks and page != 1:
         abort(404)
     pagination = Pagination(page, PER_PAGE, count)
-    return render_template('index.html',
-        pagination=pagination,
-        squawks=squawks
-    )
+    return render_template('index.html', pagination=pagination, squawks=squawks)
 
 
 # add a squawk via post request
