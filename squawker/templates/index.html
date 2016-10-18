@@ -1,21 +1,21 @@
 {% extends "layout.html" %}
 {% block body %}
   <div class="container">
-    <form action="{{ url_for('add_squawk') }}" method="post" class="form-inline">
-      <div class="form-inline">
+    <form action="{{ url_for('add_squawk') }}" method="post">
+      <div class="form-group">
         <label for="squawk_text">what's on your mind?</label>
-        <input type="text" class="form-control" name="squawk_text" pattern=".{1,140}" size="140" oninvalid="alert('fudge')">
-        <input type="submit" class="btn btn-default" value="submit">
+        <input type="text" class="form-control" name="squawk_text" pattern=".{1,140}" size="100" placeholder="Squawk" oninvalid="alert('fudge')">
       </div>
+      <input type="submit" class="btn btn-default" value="submit">
     </form>
   </div>
 
 <br>
   <div class="container">
-    <div class="columns large-12" id="yo">
-  		<h1>
-        Entries
-      </h1>
+    <div class="columns large-12">
+  		<h2>
+        Past squawks
+      </h2>
   	</div>
 
   	<div class="squawks">
