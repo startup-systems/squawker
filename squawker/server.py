@@ -36,10 +36,10 @@ def close_connection(exception):
         db.close()
 # ------------------------------
 
-
+# set number of squawks per page
 PER_PAGE = 20
 
-
+# pagination object from flask documents
 class Pagination(object):
 
     def __init__(self, page, per_page, total_count):
@@ -73,19 +73,7 @@ class Pagination(object):
                 last = num
 
 
-@app.route('/squawks/', defaults={'page': 1})
-@app.route('/squawks/page/<int:page>')
-def show_squawks(page):
-    count = count_all_squawks()
-    squawks = get_squawks_for_page(page, PER_PAGE, count)
-    if not squawks and page != 1:
-        abort(404)
-    pagination = Pagination(page, PER_PAGE, count)
-    return render_template('index.html',
-        pagination=pagination,
-        squawks=squawks
-    )
-
+# get count of all squawks
 def count_all_squawks():
     # create db connection
     conn = get_db()
@@ -95,6 +83,8 @@ def count_all_squawks():
     squawks = cursor_object.fetchall()
     return len(squawks)
 
+
+# get squawks for page
 def get_squawks_for_page(page, PER_PAGE, count):
     # create db connection
     conn = get_db()
@@ -113,13 +103,15 @@ def get_squawks_for_page(page, PER_PAGE, count):
     return squawks
 
 
-def url_for_other_page(page):
+# url generator
+def url_for_pages(page):
     args = request.view_args.copy()
     args['page'] = page
     return url_for(request.endpoint, **args)
-app.jinja_env.globals['url_for_other_page'] = url_for_other_page
+app.jinja_env.globals['url_for_pages'] = url_for_pages
 
 
+# main router
 @app.route('/', defaults={'page': 1})
 @app.route('/page/<int:page>')
 def root(page, defaults=1):
@@ -132,17 +124,6 @@ def root(page, defaults=1):
         pagination=pagination,
         squawks=squawks
     )
-
-# root route
-# @app.route('/')
-# def root():
-#     # create db connection
-#     conn = get_db()
-#     # create cursor object with squawk query
-#     cursor_object = conn.execute('SELECT ID, squawk_text from squawks order by id desc')
-#     # iterate over all squawks and store
-#     squawks = cursor_object.fetchall()
-#     return render_template('index.html', squawks=squawks)
 
 
 # add a squawk via post request
