@@ -39,7 +39,7 @@ def close_connection(exception):
 # set number of squawks per page
 PER_PAGE = 20
 
-# pagination object from flask documents
+# pagination object from flask documentation
 class Pagination(object):
 
     def __init__(self, page, per_page, total_count):
@@ -73,33 +73,17 @@ class Pagination(object):
                 last = num
 
 
-# get count of all squawks
-def count_all_squawks():
-    # create db connection
-    conn = get_db()
-    # create cursor object with squawk query
-    cursor_object = conn.execute('SELECT ID, squawk_text from squawks order by id desc')
-    # iterate over all squawks and store
-    squawks = cursor_object.fetchall()
-    return len(squawks)
-
-
 # get squawks for page
-def get_squawks_for_page(page, PER_PAGE, count):
-    # create db connection
-    conn = get_db()
-    # create cursor object with squawk query
-    cursor_object = conn.execute('SELECT ID, squawk_text from squawks order by id desc')
-    # iterate over all squawks and store
-    squawks = cursor_object.fetchall()
+def get_squawks_for_page(squawks_list, page, PER_PAGE):
+    # iterate over squawks
     if (page==1):
         i = 0
         j = 20
     else:
         i = ((page - 1) * PER_PAGE)
         j = page * PER_PAGE
-
-    squawks = squawks[i:j]
+    # get squawks for indicated page
+    squawks = squawks_list[i:j]
     return squawks
 
 
@@ -115,10 +99,17 @@ app.jinja_env.globals['url_for_pages'] = url_for_pages
 @app.route('/', defaults={'page': 1})
 @app.route('/page/<int:page>')
 def root(page, defaults=1):
-    count = count_all_squawks()
-    squawks = get_squawks_for_page(page, PER_PAGE, count)
-    # if not squawks and page != 1:
-    #     abort(404)
+    # create db connection
+    conn = get_db()
+    # create cursor object with squawk query
+    cursor_object = conn.execute('SELECT ID, squawk_text from squawks order by id desc')
+    # iterate over all squawks and store
+    squawks_list = cursor_object.fetchall()
+
+    count = len(squawks_list)
+    squawks = get_squawks_for_page(squawks_list, page, PER_PAGE)
+    if not squawks and page != 1:
+        abort(404)
     pagination = Pagination(page, PER_PAGE, count)
     return render_template('index.html',
         pagination=pagination,
