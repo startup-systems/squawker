@@ -1,14 +1,10 @@
 from flask import Flask, g
 import sqlite3
-
-
-# -- leave these lines intact --
-
 from flask import render_template, request, redirect, url_for, abort
 
 app = Flask(__name__)
 
-
+# Set up and initialize db
 def get_db():
     if not hasattr(g, 'sqlite_db'):
         db_name = app.config.get('DATABASE', 'squawker.db')
@@ -40,20 +36,24 @@ def close_connection(exception):
 # ------------------------------
 
 
+# root route
 @app.route('/')
 def root():
+    # create db connection
     conn = get_db()
-    # TODO change this
-    # create cursor object
+    # create cursor object with squawk query
     cursor_object = conn.execute('SELECT ID, squawk_text from squawks order by id desc')
+    # iterate over all squawks and store
     squawks = cursor_object.fetchall()
     return render_template('index.html', squawks=squawks)
 
-
+# add a squawk via post request
 @app.route('/add_squawk', methods=['POST'])
 def add_squawk():
+    # server side validation of squawk length
     if len(request.form['squawk_text']) > 140:
         abort(400)
+    # create db connection and store the squawk
     conn = get_db()
     conn.execute('INSERT INTO squawks (squawk_text) VALUES (?)', [request.form['squawk_text']])
     conn.commit()

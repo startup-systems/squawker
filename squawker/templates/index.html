@@ -4,7 +4,7 @@
     <form action="{{ url_for('add_squawk') }}" method="post">
       <div class="form-group">
         <label for="squawk_text">what's on your mind?</label>
-        <input type="text" class="form-control" name="squawk_text" pattern=".{1,140}" size="100" placeholder="Squawk" oninvalid="alert('fudge')">
+        <input type="text" class="form-control" name="squawk_text" pattern=".{1,140}" size="100" placeholder="Squawk" oninvalid="alert('140 characters or fewer')">
       </div>
       <input type="submit" class="btn btn-default" value="submit">
     </form>
