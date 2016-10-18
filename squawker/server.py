@@ -37,8 +37,8 @@ def close_connection(exception):
 # ------------------------------
 
 
-@app.route('/', methods=['GET','POST'], defaults={'page':1})
-@app.route('/page/<int:page>', methods=['GET','POST'])
+@app.route('/', methods=['GET', 'POST'], defaults={'page': 1})
+@app.route('/page/<int:page>', methods=['GET', 'POST'])
 def root(page):
     err = ""
     status = 200
@@ -54,8 +54,8 @@ def root(page):
     query = "SELECT COUNT(*) FROM squawks"
     query_exec = get_db().execute(query, ())
     count = query_exec.fetchone()[0]
-    return render_template("home.html", num_squawks=count, \
-            page=page, error=err), status
+    return render_template("home.html", num_squawks=count, page=page, error=err), status
+
 
 @app.context_processor
 def utility_processor():
@@ -64,8 +64,8 @@ def utility_processor():
         query_exec = get_db().execute(query, ())
         result = query_exec.fetchall()
         query_exec.close()
-        p_start = min(len(result)-1, (page-1)*20)
-        p_end = min(len(result)-1, (page*20)-1)
+        p_start = min(len(result) - 1, (page - 1) * 20)
+        p_end = min(len(result) - 1, (page * 20) - 1)
         results_to_show = result[p_start:p_end]
         return results_to_show
     return dict(get_squawks=get_squawks)
