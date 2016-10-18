@@ -4,7 +4,7 @@ import sqlite3
 
 # -- leave these lines intact --
 
-from flask import render_template, request, redirect, url_for
+from flask import render_template, request, redirect, url_for, abort
 
 app = Flask(__name__)
 
@@ -49,12 +49,13 @@ def root():
     squawks = cursor_object.fetchall()
     return render_template('index.html', squawks=squawks)
 
+
 @app.route('/add_squawk', methods=['POST'])
 def add_squawk():
-    # if not session.get('logged_in'):
-    #     abort(400)
+    if len(request.form['squawk_text']) > 140:
+        abort(400)
     conn = get_db()
-    conn.execute('insert into squawks (squawk_text) values (?)', [request.form['squawk_text']])
+    conn.execute('INSERT INTO squawks (squawk_text) VALUES (?)', [request.form['squawk_text']])
     conn.commit()
     return redirect(url_for('root'))
 

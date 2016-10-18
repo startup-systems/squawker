@@ -1,29 +1,35 @@
 {% extends "layout.html" %}
 {% block body %}
-  <div class="row">
-    <div class="columns large-12">
-      <h2>Squawk a squawk</h2>
-      <form action="{{ url_for('add_squawk') }}" method="post">
-        <dl>
-          <dt>whats on your mind?
-          <dd><input type="text" name="squawk_text" pattern=".{1,140}" oninvalid="alert('fudge')">
-          <dd><input type="submit" value="submit">
-        </dl>
-      </form>
-    </div>
+  <div class="container">
+    <form action="{{ url_for('add_squawk') }}" method="post" class="form-inline">
+      <div class="form-inline">
+        <label for="squawk_text">what's on your mind?</label>
+        <input type="text" class="form-control" name="squawk_text" pattern=".{1,140}" size="140" oninvalid="alert('fudge')">
+        <input type="submit" class="btn btn-default" value="submit">
+      </div>
+    </form>
   </div>
 
-  <div class="row">
-    <div class="columns large-12">
-  		Entries
+<br>
+  <div class="container">
+    <div class="columns large-12" id="yo">
+  		<h1>
+        Entries
+      </h1>
   	</div>
-  	<ul class="squawks">
+
+  	<div class="squawks">
     {% for squawk in squawks %}
-      <li><h2>{{ squawk[1] }}</h2>
+      <blockquote class="blockquote">
+        {{ squawk[1] }}
+      </blockquote>
+
     {% else %}
-      <li><em>Unbelievable.  No entries here so far</em>
+      <div class="error">
+        <em>Unbelievable.  No entries here so far</em>
     {% endfor %}
-  	</ul>
+    	</div>
+    </div>
   </div>
 
 {% endblock %}
