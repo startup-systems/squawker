@@ -1,5 +1,7 @@
 from flask import Flask, g
 import sqlite3
+from jinja2 import Environment, PackageLoader
+env = Environment(loader=PackageLoader('squawker', 'templates'))
 
 
 # -- leave these lines intact --
@@ -40,8 +42,9 @@ def close_connection(exception):
 @app.route('/')
 def root():
     conn = get_db()
-    # TODO change this
-    return "Hello World!"
+    
+    template = env.get_template('index.html')
+    return template.render(users=[{'url': 'https://github.com', 'username': 'trvslhlt'}])
 
 
 if __name__ == '__main__':

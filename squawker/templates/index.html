@@ -1,0 +1,14 @@
+<html>
+	<head>
+		
+	</head>
+	<body>
+		<title>Title</title>
+		<ul>
+		{% for user in users %}
+  		<p>{{ user['url'] }}</p>
+		<p>{{ user['username'] }}</p>
+		{% endfor %}
+	</ul>
+	</body>
+</html>

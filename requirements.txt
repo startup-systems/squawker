@@ -1,4 +1,5 @@
 Flask~=0.11.1
+Jinja2
 pep8~=1.7.0
 pytest~=3.0.3
 pytest-json~=0.4.0
