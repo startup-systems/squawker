@@ -35,9 +35,10 @@ def close_connection(exception):
     if db is not None:
         db.close()
 # ------------------------------
-### Methods ###
-#Grab posts
-def getPosts(page = 1):
+# ---Methods----#
+
+
+def getPosts(page=1):  # Grab posts
     conn = get_db()
     cur = conn.cursor()
     offset = (page - 1) * 20
@@ -48,46 +49,46 @@ def getPosts(page = 1):
     temp = cur.fetchall()
     data = []
     idx = []
-    #Store values in list
-#    for val in temp:
-#        data.append(temp[0])
     cur.close()
     return temp
 
-#Add posts
-def addPost(data):
+
+def addPost(data):  # Add posts
     conn = get_db()
     cur = conn.cursor()
     cur.execute("INSERT INTO squawks (body) VALUES(?)", (data,))
     conn.commit()
 
-#### Routes  ######
-#Index
-@app.route('/')
+# ---- Routes  ---- #
+
+
+@app.route('/')  # Index
 def root():
     return page(1)
-#Pages
-@app.route('/<int:pageNum>')
+
+
+@app.route('/<int:pageNum>')  # Pages
 def page(pageNum):
     currPage = pageNum
     squawks = getPosts(pageNum)
-    if( squawks[len(squawks) - 1][0] == 1):
-      last = True
+    if(squawks[len(squawks) - 1][0] == 1):
+        last = True
     else:
-      last = False
+        last = False
     # TODO change this
     return render_template('index.html', text=squawks[0], squawks=squawks, currPage=currPage, last=last)
-#Add
-@app.route('/add/', methods=['POST'])
+
+
+@app.route('/add/', methods=['POST'])  # Add
 def add(text=""):
     addPost(request.form["new_body"])
     return redirect(url_for('root'))
 
-#Next
-@app.route('/next/', methods=['GET'])
+
+@app.route('/next/', methods=['GET'])  # Next
 def nextPage():
-  pageNum = int(request.path[1:])
-  return redirect(url_for('page'), pageNum=pageNum)
+    pageNum = int(request.path[1:])
+    return redirect(url_for('page'), pageNum=pageNum)
 
 
 if __name__ == '__main__':
