@@ -1,0 +1,66 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>Squawker</title>
+  <meta name="description" content="Squawker">
+  <meta name="author" content="Osasu Eboh">
+
+  <!-- Mobile Specific Metas ––––– -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- FONT –––––––––––––––––––––– -->
+  <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
+
+  <!-- CSS ------––––––––––––––––– -->
+  <link rel="stylesheet" href="static/css/normalize.css">
+  <link rel="stylesheet" href="static/css/skeleton.css">
+
+  <!-- Favicon ––––––––––––––––––– -->
+  <link rel="icon" type="image/png" href="static/images/favicon.png">
+<!--  <link rel="stylesheet" href="css/styles.css?v=1.0">-->
+
+  <!--[if lt IE 9]>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script>
+  <![endif]-->
+</head>
+
+<body>
+  <div class="container">
+    <h2>Squawker</h2>
+
+    {% for squawk in squawks %}
+    <div class="row">
+      <div class="one column"># {{ squawk[0] }}</div>
+      <div class="eleven columns">{{ squawk[1] }}</div>
+    </div>
+    {% endfor %}
+
+    <div class="row">
+      <div class="four column">
+        <form>
+        {% if currPage != 1 %}
+        <label>Previous Page</label>
+        <input type="submit" value="<<<<<" formaction="/{{ currPage - 1}}" formmethod="get">
+        {%  endif %}
+
+        {% if last == False %}
+        <label>Next Page</label>
+        <input type="submit" value=">>>>>" formaction="/{{ currPage + 1}}" formmethod="get">
+        {% endif %}
+        </form>
+      </div>
+
+      <div class="eight column">
+        <form action>
+          <label for="exampleMessage">New Post</label>
+          <textarea class="u-full-width" placeholder="Tyep post..." id="exampleMessage" name="new_body" id="new_body"></textarea>
+          <input class="button-primary" type="submit" value="Submit" formaction="add/" formmethod="post">
+        </form>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

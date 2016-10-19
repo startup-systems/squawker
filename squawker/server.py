@@ -1,4 +1,4 @@
-from flask import Flask, g
+from flask import Flask, g, jsonify, render_template, request, redirect, url_for
 import sqlite3
 
 
@@ -35,14 +35,63 @@ def close_connection(exception):
     if db is not None:
         db.close()
 # ------------------------------
+### Methods ###
+#Grab posts
+def getPosts(page = 1):
+    conn = get_db()
+    cur = conn.cursor()
+    offset = (page - 1) * 20
+    cur.execute("""SELECT id, body FROM
+                squawks
+                ORDER BY id DESC
+                LIMIT 20 OFFSET (?)""", (offset, ))
+    temp = cur.fetchall()
+    data = []
+    idx = []
+    #Store values in list
+#    for val in temp:
+#        data.append(temp[0])
+    cur.close()
+    return temp
 
+#Add posts
+def addPost(data):
+    conn = get_db()
+    cur = conn.cursor()
+    cur.execute("INSERT INTO squawks (body) VALUES(?)", (data,))
+    conn.commit()
 
+#### Routes  ######
+#Index
 @app.route('/')
 def root():
-    conn = get_db()
+    return page(1)
+#Pages
+@app.route('/<int:pageNum>')
+def page(pageNum):
+    currPage = pageNum
+    squawks = getPosts(pageNum)
+    if( squawks[len(squawks) - 1][0] == 1):
+      last = True
+    else:
+      last = False
     # TODO change this
-    return "Hello World!"
+    return render_template('index.html', text=squawks[0], squawks=squawks, currPage=currPage, last=last)
+#Add
+@app.route('/add/', methods=['POST'])
+def add(text=""):
+    addPost(request.form["new_body"])
+    return redirect(url_for('root'))
+
+#Next
+@app.route('/next/', methods=['GET'])
+def nextPage():
+  pageNum = int(request.path[1:])
+  return redirect(url_for('page'), pageNum=pageNum)
 
 
 if __name__ == '__main__':
     app.run()
+
+# Sources:
+# http://stackoverflow.com/questions/109232/what-is-the-best-way-to-paginate-results-in-sql-server
