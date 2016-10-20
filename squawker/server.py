@@ -1,4 +1,4 @@
-from flask import Flask, g
+from flask import Flask, g, url_for
 import sqlite3
 from jinja2 import Environment, PackageLoader
 env = Environment(loader=PackageLoader('squawker', 'templates'))
@@ -42,9 +42,9 @@ def close_connection(exception):
 @app.route('/')
 def root():
     conn = get_db()
-    
+    script = url_for('static', filename='js/squawker.js')
     template = env.get_template('index.html')
-    return template.render(users=[{'url': 'https://github.com', 'username': 'trvslhlt'}])
+    return template.render(squawkerScript=script)
 
 
 if __name__ == '__main__':
