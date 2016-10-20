@@ -39,10 +39,10 @@ def close_connection(exception):
 
 @app.route('/')
 def show_entries():
-    conn = get_db()
+    db = get_db()
     # TODO change this
     #return "Hello World!"
-    cur = conn.execute('select title, text from entries order by id desc')
+    cur = db.execute('select title, text from entries order by id desc')
     entries = cur.fetchall()
     return render_template('show_entries.html', entries=entries)
 
