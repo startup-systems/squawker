@@ -1,6 +1,6 @@
-from flask import Flask, g
+import os
 import sqlite3
-
+from flask import Flask, request, session, g, redirect, url_for, abort, render_template, flash
 
 # -- leave these lines intact --
 app = Flask(__name__)
@@ -38,11 +38,24 @@ def close_connection(exception):
 
 
 @app.route('/')
-def root():
+def show_entries():
     conn = get_db()
     # TODO change this
-    return "Hello World!"
+    #return "Hello World!"
+    cur = conn.execute('select title, text from entries order by id desc')
+    entries = cur.fetchall()
+    return render_template('show_entries.html', entries=entries)
 
+
+@app.route('/add', methods=['POST'])
+def add_entry():
+    #if not session.get('logged_in'):
+    #        abort(401)
+    db = get_db()
+    db.execute('insert into entries (title, text) values (?, ?)',[request.form['title'], request.form['text']])
+    db.commit()
+    flash('New entry was successfully posted')
+    return redirect(url_for('show_entries'))
 
 if __name__ == '__main__':
     app.run()
