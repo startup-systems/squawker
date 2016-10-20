@@ -11,6 +11,7 @@ def get_db():
         db_name = app.config.get('DATABASE', 'squawker.db')
         g.sqlite_db = sqlite3.connect(db_name)
 
+
     return g.sqlite_db
 
 
