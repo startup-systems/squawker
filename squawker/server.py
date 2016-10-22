@@ -50,11 +50,11 @@ def root():
 
     return render_template("index.html", squawks=allRows)
 
+
 @app.route('/squawk/', methods=['POST'])
 def squawk():
 
     s = request.form['squawkText']
-    
     # Do nothing if form is empty
     if s is None:
         return redirect(url_for('root'))
