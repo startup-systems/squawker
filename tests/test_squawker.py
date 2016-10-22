@@ -73,8 +73,14 @@ def test_form_present(browser):
 def test_create_squawk(browser):
     TEXT = random_string()
     create_squawk(browser, TEXT)
-
     assert browser.is_text_present(TEXT)
+
+
+@pytest.mark.score(5)
+def test_returns_to_homepage(browser):
+    TEXT = random_string()
+    create_squawk(browser, TEXT)
+    assert browser.is_element_present_by_tag('form')
 
 
 @pytest.mark.score(20)
