@@ -41,7 +41,7 @@ def browser(db_client):
 
 def random_string():
     charset = string.ascii_letters + string.digits
-    length = random.randint(5,50)
+    length = random.randint(5, 50)
     return ''.join(random.choice(charset) for _ in range(length))
 
 
@@ -69,25 +69,11 @@ def test_form_present(browser):
     assert browser.is_element_present_by_tag('form')
 
 
-@pytest.mark.score(30)
-def test_create_squawk(browser):
-    TEXT = random_string()
-    create_squawk(browser, TEXT)
-    assert browser.is_text_present(TEXT)
-
-
-@pytest.mark.score(5)
-def test_returns_to_homepage(browser):
-    TEXT = random_string()
-    create_squawk(browser, TEXT)
-    assert browser.is_element_present_by_tag('form')
-
-
 @pytest.mark.score(20)
 def test_all_squawks_present(browser):
     url = '/'
 
-    num_squawks = random.randint(3,9)
+    num_squawks = random.randint(3, 9)
     bodies = [random_string() for _ in range(num_squawks)]
     for body in bodies:
         create_squawk(browser, body)
@@ -102,7 +88,7 @@ def test_all_squawks_present(browser):
 def test_reverse_chronological_order(browser):
     url = '/'
 
-    num_squawks = random.randint(3,9)
+    num_squawks = random.randint(3, 9)
     bodies = ["Post {}".format(i) for i in range(num_squawks)]
     for body in bodies:
         create_squawk(browser, body)
@@ -113,3 +99,17 @@ def test_reverse_chronological_order(browser):
     browser.visit(url)
 
     assert re.search(pattern, browser.html, re.DOTALL + re.MULTILINE) is not None
+
+
+@pytest.mark.score(30)
+def test_create_squawk(browser):
+    TEXT = random_string()
+    create_squawk(browser, TEXT)
+    assert browser.is_text_present(TEXT)
+
+
+@pytest.mark.score(5)
+def test_returns_to_homepage(browser):
+    TEXT = random_string()
+    create_squawk(browser, TEXT)
+    assert browser.is_element_present_by_tag('form')
