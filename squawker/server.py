@@ -37,7 +37,7 @@ def close_connection(exception):
 # ------------------------------
 
 
-@app.route('/', methods = ["POST", "GET"])
+@app.route('/',methods = ["POST","GET"])
 def root():
     conn = get_db()
     c = conn.cursor()
@@ -48,11 +48,11 @@ def root():
         if len(new_message) > 140:
             abort(400)
         else:
-            c.execute("INSERT INTO squawks (message) VALUES (?)", [new_message]) 
+            c.execute("INSERT INTO squawks (message) VALUES (?)", [new_message])
             conn.commit()
     c.execute("SELECT * FROM squawks ORDER BY createTime DESC")
     all_msg = c.fetchall()
-    return render_template("homepage.html", allMsg = all_msg)
+    return render_template("homepage.html",allMsg = all_msg)
 
 
 if __name__ == '__main__':
