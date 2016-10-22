@@ -8,6 +8,9 @@ import string
 import tempfile
 
 
+PAGE_SIZE = 20
+
+
 @pytest.fixture()
 def db_fd():
     server.app.config['TESTING'] = True
@@ -58,6 +61,14 @@ def create_squawk(browser, body):
     button.click()
 
 
+def create_squawks(browser, count):
+    bodies = ["Post {}".format(i) for i in range(count)]
+    for body in bodies:
+        create_squawk(browser, body)
+
+    return bodies
+
+
 def test_table_created(test_app):
     with server.app.app_context():
         conn = server.get_db()
@@ -84,9 +95,7 @@ def test_all_squawks_present(browser):
     url = '/'
 
     num_squawks = random.randint(3, 9)
-    bodies = [random_string() for _ in range(num_squawks)]
-    for body in bodies:
-        create_squawk(browser, body)
+    bodies = create_squawks(browser, num_squawks)
 
     # in case they didn't return to the homepage
     browser.visit(url)
@@ -99,9 +108,7 @@ def test_reverse_chronological_order(browser):
     url = '/'
 
     num_squawks = random.randint(3, 9)
-    bodies = ["Post {}".format(i) for i in range(num_squawks)]
-    for body in bodies:
-        create_squawk(browser, body)
+    bodies = create_squawks(browser, num_squawks)
 
     bodies.reverse()
     pattern = '.*'.join(bodies)
