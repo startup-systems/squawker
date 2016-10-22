@@ -6,7 +6,7 @@ import sqlite3
 # -- leave these lines intact --
 app = Flask(__name__)
 
-#comment
+
 def get_db():
     if not hasattr(g, 'sqlite_db'):
         db_name = app.config.get('DATABASE', 'squawker.db')
@@ -26,7 +26,6 @@ def init_db():
 @app.cli.command('initdb')
 def initdb_command():
     """Creates the database tables."""
-    print "init"
     init_db()
     print('Initialized the database.')
 
@@ -47,8 +46,8 @@ def root():
         if len(getContent) > 140:
             abort(400)
         else:
-             cc_object = conn.execute('INSERT INTO messages (message) VALUES (?)', [getContent])
-             conn.commit()
+            cc_object = conn.execute('INSERT INTO messages (message) VALUES (?)', [getContent])
+            conn.commit()
     
     cc_object = conn.execute('SELECT * FROM messages ORDER BY createTime desc')
     squawkers = cc_object.fetchall()
