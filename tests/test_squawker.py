@@ -126,13 +126,22 @@ def test_client_side_validation(browser):
     url = '/'
     browser.visit(url)
     field = find_body_field(browser)
+
     try:
         assert field['maxlength'] == '140'
     except KeyError:
-        try:
-            assert field['pattern'] is not None
-        except KeyError:
-            pytest.fail(msg="HTML5 validation not found.")
+        pass
+    else:
+        return
+
+    try:
+        assert field['pattern'] is not None
+    except KeyError:
+        pass
+    else:
+        return
+
+    pytest.fail(msg="HTML5 validation not found.")
 
 
 @pytest.mark.score(10)
