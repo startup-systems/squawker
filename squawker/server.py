@@ -62,7 +62,7 @@ def handle_invalid_usage(error):
     return response
 
 # set the post length as a configuration variable
-MAX_LEN = 3
+MAX_LEN = 140
 PAGE_LEN = 20
 
 
