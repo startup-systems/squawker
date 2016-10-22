@@ -48,7 +48,7 @@ def root():
         else:
             cc_object = conn.execute('INSERT INTO messages (message) VALUES (?)', [getContent])
             conn.commit()
-    
+
     cc_object = conn.execute('SELECT * FROM messages ORDER BY createTime desc')
     squawkers = cc_object.fetchall()
 
