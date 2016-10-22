@@ -39,9 +39,9 @@ def browser(db_client):
     return Browser('flask', app=server.app)
 
 
-def random_string():
+def random_string(minlength=5, maxlength=40):
     charset = string.ascii_letters + string.digits
-    length = random.randint(5, 50)
+    length = random.randint(minlength, maxlength)
     return ''.join(random.choice(charset) for _ in range(length))
 
 
@@ -138,3 +138,11 @@ def test_client_side_validation(browser):
     browser.visit(url)
     field = find_body_field(browser)
     assert has_any_attr(field, ['maxlength', 'pattern']), "No HTML5 validation found."
+
+
+@pytest.mark.score(10)
+def test_server_side_validation(browser):
+    TEXT = random_string(minlength=141, maxlength=200)
+    create_squawk(browser, TEXT)
+    # TODO ignore if it's in the `value` of the `<input>`
+    assert browser.is_text_not_present(TEXT)
