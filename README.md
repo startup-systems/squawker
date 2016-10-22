@@ -73,7 +73,7 @@ Run the following from this directory:
 
 ```shell
 # run the pytests
-pytest -v
+pytest --tb short
 # run the pep8 checks
 pep8
 ```
