@@ -1,7 +1,6 @@
 import os
 from sqlite3 import dbapi2 as sqlite3
-from flask import Flask, request, session, g, redirect, url_for, abort, \
-     render_template, flash
+from flask import Flask, request, session, g, redirect, url_for, abort, render_template, flash
 
 
 # -- leave these lines intact --
@@ -38,6 +37,7 @@ def close_connection(exception):
         db.close()
 # ------------------------------
 
+
 @app.route('/', methods=["POST", "GET"])
 def root():
     conn = get_db()
@@ -52,7 +52,6 @@ def root():
     c.execute("SELECT msg FROM posts ORDER BY id DESC")
     all_posts = c.fetchall()
     return render_template("index.html", allMsg=all_posts)
-
 
 
 if __name__ == '__main__':
