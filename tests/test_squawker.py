@@ -8,6 +8,7 @@ import string
 import tempfile
 
 
+URL = '/'
 PAGE_SIZE = 20
 
 
@@ -50,8 +51,7 @@ def find_body_field(browser):
 
 
 def create_squawk(browser, body):
-    url = '/'
-    browser.visit(url)
+    browser.visit(URL)
 
     input_el = find_body_field(browser)
     input_el.fill(body)
@@ -79,41 +79,36 @@ def test_table_created(test_app):
 
 
 def test_response_code(test_app):
-    response = test_app.get('/')
+    response = test_app.get(URL)
     assert response.status_code == 200
 
 
 @pytest.mark.score(5)
 def test_form_present(browser):
-    url = '/'
-    browser.visit(url)
+    browser.visit(URL)
     assert browser.is_element_present_by_tag('form')
 
 
 @pytest.mark.score(20)
 def test_all_squawks_present(browser):
-    url = '/'
-
     num_squawks = random.randint(3, 9)
     bodies = create_squawks(browser, num_squawks)
 
     # in case they didn't return to the homepage
-    browser.visit(url)
+    browser.visit(URL)
     for body in bodies:
         assert browser.is_text_present(body)
 
 
 @pytest.mark.score(20)
 def test_reverse_chronological_order(browser):
-    url = '/'
-
     num_squawks = random.randint(3, 9)
     bodies = create_squawks(browser, num_squawks)
 
     bodies.reverse()
     pattern = '.*'.join(bodies)
 
-    browser.visit(url)
+    browser.visit(URL)
 
     assert re.search(pattern, browser.html, re.DOTALL + re.MULTILINE) is not None
 
@@ -134,8 +129,7 @@ def test_returns_to_homepage(browser):
 
 @pytest.mark.score(5)
 def test_client_side_validation(browser):
-    url = '/'
-    browser.visit(url)
+    browser.visit(URL)
     field = find_body_field(browser)
 
     try:
