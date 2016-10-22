@@ -1,8 +1,10 @@
 from bs4 import BeautifulSoup
 import os
 import pytest
+import random
 from splinter import Browser
 from squawker import server
+import string
 import tempfile
 
 
@@ -32,6 +34,25 @@ def test_app(db_client):
     return server.app.test_client()
 
 
+@pytest.fixture()
+def browser(db_client):
+    return Browser('flask', app=server.app)
+
+
+def random_string():
+    charset = string.ascii_uppercase + string.digits
+    length = random.randint(5,50)
+    return ''.join(random.choice(charset) for _ in range(length))
+
+
+def create_squawk(browser, body):
+    input_el = browser.find_by_css('input[type="text"],textarea').first
+    assert input_el is not None
+    input_el.fill(body)
+    button = browser.find_by_css('input[type="submit"],button[type="submit"]').first
+    button.click()
+
+
 def test_response_code(test_app):
     response = test_app.get('/')
     assert response.status_code == 200
@@ -46,16 +67,26 @@ def test_form_present(test_app):
 
 
 @pytest.mark.score(30)
-def test_create_squawk(db_client):
-    browser = Browser('flask', app=server.app)
+def test_create_squawk(browser):
     url = '/'
     browser.visit(url)
 
-    TEXT = "splinter - python acceptance testing for web applications"
-    input_el = browser.find_by_css('input[type="text"],textarea').first
-    assert input_el is not None
-    input_el.fill(TEXT)
-    button = browser.find_by_css('input[type="submit"]').first
-    button.click()
+    TEXT = random_string()
+    create_squawk(browser, TEXT)
 
     assert browser.is_text_present(TEXT)
+
+
+@pytest.mark.score(20)
+def test_all_squawks_present(browser):
+    url = '/'
+
+    bodies = [random_string() for _ in range(random.randint(3,9))]
+    for body in bodies:
+        browser.visit(url)
+        create_squawk(browser, body)
+
+    # don't assume they
+    browser.visit(url)
+    for body in bodies:
+        assert browser.is_text_present(body)
