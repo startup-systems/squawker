@@ -63,17 +63,6 @@ def create_squawk(browser, body):
     button.click()
 
 
-def has_any_attr(field, attrs):
-    for attr in attrs:
-        try:
-            field[attr]
-        except KeyError:
-            continue
-        else:
-            return True
-    return False
-
-
 def test_response_code(test_app):
     response = test_app.get('/')
     assert response.status_code == 200
@@ -137,7 +126,13 @@ def test_client_side_validation(browser):
     url = '/'
     browser.visit(url)
     field = find_body_field(browser)
-    assert has_any_attr(field, ['maxlength', 'pattern']), "No HTML5 validation found."
+    try:
+        assert field['maxlength'] == '140'
+    except KeyError:
+        try:
+            assert field['pattern'] is not None
+        except KeyError:
+            pytest.fail(msg="HTML5 validation not found.")
 
 
 @pytest.mark.score(10)
