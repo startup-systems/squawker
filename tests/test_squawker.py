@@ -2,6 +2,7 @@ from bs4 import BeautifulSoup
 import os
 import pytest
 import random
+import re
 from splinter import Browser
 from squawker import server
 import string
@@ -91,3 +92,22 @@ def test_all_squawks_present(browser):
     browser.visit(url)
     for body in bodies:
         assert browser.is_text_present(body)
+
+
+@pytest.mark.score(20)
+def test_reverse_chronological_order(browser, test_app):
+    url = '/'
+
+    num_squawks = random.randint(3,9)
+    bodies = ["Post {}".format(i) for i in range(num_squawks)]
+    for body in bodies:
+        create_squawk(browser, body)
+
+    bodies.reverse()
+    pattern = '.*'.join(bodies)
+
+    response = test_app.get('/')
+    body = str(response.data)
+    print(body)
+
+    assert re.search(pattern, body, re.DOTALL + re.MULTILINE) is not None
