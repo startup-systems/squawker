@@ -1,0 +1,30 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Squawker</title>
+  </head>
+  <body>
+    <h1>Squawker</h1>
+    <div class="postMsg">
+      <form action="/" method="POST">
+        <div>
+          <label for="msg">Share your thoughts!<br></label>
+          <textarea id="message" name="npost" maxLength="140"></textarea>
+        </div>
+        <div class="button">
+          <button type="submit">Submit</button>
+        </div>
+      </form>
+    </div>
+    <br>
+    <div class="getMsg">
+      <label for="allPosts">Your posts:</label>
+      {% for epost in allMsg %}
+        <div class="aPosts">
+          <p>{{ epost[0] }}</p> 
+        </div>
+      {% endfor %}
+    </div>
+  </body>
+</html>
