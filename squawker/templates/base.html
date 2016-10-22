@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <title>{%block title%}{%endblock%}</title>
+      <link href="/static/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+      <link href="/static/theme.css" rel="stylesheet">
+
+</head>
+<body>
+  <div class="center-col">
+
+    <form action="{{url_for('post')}}" method="POST">
+      <input type="text" name="squawk" maxlength="{{max_len}}" required autofocus>
+      <input type="submit" value="SQUAWWWWWK" />
+    </form>
+
+    <div>
+      {%for squawk in squawks%}
+      <div class="squawk">{{squawk.text}}</div>
+      {%endfor%}
+      <div class="row">
+        {%if page>0%}
+        <a href="{{url_for('root', page_no=page-1)}}" class="btn btn-primary">Prev</a>
+        {%endif%}
+        {%if has_next%}
+        <a href="{{url_for('root', page_no=page+1)}}" class="btn btn-primary pull-right">Next</a>
+        {%endif%}
+      </div>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,19 @@
+
+
+
+
+.pull-right {
+    float: right!important;
+}
+
+.center-col{
+  width:300px;
+  margin:0 auto;
+}
+
+.squawk{
+  border:1px solid;
+  border-radius:5px;
+  margin:5px;
+  padding:10px;
+}
