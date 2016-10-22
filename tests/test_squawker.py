@@ -45,16 +45,33 @@ def random_string():
     return ''.join(random.choice(charset) for _ in range(length))
 
 
+def find_body_field(browser):
+    field = browser.find_by_css('input[type="text"],textarea').first
+    assert field is not None
+    return field
+
+
 def create_squawk(browser, body):
     url = '/'
     browser.visit(url)
 
-    input_el = browser.find_by_css('input[type="text"],textarea').first
-    assert input_el is not None
+    input_el = find_body_field(browser)
     input_el.fill(body)
 
     button = browser.find_by_css('input[type="submit"],button[type="submit"]').first
+    assert button is not None
     button.click()
+
+
+def has_any_attr(field, attrs):
+    for attr in attrs:
+        try:
+            field[attr]
+        except KeyError:
+            continue
+        else:
+            return True
+    return False
 
 
 def test_response_code(test_app):
@@ -113,3 +130,11 @@ def test_returns_to_homepage(browser):
     TEXT = random_string()
     create_squawk(browser, TEXT)
     assert browser.is_element_present_by_tag('form')
+
+
+@pytest.mark.score(5)
+def test_client_side_validation(browser):
+    url = '/'
+    browser.visit(url)
+    field = find_body_field(browser)
+    assert has_any_attr(field, ['maxlength', 'pattern']), "No HTML5 validation found."
