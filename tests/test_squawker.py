@@ -40,15 +40,19 @@ def browser(db_client):
 
 
 def random_string():
-    charset = string.ascii_uppercase + string.digits
+    charset = string.ascii_letters + string.digits
     length = random.randint(5,50)
     return ''.join(random.choice(charset) for _ in range(length))
 
 
 def create_squawk(browser, body):
+    url = '/'
+    browser.visit(url)
+
     input_el = browser.find_by_css('input[type="text"],textarea').first
     assert input_el is not None
     input_el.fill(body)
+
     button = browser.find_by_css('input[type="submit"],button[type="submit"]').first
     button.click()
 
@@ -68,9 +72,6 @@ def test_form_present(test_app):
 
 @pytest.mark.score(30)
 def test_create_squawk(browser):
-    url = '/'
-    browser.visit(url)
-
     TEXT = random_string()
     create_squawk(browser, TEXT)
 
@@ -81,12 +82,12 @@ def test_create_squawk(browser):
 def test_all_squawks_present(browser):
     url = '/'
 
-    bodies = [random_string() for _ in range(random.randint(3,9))]
+    num_squawks = random.randint(3,9)
+    bodies = [random_string() for _ in range(num_squawks)]
     for body in bodies:
-        browser.visit(url)
         create_squawk(browser, body)
 
-    # don't assume they
+    # in case they didn't return to the homepage
     browser.visit(url)
     for body in bodies:
         assert browser.is_text_present(body)
