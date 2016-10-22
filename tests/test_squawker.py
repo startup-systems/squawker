@@ -1,4 +1,3 @@
-from bs4 import BeautifulSoup
 import os
 import pytest
 import random
@@ -64,11 +63,10 @@ def test_response_code(test_app):
 
 
 @pytest.mark.score(5)
-def test_form_present(test_app):
-    response = test_app.get('/')
-    soup = BeautifulSoup(response.data, 'html.parser')
-    form = soup.find('form')
-    assert form is not None
+def test_form_present(browser):
+    url = '/'
+    browser.visit(url)
+    assert browser.is_element_present_by_tag('form')
 
 
 @pytest.mark.score(30)
@@ -95,7 +93,7 @@ def test_all_squawks_present(browser):
 
 
 @pytest.mark.score(20)
-def test_reverse_chronological_order(browser, test_app):
+def test_reverse_chronological_order(browser):
     url = '/'
 
     num_squawks = random.randint(3,9)
@@ -106,8 +104,6 @@ def test_reverse_chronological_order(browser, test_app):
     bodies.reverse()
     pattern = '.*'.join(bodies)
 
-    response = test_app.get('/')
-    body = str(response.data)
-    print(body)
+    browser.visit(url)
 
-    assert re.search(pattern, body, re.DOTALL + re.MULTILINE) is not None
+    assert re.search(pattern, browser.html, re.DOTALL + re.MULTILINE) is not None
