@@ -16,7 +16,7 @@ def db_fd():
 
 
 @pytest.fixture()
-def db_client(db_fd, request):
+def test_app(db_fd, request):
     client = server.app.test_client()
     with server.app.app_context():
         server.init_db()
@@ -30,12 +30,7 @@ def db_client(db_fd, request):
 
 
 @pytest.fixture()
-def test_app(db_client):
-    return server.app.test_client()
-
-
-@pytest.fixture()
-def browser(db_client):
+def browser(test_app):
     return Browser('flask', app=server.app)
 
 
@@ -61,6 +56,15 @@ def create_squawk(browser, body):
     button = browser.find_by_css('input[type="submit"],button[type="submit"]').first
     assert button is not None
     button.click()
+
+
+def test_table_created(test_app):
+    with server.app.app_context():
+        conn = server.get_db()
+        c = conn.cursor()
+        c.execute('SELECT COUNT() FROM sqlite_master WHERE type = "table"')
+        count = c.fetchone()['COUNT()']
+        assert count > 1
 
 
 def test_response_code(test_app):
