@@ -2,7 +2,6 @@ from flask import Flask, g, render_template, request, abort
 import sqlite3
 
 
-
 # -- leave these lines intact --
 app = Flask(__name__)
 
