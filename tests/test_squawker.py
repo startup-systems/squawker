@@ -74,7 +74,12 @@ def test_table_created(test_app):
         conn = server.get_db()
         c = conn.cursor()
         c.execute('SELECT COUNT() FROM sqlite_master WHERE type = "table"')
-        count = c.fetchone()['COUNT()']
+        result = c.fetchone()
+        # handles https://docs.python.org/3/library/sqlite3.html#sqlite3.Connection.row_factory
+        if type(result) == dict:
+            count = result['COUNT()']
+        else:
+            count = result[0]
         assert count > 1
 
 
