@@ -54,6 +54,7 @@ class InvalidUsage(Exception):
         rv['message'] = self.message
         return rv
 
+
 @app.errorhandler(InvalidUsage)
 def handle_invalid_usage(error):
     response = jsonify(error.to_dict())
@@ -84,7 +85,7 @@ def root(page_no=0):
     FROM squawks')
     count = c.fetchone()[0]
 
-    t = (page_no*PAGE_LEN, PAGE_LEN)
+    t = (page_no * PAGE_LEN, PAGE_LEN)
 
     c.execute('\
     SELECT id, squawk, timestamp\
@@ -94,9 +95,13 @@ def root(page_no=0):
     for squawk in c.fetchall():
         squawks.append(Squawk(squawk[1], squawk[0], squawk[2]))
 
-    return render_template("base.html", squawks=squawks, max_len=MAX_LEN,
-                        has_next=(count > ((page_no+1)*PAGE_LEN)),
-                        page=page_no)
+    has_next = (count > ((page_no + 1) * PAGE_LEN))
+
+    return render_template("base.html",
+                           squawks=squawks,
+                           max_len=MAX_LEN,
+                           has_next=has_next,
+                           page=page_no)
 
 
 def isValid(squawk):
