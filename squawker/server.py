@@ -57,16 +57,17 @@ def root(pageN):
     cmdExec.close()
     return render_template("index.html", num_squawks=count, pageN=pageN), 400
 
+
 @app.context_processor
 def utility_processor():
-    def loadSquawks(pageN = 1):
+    def loadSquawks(pageN=1):
         cmd = "SELECT message FROM squawkstable ORDER BY timestamp DESC"
         cmdExec = get_db().execute(cmd, ())
         squawks = cmdExec.fetchall()
         cmdExec.close()
         slen = len(squawks)
-        return squawks[(pageN-1) * 20 : min(slen, pageN * 20)]
-    return dict(loadSquawks = loadSquawks)
+        return squawks[(pageN - 1) * 20:min(slen, pageN * 20)]
+    return dict(loadSquawks=loadSquawks)
 
 
 if __name__ == '__main__':
