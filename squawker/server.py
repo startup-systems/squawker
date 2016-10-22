@@ -49,7 +49,7 @@ def root():
                 conn.commit()
     c = conn.execute("SELECT * FROM mytable ORDER BY createTime desc")
     Msg = c.fetchall()
-    return render_template('index.html', allMsg = Msg)
+    return render_template('index.html', allMsg=Msg)
 
 
 if __name__ == '__main__':
