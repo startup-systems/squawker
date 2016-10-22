@@ -1,3 +1,6 @@
 -- TODO change this
-DROP TABLE IF EXISTS mytable;
-CREATE TABLE mytable (id integer);
+DROP TABLE IF EXISTS posts;
+CREATE TABLE posts (
+	id INTEGER PRIMARY KEY AUTOINCREMENT,
+	msg VARCHAR(140) DEFAULT NULL
+	);
