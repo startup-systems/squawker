@@ -1,7 +1,7 @@
 from flask import Flask, g
 import sqlite3
 
-from flask import render_template, request, redirect, url_for
+from flask import render_template, request, redirect, url_for, abort
 
 # -- leave these lines intact --
 app = Flask(__name__)
@@ -41,8 +41,6 @@ def close_connection(exception):
 @app.route('/')
 def root():
     conn = get_db()
-    # TODO change this
-    # return "Hello world!!!"
 
     # Get all the squawks in order of recency
     cursor = conn.execute("SELECT id, squawk FROM squawkTable ORDER BY id desc")
@@ -61,7 +59,7 @@ def squawk():
 
     # If more than 140 characters, bad request
     if len(s) > 140:
-        return "<h1>ERROR 400 BAD REQUEST</h1>"
+        return abort(400)
 
     # Insert squawk into database
     conn = get_db()
@@ -70,11 +68,6 @@ def squawk():
     conn.close()
     return redirect(url_for('root'))
 
-# Add squawk to database endpoint
-    # opendb conncetion
-    # insert into use request.form['squawkText']
-    # db.commit()
-    # redirect back to homepage at tend
 
 if __name__ == '__main__':
     app.run()
