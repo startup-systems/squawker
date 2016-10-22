@@ -55,7 +55,7 @@ def root(pageN):
     cmdExec = get_db().execute(cmd, ())
     count = cmdExec.fetchone()[0]
     cmdExec.close()
-    return render_template("index.html", num_squawks=count, pageN=pageN), 400
+    return render_template("index.html", num_squawks=count, pageN=pageN), status
 
 
 @app.context_processor
