@@ -56,9 +56,9 @@ def root():
 
         if len(squawk_to_add) > 140:
             return "Error: invalid input", 400
-        
+
         insertion_query = "insert into squawks (id, create_time, squawk) values (?,?,?) "
-                
+
         conn.cursor().execute(insertion_query, (1, post_time, squawk_to_add))
         conn.commit()
         list_of_squawks = []
