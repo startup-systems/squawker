@@ -1,3 +1,3 @@
 -- TODO change this
-DROP TABLE IF EXISTS mytable;
-CREATE TABLE mytable (id integer);
+DROP TABLE IF EXISTS message;
+CREATE TABLE message (id integer primary key autoincrement,msg text not null);

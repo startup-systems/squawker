@@ -1,4 +1,4 @@
-from flask import Flask, g
+from flask import Flask, g, request, render_template, abort, redirect
 import sqlite3
 
 
@@ -40,9 +40,26 @@ def close_connection(exception):
 @app.route('/')
 def root():
     conn = get_db()
-    # TODO change this
-    return "Hello World!"
+    c = conn.cursor()
+    c.execute("Select msg from message order by id desc")
+    result = c.fetchall()
+    rows = []
+    for r in result:
+        rows.append(r[0])
+    return render_template('index.html', rows=rows)
 
 
+@app.route('/submitMessage', methods=['POST'])
+def submitMessage():
+    length = len(request.form['msg'])
+    if length > 140:
+        abort(400)
+    else:
+        conn = get_db()
+        c = conn.cursor()
+        c.execute("INSERT INTO message (msg) VALUES (?)", [request.form['msg']])
+        conn.commit()
+        conn.close()
+    return redirect('/')
 if __name__ == '__main__':
     app.run()
