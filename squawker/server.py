@@ -50,8 +50,16 @@ def root():
 @app.route('/squawk', methods=['POST'])
 def createSquawk():
     json = request.get_json()
-    print(json)
+    create_squawk(json)
     return '', 201
+
+
+def create_squawk(data):
+    db = get_db()
+    c = db.cursor()
+    squawk = (data['time'] / 1000.0, data['username'], data['text'])
+    c.execute('INSERT INTO squawks(time, username, text) VALUES (?, ?, ?)', squawk)
+    db.commit()
 
 
 if __name__ == '__main__':
