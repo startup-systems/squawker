@@ -1,4 +1,4 @@
-from flask import Flask, g
+from flask import Flask, g, render_template, redirect, request, url_for, abort
 import sqlite3
 
 
@@ -41,8 +41,20 @@ def close_connection(exception):
 def root():
     conn = get_db()
     # TODO change this
-    return "Hello World!"
+    cursor_object = conn.execute('SELECT * FROM squawks ORDER BY post_time DESC')
+    feeds = cursor_object.fetchall()
+    return render_template('homepage.html', feeds=feeds)
 
+
+@app.route('/new_sq', methods=['POST'])
+def new_sq():
+    db = get_db()
+    new_sq = request.form['content']
+    if len(new_sq) > 140:
+        abort(400)
+    db.execute('INSERT INTO squawks (feed) values (?)', [new_sq])
+    db.commit()
+    return redirect(url_for('root'))
 
 if __name__ == '__main__':
     app.run()

@@ -1,0 +1,61 @@
+body  {
+    background-color: rgba(192,192,192,0.3);
+}
+small {
+  margin-left: 3%;
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+}
+
+li {
+    float: left;
+}
+
+li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+li a:hover {
+    background-color: #111;
+}
+.title {
+  margin-left: 2%;
+  margin-top: 5%;
+  font-size: 150%;
+  font-weight: bold;
+}
+
+.profile {
+  margin-top: 2%;
+  border-radius: 50%;
+  width: 6%;
+  height: 6%;
+}
+
+.grid {
+  width: 31%;
+  height: 31%;
+  margin: 1%;
+  margin-bottom: 4%;
+}
+.bio {
+  text-align: center;
+  margin-right: 2%;
+  margin-left: 2%;
+}
+.contact {
+  text-align: center;
+  font-size: 80%;
+  color: #708090;
+  margin-bottom: 5%;
+}
