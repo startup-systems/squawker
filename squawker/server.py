@@ -1,6 +1,6 @@
-from flask import Flask, g
+from flask import Flask, g, render_template, request, redirect
 import sqlite3
-
+from datetime import datetime
 
 # -- leave these lines intact --
 app = Flask(__name__)
@@ -40,8 +40,28 @@ def close_connection(exception):
 @app.route('/')
 def root():
     conn = get_db()
-    # TODO change this
-    return "Hello World!"
+    c = conn.cursor()
+    s = "SELECT squawk from squawks order by submitdate desc"
+    c.execute(s)
+    #squawksstr = []
+    allrows = c.fetchall()
+    allsquawks = []
+    for s in allrows:
+        allsquawks.append(s[0])
+    return render_template('home.html', allsquawks=allsquawks)
+
+
+@app.route('/submitNewSquawk', methods=["POST"])
+def submitNewSquawk():
+    conn = get_db()
+    c = conn.cursor()
+    time = str(datetime.now())
+    s = 'INSERT INTO squawks VALUES ("{}", "{}")'.format(time, str(request.form["squawk"]))     
+    c.execute(s)
+    conn.commit()
+    conn.close()
+    return redirect('/')
+
 
 
 if __name__ == '__main__':
