@@ -1,9 +1,44 @@
 from flask import Flask, g, render_template, redirect, request, url_for, abort
 import sqlite3
+from math import ceil
 
 
 # -- leave these lines intact --
 app = Flask(__name__)
+
+
+# Reference: http://flask.pocoo.org/snippets/44/
+class Pagination(object):
+
+    def __init__(self, page, per_page, total_count):
+        self.page = page
+        self.per_page = per_page
+        self.total_count = total_count
+
+    @property
+    def pages(self):
+        return int(ceil(self.total_count / float(self.per_page)))
+
+    @property
+    def has_prev(self):
+        return self.page > 1
+
+    @property
+    def has_next(self):
+        return self.page < self.pages
+
+    def iter_pages(self, left_edge=2, left_current=2,
+                   right_current=5, right_edge=2):
+        last = 0
+        for num in range(1, self.pages + 1):
+            if num <= left_edge or \
+               (num > self.page - left_current - 1 and \
+                num < self.page + right_current) or \
+               num > self.pages - right_edge:
+                if last + 1 != num:
+                    yield None
+                yield num
+                last = num
 
 
 def get_db():
@@ -36,14 +71,33 @@ def close_connection(exception):
         db.close()
 # ------------------------------
 
+PER_PAGE = 10
 
-@app.route('/')
-def root():
+# URL generation helper
+def url_for_other_page(page):
+    args = request.view_args.copy()
+    args['page'] = page
+    return url_for(request.endpoint, **args)
+app.jinja_env.globals['url_for_other_page'] = url_for_other_page
+
+
+def get_current_page_feed(feeds, page):
+    return feeds[((page - 1) * PER_PAGE):min(((page - 1) * PER_PAGE) + PER_PAGE, len(feeds))]
+
+
+@app.route('/', defaults={'page': 1})
+@app.route('/page/<int:page>')
+def root(page):
     conn = get_db()
     # TODO change this
     cursor_object = conn.execute('SELECT * FROM squawks ORDER BY post_time DESC')
     feeds = cursor_object.fetchall()
-    return render_template('homepage.html', feeds=feeds)
+    count = len(feeds)
+    feeds = get_current_page_feed(feeds, page)
+    if not feeds and page != 1:
+        abort(404)
+    pagination = Pagination(page, PER_PAGE, count)
+    return render_template('homepage.html',pagination=pagination, feeds=feeds)
 
 
 @app.route('/new_sq', methods=['POST'])
