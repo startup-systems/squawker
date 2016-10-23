@@ -75,7 +75,7 @@ def root():
 @app.route('/<int:pageNum>')  # Pages
 def page(pageNum=1):
     squawks = getPosts(pageNum)
-    if(len(squawks)==0 or squawks[len(squawks) - 1][0] == 1):
+    if(len(squawks) == 0 or squawks[len(squawks) - 1][0] == 1):
         last = True
     else:
         last = False
