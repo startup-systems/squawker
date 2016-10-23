@@ -34,30 +34,32 @@
     {% for squawk in squawks %}
     <div class="row">
       <div class="one column"># {{ squawk[0] }}</div>
-      <div class="eleven columns">{{ squawk[1] }}</div>
+      <div class="eleven columns"><p>{{ squawk[1] }}</p></div>
     </div>
     {% endfor %}
 
     <div class="row">
-      <div class="four column">
+      <div class="twelve column">
+        <form action="add/" method="post">
+          <label for="new_body">New Post</label>
+          <textarea class="u-full-width" placeholder="Type post..." name="new_body" id="new_body"  maxlength="140" ></textarea>
+          <input class="button-primary" type="submit" value="Submit">
+        </form>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="twelve column">
         <form>
         {% if currPage != 1 %}
         <label>Previous Page</label>
-        <input type="submit" value="<<<<<" formaction="/{{ currPage - 1}}" formmethod="get">
+        <a type="submit" id="Prev" name="Prev" href="{{ url_for('page', pageNum=currPage - 1) }}">Prev</a>
         {%  endif %}
 
         {% if last == False %}
         <label>Next Page</label>
-        <input type="submit" value=">>>>>" formaction="/{{ currPage + 1}}" formmethod="get">
+        <a type="submit" id="Next" name="Next" href="{{ url_for('page', pageNum=currPage + 1) }}">Next </a>
         {% endif %}
-        </form>
-      </div>
-
-      <div class="eight column">
-        <form novalidate>
-          <label for="new_body">New Post</label>
-          <textarea class="u-full-width" placeholder="Type post..." id="exampleMessage" name="new_body" id="new_body" size="140" maxlength="140" required></textarea>
-          <input class="button-primary" type="submit" value="Submit" formaction="add/" formmethod="post">
         </form>
       </div>
     </div>
