@@ -108,6 +108,7 @@ def test_reverse_chronological_order(browser):
 def test_create_squawk(browser):
     TEXT = random_string()
     create_squawk(browser, TEXT)
+    browser.visit(URL)
     assert browser.is_text_present(TEXT)
 
 
