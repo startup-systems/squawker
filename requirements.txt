@@ -3,4 +3,4 @@ Jinja2
 pep8~=1.7.0
 pytest~=3.0.3
 pytest-json~=0.4.0
-splinter[flask]~=0.7.4
+git+https://github.com/startup-systems/splinter.git@0b47224f0ed77ef5882ec4d374f2d1b233275900#egg=splinter[flask]
