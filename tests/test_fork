@@ -12,6 +12,6 @@ git checkout -b "$START_BRANCH-$USERNAME"
 # http://stackoverflow.com/a/4089452/358804
 ORIGIN=$(git config --get remote.origin.url)
 OTHER=$(echo "$ORIGIN" | sed "s/startup-systems/$USERNAME/")
-git pull "$OTHER" master
+git pull --no-edit "$OTHER" master
 
 pytest --tb short
