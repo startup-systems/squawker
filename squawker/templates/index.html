@@ -45,8 +45,8 @@
                 </tbody>
             </table>
             <p>
-                {% if prev_num > 0 %}<a href="{{ url_for('root', page = prev_num) }}"><< Newer posts</a>{% endif %}
-                {% if (greeting_list|length == 20) and (lastpage != thisPage) %}<a href="{{ url_for('root', page = next_num) }}">Older posts >></a>{% endif %}
+                {% if prev_num > 0 %}<a href="{{ url_for('root', page = prev_num) }}">PREV</a>{% endif %}
+                {% if (greeting_list|length == 20) and (lastpage != thisPage) %}<a href="{{ url_for('root', page = next_num) }}">NEXT</a>{% endif %}
             </p>
         </div>
     </div>
