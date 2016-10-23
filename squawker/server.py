@@ -1,6 +1,6 @@
-from flask import Flask, g
+from flask import Flask, g, render_template, request
 import sqlite3
-
+import time
 
 # -- leave these lines intact --
 app = Flask(__name__)
@@ -36,12 +36,40 @@ def close_connection(exception):
         db.close()
 # ------------------------------
 
+# this function from http://flask.pocoo.org/docs/0.11/patterns/sqlite3/
+def query_db(query, args=(), one=False):
+    cur = get_db().execute(query, args)
+    rv = cur.fetchall()
+    cur.close()
+    return (rv[0] if rv else None) if one else rv
 
-@app.route('/')
+@app.route('/', methods=['POST', 'GET'])
 def root():
     conn = get_db()
-    # TODO change this
-    return "Hello World!"
+
+    if request.method == 'POST':
+        squawk_to_add = request.form['content']
+        post_time = int(time.time())
+
+        if len(squawk_to_add) > 140:
+            return "Error: invalid input", 400
+
+        insertion_query = "insert into squawks (id, create_time, squawk) values (?,?,?) "
+                
+        conn.cursor().execute(insertion_query, (1, post_time, squawk_to_add))
+        conn.commit()
+        
+        list_of_squawks = []
+        for squawk in query_db("select * from squawks order by create_time desc"):
+            list_of_squawks.append(squawk[2])
+
+        return render_template("front.html", squawks = list_of_squawks)
+
+    list_of_squawks = []
+    for squawk in query_db("select * from squawks"):
+        list_of_squawks.append(squawk[2])
+
+    return render_template("front.html", squawks = list_of_squawks)
 
 
 if __name__ == '__main__':
