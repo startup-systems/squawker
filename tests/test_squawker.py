@@ -6,6 +6,7 @@ from splinter import Browser
 from squawker import server
 import string
 import tempfile
+import time
 
 
 URL = '/'
@@ -61,10 +62,12 @@ def create_squawk(browser, body):
     button.click()
 
 
-def create_squawks(browser, count):
+def create_squawks(browser, count, delay=0):
     bodies = ["Post {}".format(i) for i in range(count)]
     for body in bodies:
         create_squawk(browser, body)
+        if delay > 0:
+            time.sleep(delay)
 
     return bodies
 
@@ -93,8 +96,8 @@ def test_all_squawks_present(browser):
 
 @pytest.mark.score(20)
 def test_reverse_chronological_order(browser):
-    num_squawks = random.randint(3, 9)
-    bodies = create_squawks(browser, num_squawks)
+    # the SQLite3 `datetime` type is down to the second by default, so wait between creating each squawk
+    bodies = create_squawks(browser, 3, delay=1)
 
     bodies.reverse()
     pattern = '.*'.join(bodies)
