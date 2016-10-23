@@ -1,4 +1,4 @@
-from flask import Flask, g, url_for
+from flask import Flask, g, request, url_for
 import sqlite3
 from jinja2 import Environment, PackageLoader
 env = Environment(loader=PackageLoader('squawker', 'templates'))
@@ -45,6 +45,13 @@ def root():
     script = url_for('static', filename='js/squawker.js')
     template = env.get_template('index.html')
     return template.render(squawkerScript=script)
+
+
+@app.route('/squawk', methods=['POST'])
+def createSquawk():
+    json = request.get_json()
+    print(json)
+    return '', 201
 
 
 if __name__ == '__main__':
