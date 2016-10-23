@@ -1,0 +1,35 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <title>Squawker | Startup Systems</title>
+</head>
+
+<body>
+    <div id="squawks">
+        <p># of Squawks: {{num_squawks}}</p>
+        {% if pageN > 1 %}
+        <a href="/page/{{ pageN-1 }}">Previous</a> &nbsp {% endif %}
+        <a href="/page/{{ pageN+1 }}">Next</a>
+        <br> {% for squawk in loadSquawks(pageN) %}
+        <br>
+        <div>{{ squawk[0] }}</div>
+        {% endfor %} {% if pageN > 1 %}
+        <a href="/page/{{ pageN-1 }}">Previous</a> &nbsp {% endif %}
+        <a href="/page/{{ pageN+1 }}">Next</a>
+    </div>
+    <br>
+    <br>
+    <form action="/" method="post">
+        <div>
+            <label for="msg">Enter a squawk:</label>
+            <br>
+            <textarea id="msg" name="squawk_message" maxlength="140"></textarea>
+        </div>
+        <div class="button">
+            <button type="submit">post</button>
+        </div>
+    </form>
+</body>
+
+</html>
