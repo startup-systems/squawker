@@ -1,6 +1,6 @@
-from flask import Flask, g
+from flask import Flask, g, request, render_template, redirect, abort
 import sqlite3
-
+import time
 
 # -- leave these lines intact --
 app = Flask(__name__)
@@ -21,6 +21,8 @@ def init_db():
             db.cursor().executescript(f.read())
         db.commit()
 
+init_db()
+
 
 @app.cli.command('initdb')
 def initdb_command():
@@ -37,12 +39,38 @@ def close_connection(exception):
 # ------------------------------
 
 
+def db_read_squawker():
+    cur = get_db().cursor()
+    cur.execute("SELECT * FROM squawker ORDER BY id DESC")
+    return cur.fetchall()
+
+
+def db_add_squawk(squawk):
+    cur = get_db().cursor()
+    t = str(time.time())
+    squawk_info = (t, squawk)
+    cur.execute("INSERT INTO squawker VALUES (?, ?)", squawk_info)
+    get_db().commit()
+
+
 @app.route('/')
 def root():
     conn = get_db()
     # TODO change this
-    return "Hello World!"
+    squawker = db_read_squawker()
+    return render_template('index.html', squawker=squawker)
+
+
+@app.route("/api/squawk", methods=["POST"])
+def receive_squawk():
+    print(request.form)
+    if ((request.form['squawk']) == ""):
+        abort(400)
+    else:
+        db_add_squawk(request.form['squawk'])
+    return redirect("/")
 
 
 if __name__ == '__main__':
-    app.run()
+    # app.run(host="0.0.0.0", port=5000, debug=True)
+    app.run(debug=True)
