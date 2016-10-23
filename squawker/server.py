@@ -68,7 +68,7 @@ def root():
         return render_template("front.html", squawks=list_of_squawks)
 
     list_of_squawks = []
-    for squawk in query_db("select * from squawks"):
+    for squawk in query_db("select * from squawks order by create_time desc"):
         list_of_squawks.append(squawk[2])
 
     return render_template("front.html", squawks=list_of_squawks)
