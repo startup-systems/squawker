@@ -45,7 +45,7 @@ def root():
         if len(newMessage) > 140:
                 abort(400)
         else:
-                conn.execute("INSERT INTO mytable (message) VALUE (?)", [newMessage])
+                conn.execute("INSERT INTO mytable (message) VALUES (?)", [newMessage])
                 conn.commit()
     c = conn.execute("SELECT * FROM mytable ORDER BY createTime desc")
     Msg = c.fetchall()
