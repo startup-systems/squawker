@@ -38,11 +38,10 @@ def close_connection(exception):
 
 @app.route('/', methods=['GET', 'POST'], defaults={'pageN': 1})
 @app.route('/page/<int:pageN>', methods=['GET', 'POST'])
-
 def root(pageN):
     status = 200
     if request.form:
-        msg = request.form['squak_message']
+        msg = request.form['squawk_message']
         if len(msg) > 140:
             err = "Keep message under 140 characters"
             status = 400
