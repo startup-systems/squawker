@@ -1,0 +1,17 @@
+#!/bin/bash
+
+set -e
+set -x
+
+USERNAME=$1
+# http://stackoverflow.com/a/12142066/358804
+START_BRANCH=$(git rev-parse --abbrev-ref HEAD)
+
+git checkout -b "$START_BRANCH-$USERNAME"
+
+# http://stackoverflow.com/a/4089452/358804
+ORIGIN=$(git config --get remote.origin.url)
+OTHER=$(echo "$ORIGIN" | sed "s/startup-systems/$USERNAME/")
+git pull --no-edit "$OTHER" master
+
+pytest --tb short
