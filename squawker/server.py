@@ -39,7 +39,8 @@ def close_connection(exception):
         db.close()
 # ------------------------------
 
-#Obtained from http://flask.pocoo.org/snippets/44/
+
+# Obtained from http://flask.pocoo.org/snippets/44/
 class Pagination(object):
 
     def __init__(self, page, per_page, total_count):
@@ -62,11 +63,8 @@ class Pagination(object):
     def iter_pages(self, left_edge=2, left_current=2,
                    right_current=5, right_edge=2):
         last = 0
-        for num in xrange(1, self.pages + 1):
-            if num <= left_edge or \
-               (num > self.page - left_current - 1 and \
-                num < self.page + right_current) or \
-               num > self.pages - right_edge:
+        for num in range(1, self.pages + 1):
+            if num <= left_edge or (num > self.page - left_current - 1 and num < self.page + right_current) or num > self.pages - right_edge:
                 if last + 1 != num:
                     yield None
                 yield num
@@ -74,12 +72,14 @@ class Pagination(object):
 
 PER_PAGE = 20
 
+
 # Limted to 20 for page
 def get_squawks_for_page(entries, page, per_page):
     i = (page - 1) * PER_PAGE
     j = i + PER_PAGE
     squawk_entries = entries[i:j]
     return squawk_entries
+
 
 # url generator obtained from http://flask.pocoo.org/snippets/44/
 def url_for_pages(page):
@@ -104,7 +104,6 @@ def root(page):
         abort(404)
     pagination = Pagination(page, PER_PAGE, count)
     return render_template('home.html', pagination=pagination, squawks_entries=squawks_entries)
-
 
 
 @app.route('/add_squawker', methods=['POST'])
