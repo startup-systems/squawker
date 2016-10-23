@@ -37,6 +37,7 @@ def close_connection(exception):
 # ------------------------------
 
 @app.route('/', methods=['GET', 'POST'], defaults={'pageN': 1})
+
 @app.route('/page/<int:pageN>', methods=['GET', 'POST'])
 def root(pageN):
     status = 200
