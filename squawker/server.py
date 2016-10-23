@@ -65,7 +65,7 @@ def utility_processor():
         result = query_exec.fetchall()
         query_exec.close()
         p_start = min(len(result) - 1, (page - 1) * 20)
-        p_end = min(len(result) - 1, (page * 20) - 1)
+        p_end = min(len(result), (page * 20))
         results_to_show = result[p_start:p_end]
         return results_to_show
     return dict(get_squawks=get_squawks)
