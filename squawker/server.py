@@ -43,7 +43,6 @@ def root():
     c = conn.cursor()
     s = "SELECT squawk from squawks order by submitdate desc"
     c.execute(s)
-    #squawksstr = []
     allrows = c.fetchall()
     allsquawks = []
     for s in allrows:
@@ -53,16 +52,16 @@ def root():
 
 @app.route('/submitNewSquawk', methods=["POST"])
 def submitNewSquawk():
+    if len(str(request.form["squawk"])) > 140:
+        return render_template('home.html', error="Invalid squawk, too long")
     conn = get_db()
     c = conn.cursor()
     time = str(datetime.now())
-    s = 'INSERT INTO squawks VALUES ("{}", "{}")'.format(time, str(request.form["squawk"]))     
+    s = 'INSERT INTO squawks VALUES ("{}", "{}")'.format(time, str(request.form["squawk"]))
     c.execute(s)
     conn.commit()
     conn.close()
     return redirect('/')
-
-
 
 if __name__ == '__main__':
     app.run()
