@@ -69,20 +69,6 @@ def create_squawks(browser, count):
     return bodies
 
 
-def test_table_created(test_app):
-    with server.app.app_context():
-        conn = server.get_db()
-        c = conn.cursor()
-        c.execute('SELECT COUNT() FROM sqlite_master WHERE type = "table"')
-        result = c.fetchone()
-        # handles https://docs.python.org/3/library/sqlite3.html#sqlite3.Connection.row_factory
-        if type(result) == dict:
-            count = result['COUNT()']
-        else:
-            count = result[0]
-        assert count > 1
-
-
 def test_response_code(test_app):
     response = test_app.get(URL)
     assert response.status_code == 200
