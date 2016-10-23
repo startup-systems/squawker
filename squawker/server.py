@@ -35,10 +35,11 @@ def close_connection(exception):
     if db is not None:
         db.close()
 # ------------------------------
+
+
 # reference: http://flask.pocoo.org/docs/0.10/quickstart/#http-methods
 # reference: https://docs.python.org/2/library/sqlite3.html
 @app.route('/', methods=['GET', 'POST'])
-@app.route('/')
 def root():
     conn = get_db()
     cursor = conn.cursor()
