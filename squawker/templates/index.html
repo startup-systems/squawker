@@ -54,9 +54,9 @@
       </div>
 
       <div class="eight column">
-        <form action>
-          <label for="exampleMessage">New Post</label>
-          <textarea class="u-full-width" placeholder="Tyep post..." id="exampleMessage" name="new_body" id="new_body"></textarea>
+        <form novalidate>
+          <label for="new_body">New Post</label>
+          <textarea class="u-full-width" placeholder="Type post..." id="exampleMessage" name="new_body" id="new_body" size="140" maxlength="140" required></textarea>
           <input class="button-primary" type="submit" value="Submit" formaction="add/" formmethod="post">
         </form>
       </div>

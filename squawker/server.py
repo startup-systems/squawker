@@ -1,4 +1,4 @@
-from flask import Flask, g, jsonify, render_template, request, redirect, url_for
+from flask import Flask, g, jsonify, render_template, request, redirect, url_for, abort
 import sqlite3
 
 
@@ -80,7 +80,9 @@ def page(pageNum):
 
 
 @app.route('/add/', methods=['POST'])  # Add
-def add(text=""):
+def add():
+    if (len(request.form["new_body"]) > 140): # Check length of post
+        return abort(400)
     addPost(request.form["new_body"])
     return redirect(url_for('root'))
 
