@@ -1,31 +1,34 @@
 <!DOCTYPE html>
 <html>
+<link rel="stylesheet" type="text/css" href="static/style.css">
+
+<div id="page-wrap">
+
 	<head>
 		<title>My homepage</title>
 	</head>
 	<body>
 		<div class="postMsg">
 			<form action="/" method="POST">
-				<div>
-					<label for="msg">Your Message</label>
-					<textarea id="message" name="usr_message"></textarea>
+				<div class="area">
+					<textarea cols="50" rows="5" id="message" name="usr_message" style="border:double 4px #2980b9;"></textarea>
 				</div>
-				<div class="button">
-					<button type="submit">Post your message</button>
+				<div>
+					<button type="submit">Post your squawker</button>
 				</div>
 			</form>
 		</div>
 
 
-
 		<div class="getMsg">
 			<label for="previousMsg">The squawkers</label>
 			{% for msg in allMsg %}
-				<div>
-					<p>{{ msg[2] }}</p>
-					<p>{{ msg[1] }}</p>
+				<div class="sq">
+					<p style="font-size:26px">{{ msg[1] }}</p>
+					<p style="font-size:18px">{{ msg[2] }}</p>
 				</div>
 			{% endfor %}
 		</div>
 	</body>
+	</div>
 </html>
