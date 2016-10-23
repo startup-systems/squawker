@@ -37,6 +37,7 @@ def close_connection(exception):
 # ------------------------------
 
 # this function from http://flask.pocoo.org/docs/0.11/patterns/sqlite3/
+
 def query_db(query, args=(), one=False):
     cur = get_db().execute(query, args)
     rv = cur.fetchall()
@@ -58,18 +59,17 @@ def root():
                 
         conn.cursor().execute(insertion_query, (1, post_time, squawk_to_add))
         conn.commit()
-        
         list_of_squawks = []
         for squawk in query_db("select * from squawks order by create_time desc"):
             list_of_squawks.append(squawk[2])
 
-        return render_template("front.html", squawks = list_of_squawks)
+        return render_template("front.html", squawks=list_of_squawks)
 
     list_of_squawks = []
     for squawk in query_db("select * from squawks"):
         list_of_squawks.append(squawk[2])
 
-    return render_template("front.html", squawks = list_of_squawks)
+    return render_template("front.html", squawks=list_of_squawks)
 
 
 if __name__ == '__main__':
