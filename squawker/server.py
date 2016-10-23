@@ -51,7 +51,7 @@ def root(pageN):
             get_db().commit()
             query.close()
     command = get_db().execute("SELECT COUNT(*) FROM squawk_table", ())
-    count = cmdExec.fetchone()[0]
+    count = command.fetchone()[0]
     command.close()
     return render_template("index.html", num_squawks=count, pageN=pageN), status
 
@@ -60,7 +60,7 @@ def root(pageN):
 def utility_processor():
     def loadSquawks(pageN=1):
         command = get_db().execute("SELECT message FROM squawk_table ORDER BY timestamp DESC", ())
-        squawks = cmdExec.fetchall()
+        squawks = command.fetchall()
         command.close()
         return squawks[(pageN - 1) * 20:min(len(squawks), pageN * 20)]
     return dict(loadSquawks=loadSquawks)
