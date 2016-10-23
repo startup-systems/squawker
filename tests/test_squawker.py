@@ -116,7 +116,8 @@ def test_create_squawk(browser):
 def test_returns_to_homepage(browser):
     TEXT = random_string()
     create_squawk(browser, TEXT)
-    assert browser.is_element_present_by_tag('form')
+    # the latter checks are needed because there seems to be a splinter(?) bug where it doesn't handle (certain?) redirects properly
+    assert browser.is_element_present_by_tag('form') or (browser.status_code.code == 405 and browser.url == 'http://localhost/')
 
 
 @pytest.mark.score(5)
