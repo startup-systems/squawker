@@ -11,6 +11,9 @@ import time
 
 URL = '/'
 PAGE_SIZE = 20
+# match case-insensitively
+# http://stackoverflow.com/a/1625859/358804
+NEXT_XPATH = "//a[contains(translate(text(),'abcdefghijklmnopqrstuvwxyz','ABCDEFGHIJKLMNOPQRSTUVWXYZ'), 'NEXT')]"
 
 
 @pytest.fixture()
@@ -135,3 +138,47 @@ def test_server_side_validation(browser):
     create_squawk(browser, TEXT)
     # TODO ignore if it's in the `value` of the `<input>`
     assert browser.is_text_not_present(TEXT)
+
+
+@pytest.mark.score(5)
+@pytest.mark.xfail
+def test_page_size_limit(browser):
+    bodies = create_squawks(browser, PAGE_SIZE + 1)
+
+    browser.visit(URL)
+    assert browser.is_text_not_present(bodies[0])
+
+
+@pytest.mark.score(5)
+@pytest.mark.xfail
+def test_next_only_present_for_pagination(browser):
+    browser.visit(URL)
+    assert browser.is_element_not_present_by_xpath(NEXT_XPATH), "`Next` link should not be present."
+
+    create_squawks(browser, PAGE_SIZE + 1)
+
+    browser.visit(URL)
+    assert browser.is_element_present_by_xpath(NEXT_XPATH), "`Next` link should be present."
+
+
+@pytest.mark.score(5)
+@pytest.mark.xfail
+def test_next_not_present_on_last_page(browser):
+    bodies = create_squawks(browser, PAGE_SIZE + 1)
+
+    browser.visit(URL)
+    browser.find_by_xpath(NEXT_XPATH).first.click()
+
+    assert browser.is_element_not_present_by_xpath(NEXT_XPATH), "`Next` link should not be present."
+
+
+@pytest.mark.score(5)
+@pytest.mark.xfail
+def test_pagination(browser):
+    bodies = create_squawks(browser, PAGE_SIZE + 1)
+
+    browser.visit(URL)
+    browser.find_by_xpath(NEXT_XPATH).first.click()
+
+    assert browser.is_text_present(bodies[0])
+    assert browser.is_text_not_present(bodies[-1])

@@ -76,9 +76,9 @@ Run the following from this directory:
 pytest --tb short
 # run the pep8 checks
 pep8
+# check the extra credit
+pytest --tb short --runxfail
 ```
-
-**Note the pytests are not yet complete.**
 
 ## Things you will need
 
