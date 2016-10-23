@@ -95,8 +95,6 @@ def root(page):
     conn = get_db()
     cur = conn.execute('select squawker from mytable order by id desc')
     entries = cur.fetchall()
-    # delete unicode values
-    entries = map(lambda x: unicodedata.normalize('NFKD', x[0]).encode('ascii', 'ignore'), entries)
     count = len(entries)
     squawks_entries = get_squawks_for_page(entries, page, PER_PAGE)
     print(squawks_entries)
