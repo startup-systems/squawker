@@ -32,7 +32,7 @@ class Pagination(object):
         last = 0
         for num in range(1, self.pages + 1):
             if num <= left_edge or \
-               (num > self.page - left_current - 1 and \
+               (num > self.page - left_current - 1 and
                 num < self.page + right_current) or \
                num > self.pages - right_edge:
                 if last + 1 != num:
@@ -73,6 +73,7 @@ def close_connection(exception):
 
 PER_PAGE = 10
 
+
 # URL generation helper
 def url_for_other_page(page):
     args = request.view_args.copy()
@@ -97,7 +98,7 @@ def root(page):
     if not feeds and page != 1:
         abort(404)
     pagination = Pagination(page, PER_PAGE, count)
-    return render_template('homepage.html',pagination=pagination, feeds=feeds)
+    return render_template('homepage.html', pagination=pagination, feeds=feeds)
 
 
 @app.route('/new_sq', methods=['POST'])
