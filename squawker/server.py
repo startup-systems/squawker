@@ -62,8 +62,6 @@ def root():
             query = "INSERT INTO squawker (squawk) VALUES (?)"
             c.execute(query, [new_msg])
             conn.commit()
-
-    # displaying all the posts in order
     selectquery = "SELECT squawk FROM squawker order by id DESC"
     c.execute(selectquery)
     all = c.fetchall()
