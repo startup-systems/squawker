@@ -1,4 +1,4 @@
-from flask import Flask, g
+from flask import Flask, g, request, render_template
 import sqlite3
 
 
@@ -38,7 +38,6 @@ def close_connection(exception):
 
 @app.route('/', methods=["GET", "POST"])
 def root():
-    print("test")
     conn = get_db()
     c = conn.cursor()
     status = 200
@@ -47,10 +46,12 @@ def root():
         if len(message) > 140:
             status = 400
         elif len(message) > 0:
-            c.execute("INSERT INTO squawks (message) VALUES ('" + message + "' + ")
+            c.execute("INSERT INTO squawks (squawk) VALUES (\'" + message + "\')")
             conn.commit()
+    squawks = c.execute("SELECT squawk FROM squawks ORDER BY timestamp DESC")
+    squawks_msgs = squawks.fetchall()
     conn.close()
-    return render_template('squawker.html', squawk=squawk), status
+    return render_template('index.html', squawks=squawks_msgs), status
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0")
