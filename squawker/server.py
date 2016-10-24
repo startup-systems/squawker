@@ -37,9 +37,8 @@ def close_connection(exception):
 # ------------------------------
 
 
-@app.route('/', methods=['GET', 'POST'], defaults={'page': 1})
-@app.route('/page/<int:page>')
-def root(page):
+@app.route('/', methods=['GET', 'POST'])
+def root():
     error = ""
     status = 200
     conn = get_db()
@@ -55,17 +54,17 @@ def root(page):
         else:
             c = conn.execute("INSERT INTO squawks (\'posts\') VALUES (\'" + post_text + "\')")
             conn.commit()
-    # sort by DESC timi
+    # sort by DESC time
     c = conn.execute("SELECT COUNT(*) FROM squawks ORDER BY time DESC", ())
     count = c.fetchone()[0]
     c.close()
-    return render_template("index.html", num_squawks=count, page=page), status
+    return render_template("index.html", num_squawks=count), status
 
 
 
 @app.context_processor
 def utility_processor():
-    def loadSquawks(page=1):
+    def loadSquawks():
         conn = get_db()
         c = conn.execute("SELECT posts FROM squawks ", ())
         squawks = c.fetchall()

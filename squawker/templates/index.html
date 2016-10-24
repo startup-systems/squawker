@@ -19,7 +19,7 @@
 	<div id="squawks">
 		<p>Total Squaks Counts: {{num_squawks}}</p>
 		<br>
-		{% for squawk in loadSquawks(page) %}
+		{% for squawk in loadSquawks() %}
     		<br>
     		<div>{{ squawk[0] }}</div>
 		{% endfor %}
