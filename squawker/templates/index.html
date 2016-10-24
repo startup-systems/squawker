@@ -7,15 +7,15 @@
 	<form action="\", method="post">
 	<div>
 		<label>New Squawk!</label>
-		<input type="text",name="messages",maxlength="140" required></input>
+		<input type="text",name="squawks",maxlength="140" required></input>
 	</div>	
 	<div class= "button">
 		<button type="submit!">add post</button>
 	</div>
 	</form>
 	<div>
-		{% for squawks in squawks %}
-			<p>{{squawks}} </p>
+		{% for squawks in squawker %}
+			<p>{{squawks[1]}} </p>
 		(% endfor %}
 	</div>
 </body>
