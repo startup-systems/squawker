@@ -35,6 +35,7 @@ def close_connection(exception):
         db.close()
 # ------------------------------
 
+
 @app.route('/')
 @app.route('/page/<int:page_id>', methods=['GET', 'POST'])
 def root(page_id=1):
@@ -55,12 +56,20 @@ def root(page_id=1):
 def post_squawker():
     error = None
     if request.method == 'POST':
-        conn = get_db()
-        c = conn.cursor()
-        c.execute('INSERT INTO squawkers (msg) VALUES (?)', [request.form['msg']])
-        conn.commit()
-        conn.close()
-        return redirect(url_for('root'))
+        text = request.form['msg']
+        if len(msg) > 140:
+            error = "squawke too long"
+            abort(400)
+        else if len(msg) == 0:
+            error = "squawke is empty"
+            abort(400)
+        else:
+            conn = get_db()
+            c = conn.cursor()
+            c.execute('INSERT INTO squawkers (msg) VALUES (?)', [request.form['msg']])
+            conn.commit()
+            conn.close()
+            return redirect(url_for('root'))
 
 if __name__ == '__main__':
     app.run()
