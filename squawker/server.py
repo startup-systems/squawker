@@ -51,6 +51,6 @@ def root():
             conn.commit()
     c.execute("SELECT * FROM posts ORDER BY id DESC")
     content = c.fetchall()
-    return render_template("newpost.html", content = content)
+    return render_template("newpost.html", content=content)
 if __name__ == '__main__':
     app.run()
