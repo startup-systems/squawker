@@ -38,23 +38,23 @@ def close_connection(exception):
 # ------------------------------
 
 
-@app.route('/',methods=['GET','POST'])
+@app.route('/', methods=['GET', 'POST'])
 def root():
     conn = get_db()
     # TODO change this
-    c=conn.cursor()
-	if request.methods == 'POST':
-	    squawk=request.from['message']
-		time_posted = time.ctime(int(time.time()))
-		if len(squawk) >140:
-		    abort
-		else:
-		    squawks = (squawk, time_posted)
-			c.execute('INSERT INTO mytable VALUES (?, ?)', squawks)
-			conn.commit()
-		c.execute('SELECT message FROM mytable ORDER BY time DESC')
-		posts = c.fetchall()
-		return render_template('index.html', allpost=posts)
+    c = conn.cursor()
+    if request.method == 'POST':
+        squawk = request.form['message']
+        time_posted = time.ctime(int(time.time()))
+        if len(squawk) > 140:
+            abort(400)
+        else:
+            squawks = (squawk, time_posted)
+            c.execute('INSERT INTO mytable VALUES (?, ?)', squawks)
+            conn.commit()
+    c.execute('SELECT message FROM mytable ORDER BY time DESC')
+    posts = c.fetchall()
+    return render_template('index.html', allpost=posts)
 
 
 if __name__ == '__main__':
