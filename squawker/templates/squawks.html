@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <form action "{{url_for('add_entry') }}" method ="post" class="add-entry">
+    	<dl>
+    		<dt>Title:
+			<dd><input type="text" size="30" name="title">
+			<dt>Text:
+			<dd><textarea name="text" rows="5" cols="40"></textarea>
+			<dd><input type="submit" value="Share">
+    	</dl>
+	</form>
+
+	
+    <ul class= "entries">
+	    {% for squawk in squawkers %}
+	    	<li><h2>{{ squawk.title}}</h2>{{squawk.text|safe}}</li>
+	    {% else %}
+	    	<li><em>No entries for this session!</em></li>
+	    {% endfor %}
+	</ul>
+
+
+{% endblock %}

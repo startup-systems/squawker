@@ -1,16 +1,20 @@
-from flask import Flask, g
+import os
+from flask import Flask, g, render_template, flash, request, redirect, url_for
 import sqlite3
 
 
 # -- leave these lines intact --
 app = Flask(__name__)
 
+def connect_db():
+    rv = sqlite3.connect(app.config['DATABASE'])
+    rv.row_factory = sqlite3.Row
+    return rv
 
 def get_db():
     if not hasattr(g, 'sqlite_db'):
         db_name = app.config.get('DATABASE', 'squawker.db')
         g.sqlite_db = sqlite3.connect(db_name)
-
     return g.sqlite_db
 
 
@@ -39,9 +43,23 @@ def close_connection(exception):
 
 @app.route('/')
 def root():
-    conn = get_db()
-    # TODO change this
-    return "Hello World!"
+    db = get_db()
+    cur = db.execute('select title, text from mytable')
+    entries = cur.fetchall()
+    return render_template('tweet.html', entries = mytable)
+
+
+
+@app.route('/addsquawk',methods = ['POST'])
+def add_entry():
+    db = get_db()
+    db.execute('insert into squawks (title, text) values (?,?)',
+        [request.form['title'], request.form['text']])
+    db.commit()
+    flash('New entry was successfuly posted')
+    return redirect_for(url_for('tweet'))
+
+
 
 
 if __name__ == '__main__':
