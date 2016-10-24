@@ -3,7 +3,7 @@
     <title>Squawker</title>
     <body>
         <form action="/template" method="post">
-            <textarea id="msg" name="tweet_msg" maxlength="140"></textarea>
+            <textarea id="msg" name="squawk" maxlength="140"></textarea>
             <div class="button">
                 <button type="submit">SUBMIT!</button>
             </div>
@@ -11,7 +11,9 @@
             {% endif %}
         </form>
         <div>
-            {% for item in squawks %}
+            {% for x in squawks %}
+            <p>{{ x[1] }}</p>
+            {% endfor %}
         </div>
       </body>
 </html>

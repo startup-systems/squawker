@@ -1,6 +1,6 @@
-DROP TABLE IF EXISTS tweets;
-CREATE TABLE tweets(
+DROP TABLE IF EXISTS squawks;
+CREATE TABLE squawks(
     id integer PRIMARY KEY,
-    tweet varchar(140),
+    squawk varchar(140),
     timestamp datetime DEFAULT CURRENT_TIMESTAMP,
 );
