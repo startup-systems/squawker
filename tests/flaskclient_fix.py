@@ -36,8 +36,8 @@ class FlaskClient(flaskclient.FlaskClient):
 
                 # Update any existing query dictionary with the `data` argument
                 url_params.update(data or {})
-                url_parts = url_parts._replace(
-                        query=parse.urlencode(url_params, doseq=True))
+                query = parse.urlencode(url_params, doseq=True)
+                url_parts = url_parts._replace(query=query)
 
                 # Rebuild the URL
                 url = parse.urlunparse(url_parts)
@@ -53,7 +53,7 @@ class FlaskClient(flaskclient.FlaskClient):
                 headers=self._custom_headers,
                 data=data,
                 follow_redirects=False
-                )
+            )
 
             # Implement more standard `302`/`303` behaviour
             if self._response.status_code in (302, 303):
