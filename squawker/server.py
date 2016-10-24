@@ -1,4 +1,4 @@
-from flask import Flask, g
+from flask import Flask, g, request, render_template
 import sqlite3
 
 
@@ -37,11 +37,21 @@ def close_connection(exception):
 # ------------------------------
 
 
-@app.route('/')
+@app.route('/', methods=["POST", "GET"])
 def root():
     conn = get_db()
-    # TODO change this
-    return "Hello World!"
+    # To change this
+    if request.mode == "POST":
+        newmsg = request.form["user_post"]
+        if len(newmsg) > 140:
+            return "Post length error", 400
+        else:
+            conn.execute("INSERT INTO squawktable (message) VALUE (?)", [new_post])
+            conn.commit()
+    c = conn.cursor()
+    c.execute("SELECT * FROM squawktable ORDER BY createTime DESC")
+    msgPool = c.fetchall()
+    return render_template("squawk.html", msgPool=msgPool)
 
 
 if __name__ == '__main__':

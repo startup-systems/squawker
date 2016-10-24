@@ -1,0 +1,33 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Squawker</title>
+</head>
+<body>
+    <form method="newmsg">
+		<div>
+			<label for="newmsg">squawker</label>
+			<textarea maxlength="140" id="message" name="user_post"></textarea>
+		<div>
+		<div class="button">
+	    	<button type="submit">Post it!</button>
+		<div>
+		<div>
+        	<ul id="message">
+			{% for item in content %}
+	        	<li>{{item}}</li>
+			{% endfor %}
+			<ul>
+		<div>
+    <div class="getMsg">
+  		<label for="previousMsg">These are messages you have post from newest to oldest</label>
+  			{% for msg in allMsg %}
+  			<div class="preMsg">
+  				<p>{{ msg[2] }}</p>
+  				<p>{{ msg[1] }}</p>
+  			</div>
+  		{% endfor %}
+  	</div>
+</body>
+</html>
