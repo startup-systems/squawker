@@ -47,7 +47,9 @@ def close_connection(exception):
 def root():
     db = get_db()
     cur = db.execute('select title, text from squawks order by id desc')
+
     squawks = cur.fetchall()
+    # raise ValueError
     return render_template('squawks.html', entries=squawks)
 
 
