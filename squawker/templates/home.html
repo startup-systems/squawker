@@ -1,0 +1,41 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<title>Squawker</title>
+</head>
+<body>
+	<form action="/" method="post">
+		<div>
+        		<label for="msg">Message:</label>
+        		<textarea id="msg" name="squawk_msg" maxlength="140"></textarea>
+
+    		</div>
+		<div class="button">
+			<button type="submit">Post</button>
+		</div>
+
+	{{ error }}
+
+	</form>
+
+	<br><br>
+	
+	<div id="squawks">
+		<p>
+		There are {{num_squawks}} Squawks in the database!
+		</p>
+		{% if page > 1 %}
+			<a href="/page/{{ page-1 }}">Previous Page</a>
+			&nbsp
+		{% endif %}
+		<a href="/page/{{ page+1 }}">Next Page</a>
+		<br>
+		{% for squawk in get_squawks(page) %}
+		<br>
+		<div>{{ squawk[0] }}</div>
+		{% endfor %}
+	</div>
+
+</body>
+</html>
+
