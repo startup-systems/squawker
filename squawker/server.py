@@ -47,7 +47,7 @@ def root():
 		if len(post) > 140:
 			return "Squacker should less than 140 characters!",400
 		else:
-			c.execute("INSERT INFO posts (post) VALUES(?);",[post])
+			c.execute("INSERT INTO posts (post) VALUES(?);",[post])
 			conn.commit()
 	c.execute("SELECT * FROM posts ORDER BY id DESC")
 	content = c.fetchall()
