@@ -50,7 +50,7 @@ def root():
 		conn.commit()
     c.execute("SELECT * FROM mytable ORDER BY id DESC")
     squawks = c.fetchall()
-    return render_template("index.html", squawks=sqauwks)
+    return render_template("index.html", squawks=squawks)
 
 
 if __name__ == '__main__':
