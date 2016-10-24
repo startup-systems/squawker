@@ -40,21 +40,20 @@ def close_connection(exception):
 @app.route('/')
 @app.route('/', methods=["GET", "POST"])
 def root():
-    conn = get_db() #connect to db
-    # TODO change this
+    conn = get_db()
     return "Hello World!"
-    cur= conn.cursor()
+    cur = conn.cursor()
     if request.method == 'Post':
-        squawks= request.form["messages"]
-	if len(squawks) > 140:
-		abort(400)
-		error='Squawks are limited to 140 characters'
-	else:
-		cur.execute("INSERT INTO squawks(squawks) VALUES(?) ",squawks)
-		conn.commit()
+        squawks = request.form["messages"]
+        if len(squawks) > 140:
+                abort(400)
+                error='Squawks are limited to 140 characters'
+        else:
+                cur.execute("INSERT INTO squawks(squawks) VALUES(?) ",squawks)
+                conn.commit()
     cur.execute("SELECT squawks FROM squawks ORDER BY time DESC")
-    all_squawks= cur.fetchall()
-    return render_template('index.html', squawks= all_squawks)    
+    all_squawks = cur.fetchall()
+    return render_template('index.html', squawks = all_squawks)    
 
 if __name__ == '__main__':
     app.run()
