@@ -67,8 +67,8 @@ def root(page):
             conn.commit()
 
     last_page = get_number_pages_of_squawker(c)
-    if page < 1 or page > last_page:
-        abort(404)
+    #if page < 1 or page > last_page:
+    #    abort(404)
 
     squawkers = get_squawker_per_page(c, page)
     conn.close()
