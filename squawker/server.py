@@ -1,5 +1,10 @@
-from flask import Flask, g
+from datetime import datetime
+from flask import Flask, g, abort
+from flask import render_template
+from flask import request
+from flask import redirect
 import sqlite3
+from types import *
 
 
 # -- leave these lines intact --
@@ -37,11 +42,24 @@ def close_connection(exception):
 # ------------------------------
 
 
-@app.route('/')
+@app.route('/', methods=['GET','POST'])
 def root():
     conn = get_db()
+    cursor = conn.cursor()
     # TODO change this
-    return "Hello World!"
+    if request.method == "POST":
+        if len(request.form['squawk']) > 140: abort(400)
+        time = datetime.now()
+        cursor.execute("""INSERT INTO Squawks (name,squawk,time) VALUES (?,?,?);""",(request.form['name'],request.form['squawk'],time))
+        conn.commit()
+        return redirect('/')
+    else:
+        cursor.execute("""SELECT * FROM Squawks;""")
+        old_squawks = cursor.fetchall()
+        def byTime(squawk):
+            return squawk[2]
+        old_squawks = sorted(old_squawks, key=byTime, reverse=True)
+        return render_template('index.html', squawks = old_squawks)
 
 
 if __name__ == '__main__':

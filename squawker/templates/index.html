@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Squawk</title>
+</head>
+<body>
+	<form action="/" method="post" id="squawkForm">
+		Name: <input type="text" name="name">
+		New Squawk: <input type="text" name="squawk" maxlength="140">
+		<input type="submit" value="Post my new squawk!">
+	</form>
+	<div id="old">
+	{% for squawk in squawks %}
+		<li><p>Name: {{squawk[0]}} Message: {{squawk[1]}} Time: {{squawk[2]}}</p></li>
+	{% endfor %}
+	</div>
+</body>
+</html>
+
