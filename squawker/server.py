@@ -1,9 +1,10 @@
-from flask import Flask, g
+from flask import Flask, g, render_template
 import sqlite3
-
+from datetime import datetime, timezone
 
 # -- leave these lines intact --
 app = Flask(__name__)
+FORMAT = "%Y-%m-%d %H:%M:%S"
 
 
 def get_db():
@@ -34,14 +35,39 @@ def close_connection(exception):
     db = getattr(g, 'sqlite_db', None)
     if db is not None:
         db.close()
+
+
 # ------------------------------
 
 
 @app.route('/')
 def root():
+    # conn = get_db()
+    # TODO
+
+    items = _get_all_post()
+
+    return render_template('base.html', items=items, page=1)
+
+
+def _get_all_post():
     conn = get_db()
-    # TODO change this
-    return "Hello World!"
+    cur = conn.cursor()
+    cur.execute("SELECT post, ts FROM squawker ORDER BY ts;")
+    items = cur.fetchall()
+    map(lambda r: (r[0], _convert_time(r[1])), items)
+    return items
+
+
+def _convert_time(ts):
+    dt = datetime.strptime(ts, FORMAT)
+    _ = dt.replace(tzinfo=timezone.utc).astimezone(tz=None)
+    return _.strftime(FORMAT)
+
+
+@app.route('/post')
+def do_post():
+    pass
 
 
 if __name__ == '__main__':
