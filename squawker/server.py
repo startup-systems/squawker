@@ -52,8 +52,7 @@ def root():
         else:
             abort(400)
     cursor.execute("SELECT squawk FROM squawks ORDER BY time_stamp DESC")
-    res = cursor.fetchall()
-    return render_template("index.html", squawks=res)
+    return render_template("index.html", squawks=cursor.fetchall())
 
 if __name__ == '__main__':
     app.run()
