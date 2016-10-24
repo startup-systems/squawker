@@ -57,10 +57,10 @@ def post_squawker():
     error = None
     if request.method == 'POST':
         text = request.form['msg']
-        if len(msg) > 140:
+        if len(text) > 140:
             error = "squawke too long"
             abort(400)
-        elif len(msg) == 0:
+        elif len(text) == 0:
             error = "squawke is empty"
             abort(400)
         else:
