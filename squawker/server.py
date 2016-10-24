@@ -70,6 +70,5 @@ def root(page_number):
     return render_template("index.html", num_squawks=count, page_number=page_number), status
 
 
-
 if __name__ == '__main__':
     app.run()
