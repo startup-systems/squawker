@@ -8,17 +8,18 @@
     <form method="post">
 		<div>
 			<label for="post">Squawker:</label>
-			<textarea maxlength="140" id="post" name="squawker_post"></textarea>
-		<div>
+			<textarea maxlength="140" id="squawk" name="squawker_post"></textarea>
+		</div>
 		<div class="button">
 	    	<button type="submit">Post Squawker!</button>
-		<div>
+		</div>
 		<div>
         	<ul id="post">
 			{% for item in squawks %}
 	        	<li>{{item}}</li>
 			{% endfor %}
-			<ul>
-		<div>
+			</ul>
+	    </div>
+	    </form>
 </body>
 </html>
