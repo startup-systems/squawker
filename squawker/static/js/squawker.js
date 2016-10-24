@@ -10,7 +10,7 @@ function squawk() {
 		url: "/squawk",
 		data: JSON.stringify(body),
 		contentType: "application/json; charset=utf-8",
-		success: function(data) { alert(data); },
+		success: function() { getAllSquawks() },
 		failure: function(err) { alert(err); }
 	});
 }
