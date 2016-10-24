@@ -45,8 +45,8 @@ def root():
 	post = request.form.get('squawker_post')
         if len(post) > 140:
 		abort(400)
-	elif len(post)>0 and len(message)<=140:
-		c.execute("INSERT INTO mytable (post) VALUES(?);", [post])
+	elif len(post)>0 and len(post)<=140:
+		c.execute("INSERT INTO mytable (squawk) VALUES(?);", [post])
 		conn.commit()
     c.execute("SELECT * FROM mytable ORDER BY id DESC")
     squawks = c.fetchall()
