@@ -1,0 +1,35 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <title>Squawker</title>
+</head>
+
+<body>
+    <div id="squawks">
+        <p>Totoal Squawks: {{numSquawks}}</p>
+        <ol> {% for squawk in loadSquawks(pageN) %}
+        <li>{{ squawk[0] }}</li>
+        {% endfor %}
+        </ol>
+        {% if pageN > 1 %}
+        <a href="/page/{{ pageN-1 }}">Previous</a> {% endif %}
+        {% if pageN*20 < numSquawks %}
+        <a href="/page/{{ pageN+1 }}">Next</a>
+        {% endif %}
+    </div>
+    <br>
+    <br>
+    <form action="/" method="post">
+        <div>
+            <label for="msg">Say something:</label>
+            <br>
+            <textarea id="msg" name="squawk" maxlength="140"></textarea>
+        </div>
+        <div class="button">
+            <button type="submit">post</button>
+        </div>
+    </form>
+</body>
+
+</html>
