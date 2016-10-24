@@ -99,12 +99,16 @@ def save():
     # for squawk in squawks:
     #     print len(squawk)
 
-    add_to_db(request.form['name'].encode("utf-8"))
+    result = request.form['name'].encode("utf-8")
+    if len(result)<=140:
+        add_to_db(result)
     # Will get new squawk, and save into database
     #  results = get_from_db()
     # print "From Save: num from results: "+str(len(results))
     # for result in results:
     #     print result[1]
+    else:
+        return render_template('error.html'), 400
 
     response = make_response(redirect(url_for('index')))
     return response
