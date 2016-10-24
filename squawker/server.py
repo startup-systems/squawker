@@ -1,4 +1,4 @@
-from flask import Flask, g
+from flask import Flask, g, request, render_template
 import sqlite3
 
 
@@ -37,11 +37,35 @@ def close_connection(exception):
 # ------------------------------
 
 
-@app.route('/')
-def root():
+@app.route('/', methods=['GET', 'POST'], defaults={'page': 1})
+@app.route('/page/<int:page>')
+def root(page):
+    error = ""
+    status = 200
     conn = get_db()
-    # TODO change this
-    return "Hello World!"
+    if(request.method == "POST"):
+        post_text = request.form['squawk_msg']
+        if len(msg) > 140:
+            error = "Post too long, limit to 140"
+            status = 400
+        else:
+            c = conn.execute('INSERT INTO squawks (text) VALUES (?)', [post_text])
+            conn.commit()
+    c = conn().execute("SELECT COUNT(*) FROM squawks", ())
+    count = c.fetchone()[0]
+    c.close()
+    return render_template("index.html", num_squawks=count, page=page), status
+
+
+@app.context_processor
+def utility_processor():
+    def loadSquawks(page=1):
+        c = conn().execute("SELECT posts FROM squawks ORDER BY timestamp DESC", ())
+        squawks = c.fetchall()
+        c.close()
+        slen = len(squawks)
+        return squawks[(page - 1) * 20:min(slen, page * 20)]
+    return dict(loadSquawks=loadSquawks)
 
 
 if __name__ == '__main__':
