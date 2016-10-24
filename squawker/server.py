@@ -36,6 +36,7 @@ def close_connection(exception):
         db.close()
 # ------------------------------
 
+
 @app.route('/', methods=["GET", "POST"])
 def root():
     conn = get_db()
