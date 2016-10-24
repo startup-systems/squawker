@@ -1,10 +1,8 @@
-from flask import Flask, g
+from flask import Flask, g, abort, redirect, render_template, url_for, request
 import sqlite3
-
 
 # -- leave these lines intact --
 app = Flask(__name__)
-
 
 def get_db():
     if not hasattr(g, 'sqlite_db'):
@@ -37,12 +35,21 @@ def close_connection(exception):
 # ------------------------------
 
 
-@app.route('/')
+@app.route('/', methods=["GET", "POST"])
 def root():
     conn = get_db()
-    # TODO change this
-    return "Hello World!"
-
+    cur = conn.cursor()
+    error=None
+    if request.method=="POST"
+        addSquawk=request.form['content']
+        if len(addSquawk)>140:
+            abort(400)
+        else:
+            addition = conn.execute("INSERT INTO squawks (addSquawk) VALUES (?)", [addSquawk])
+            conn.commit()
+    conn.execute("SELECT* FROM squawks ORDER BY createTime DESC")
+    listSq = cur.fetchall()
+    return render_template("index.html", allSquawks = listSq)
 
 if __name__ == '__main__':
     app.run()

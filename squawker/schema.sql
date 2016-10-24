@@ -1,3 +1,6 @@
 -- TODO change this
-DROP TABLE IF EXISTS mytable;
-CREATE TABLE mytable (id integer);
+DROP TABLE IF EXISTS squawks;
+CREATE TABLE squawks (id integer);
+	id INTEGER PRIMARY KEY AUTOINCREMENT,
+	post VARCHAR(140) NOT NULL,
+	timestamp DATETIME DEFAULT CURRENT_TIMESTAMP;
