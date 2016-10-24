@@ -36,23 +36,21 @@ def close_connection(exception):
         db.close()
 # ------------------------------
 
-
 @app.route('/', methods=["GET", "POST"])
 def root():
+    print("test")
     conn = get_db()
     c = conn.cursor()
-    error = ''
     status = 200
     if request.method == "POST":
         message = request.form['squawk']
         if len(message) > 140:
-            error = "Invalid Squawk!"
             status = 400
         elif len(message) > 0:
             c.execute("INSERT INTO squawks (message) VALUES ('" + message + "' + ")
             conn.commit()
     conn.close()
-    return render_template('squawker.html', squawk=squawk, error=error), status
+    return render_template('squawker.html', squawk=squawk), status
 
 if __name__ == '__main__':
-    app.run()
+    app.run(host="0.0.0.0")
