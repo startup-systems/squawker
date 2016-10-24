@@ -1,3 +1,6 @@
 -- TODO change this
 DROP TABLE IF EXISTS mytable;
-CREATE TABLE mytable (id integer);
+CREATE TABLE mytable (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  tstamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  comment VARCHAR(150)  NOT NULL );

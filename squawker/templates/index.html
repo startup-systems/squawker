@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Squawker</title>
+
+  <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+  <!-- <link rel="stylesheet" type="text/css" href="/static/styles.css"/> -->
+ <!-- Latest compiled and minified CSS -->
+ <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+ integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+ </head>
+  <body>
+    <h1 class="text-center"> Squawker </h1>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-6 col-md-offset-3">
+    <form action="/posts" method="POST" name="submit-comment"  id="submit-form" >
+     <div class="form-group">
+     <label for="comment">Post a comment</label>
+     <textarea class="form-control" maxlength="140" rows="5" name="comment" id="comment" required></textarea>
+     </div>
+     <!-- <button type="submit" id="submit" class="btn btn-default">Submit</button> -->
+      <input type="submit" id="submit" class="btn btn-default" value="Post Comment" />
+    </form>
+    <BR/>
+    <div id="error" class="alert alert-info">
+      <strong>Info!</strong> Posts must contain atleast 3 characters.
+    </div>
+
+  </div> <!-- col -->
+  </div> <!-- row -->
+</div><!-- /.container -->
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2">
+     </div> <!-- col -->
+     <h3 class="text-center">POSTS</h3>
+          <HR/>
+          {% for x in rows %}
+          <div class="row text-center" > {{ x }}  </div>
+          <HR/>
+          {% endfor %}
+          <BR/>
+
+     </div> <!-- row -->
+   </div><!-- /.container -->
+
+  </body>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+
+  <!-- Latest compiled and minified JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+  integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+  <script>
+
+  $( "#error" ).hide();
+/*
+  $( "#submit-form" ).submit(function( event ) {
+
+    event.preventDefault();
+
+    //validate stuff
+    var len = $("#comment").val().length;
+    if (len < 3) {
+      //alert( "Please enter atleast 3 characters " + len);
+      $( "#error" ).show();
+    }else{
+       $( "#error" ).hide();
+        text = $("#comment").val();
+        // information to be sent to the server
+        var info = $("#comment").val();
+        var server = document.URL + "posts";
+        //alert(server);
+
+    $.ajax({
+        type: "POST",
+        url: server,
+        data: {comment : info},
+        success: function(data) {
+            location.reload();
+            console.log(data);
+        }
+    });
+
+        $("#comment").val('');
+  }
+  });
+*/
+  </script>
+
+</html>
