@@ -1,6 +1,7 @@
 from flask import Flask, g, render_template, request, redirect, abort
 import sqlite3
 import time
+from math import ceil
 
 
 # -- leave these lines intact --
@@ -39,33 +40,35 @@ def close_connection(exception):
 
 ENTRIES_PER_PAGE = 20
 
+
 def get_squawker_per_page(c, page):
-    output = c.execute('SELECT * FROM squawker ORDER BY created_at DESC LIMIT ' + str(ENTRIES_PER_PAGE) + ' OFFSET ' + str(ENTRIES_PER_PAGE * (page-1)))
+    output = c.execute('SELECT * FROM squawker ORDER BY created_at DESC LIMIT ' + str(ENTRIES_PER_PAGE) + ' OFFSET ' + str(ENTRIES_PER_PAGE * (page - 1)))
     return output.fetchall()
 
-def get_count_squawker(c):
+
+def get_number_pages_of_squawker(c):
     output = c.execute('SELECT COUNT(*) FROM squawker')
-    return output.fetchone()[0]
+    return ceil(int(output.fetchone()[0]) / ENTRIES_PER_PAGE)
 
 
 @app.route('/', methods=["GET", "POST"], defaults={'page': 1})
-@app.route('/<int:page>')
+@app.route('/page/<int:page>')
 def root(page):
     conn = get_db()
     c = conn.cursor()
     error = ""
     status = 200
     if request.method == "POST":
-      if len(request.form["message"]) > 140:
-        status = 400
-        error = "The message must have 140 characters at most"
-      else:
-        c.execute("INSERT INTO squawker (message, created_at) VALUES ('" + request.form["message"] + "', " + str(int(time.time())) + ")")
-        conn.commit()
+        if len(request.form["message"]) > 140:
+            status = 400
+            error = "The message must have 140 characters at most"
+        else:
+            c.execute("INSERT INTO squawker (message, created_at) VALUES ('" + request.form["message"] + "', " + str(int(time.time())) + ")")
+            conn.commit()
 
-    last_page = get_count_squawker(c)
+    last_page = get_number_pages_of_squawker(c)
     if page < 1 or page > last_page:
-      abort(404)
+        abort(404)
 
     squawkers = get_squawker_per_page(c, page)
     conn.close()
