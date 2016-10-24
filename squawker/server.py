@@ -46,13 +46,13 @@ def root():
     if request.method == "POST":
         message = request.form['squawk']
         if len(message) > 140:
-            error =  "Invalid Squawk!"
-            status = 400                                                
-        elif len(message) > 0:                                          
-            c.execute("INSERT INTO tweets (\'message\') VALUES (\'" + message + "\')")                  
-            conn.commit()                                               
-    conn.close()                                                    
-    return render_template('squawker.html', squawk=squawk, error=error), status                                 
+            error = "Invalid Squawk!"
+            status = 400
+        elif len(message) > 0:
+            c.execute("INSERT INTO tweets (\'message\') VALUES (\'" + message + "\')")
+            conn.commit()
+    conn.close()
+    return render_template('squawker.html', squawk=squawk, error=error), status
 
 if __name__ == '__main__':
     app.run()
