@@ -1,0 +1,3 @@
+-- TODO change this
+DROP TABLE IF EXISTS squawks;
+CREATE TABLE squawks (id SERIAL PRIMARY KEY AUTOINCREMENT, body TEXT);
