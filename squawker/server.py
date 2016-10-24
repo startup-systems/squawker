@@ -60,7 +60,7 @@ def post_squawker():
         if len(msg) > 140:
             error = "squawke too long"
             abort(400)
-        else if len(msg) == 0:
+        elif len(msg) == 0:
             error = "squawke is empty"
             abort(400)
         else:
