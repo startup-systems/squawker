@@ -1,8 +1,8 @@
 import sqlite3
 
 conn = sqlite3.connect('squaker.db')
-print "Opened database successfully"
 
+#
 cur = conn.cursor()
 conn.execute('CREATE TABLE IF NOT EXISTS tweets2 (tweet TEXT)')
 print "Table created successfully"
