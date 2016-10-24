@@ -1,4 +1,4 @@
-from flask import Flask, g
+from flask import Flask, g, render_template, request, url_for, abort
 import sqlite3
 
 
@@ -37,11 +37,30 @@ def close_connection(exception):
 # ------------------------------
 
 
-@app.route('/')
-def root():
+@app.route('/', defaults={'page': 1})
+@app.route('/page/<int:page>')
+def root(page):
     conn = get_db()
-    # TODO change this
-    return "Hello World!"
+    c = conn.execute('select count(*) from mymessage;')
+    count = c.fetchone()[0]
+    allthepostmessage = conn.execute('select * from mymessage where id>=(?)-20*(?)+1 and id<=(?)-20*((?)-1) order by id desc;', (count, page, count, page))
+    prevpage, nextpage = True, True
+    if page == 1:
+        prevpage = False
+    showout = allthepostmessage.fetchall()
+    if len(showout) == 0:
+        nextpage = False
+    return render_template('index.html', allthepost=enumerate(showout), nowpage=page, prev=prevpage, nextp=nextpage)
+
+
+@app.route('/submit', methods=['POST', 'GET'])
+def formsubmit():
+    if len(request.form['msg']) > 140:
+        abort(400)
+    conn = get_db()
+    conn.execute('insert into mymessage (message) values (?);', (request.form['msg'],))
+    conn.commit()
+    return render_template('aftersubmit.html', message=request.form['msg'])
 
 
 if __name__ == '__main__':
