@@ -59,7 +59,8 @@ def createSquawk():
 def getAllSquawks():
     squawkRows = get_all_squawks()
     squawkReps = [marshal_squawk_row(row) for row in squawkRows]
-    return jsonify(squawkReps), 500
+    template = env.get_template('feed.html')
+    return template.render(squawks=squawkReps)
 
 
 def create_squawk(data):
@@ -84,7 +85,7 @@ def marshal_squawk_row(row):
     squawk_rep = {
         'time': pretty_time,
         'username': row[2],
-        'text': row[3] 
+        'text': row[3]
     }
     return squawk_rep
 

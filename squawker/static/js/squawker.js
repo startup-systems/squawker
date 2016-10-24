@@ -1,6 +1,5 @@
-
 function squawk() {
-	var squawkComposer = $("#squawkComposer");
+	var squawkComposer = $( "#squawkComposer" );
 	var body = {
 		"text": squawkComposer.val(),
 		"time": new Date().getTime(),
@@ -15,3 +14,17 @@ function squawk() {
 		failure: function(err) { alert(err); }
 	});
 }
+
+function getAllSquawks() {
+	$.ajax({
+		type: "GET",
+		url: "/squawks",
+		dataType: "html",
+		success: function(html) {
+			$( "#feed-container" ).replaceWith(html);
+		},
+		failure: function(err) { alert(err); }
+	});
+}
+
+getAllSquawks();

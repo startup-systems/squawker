@@ -1,0 +1,5 @@
+<div id="feed-container">
+  {% for squawk in squawks %}
+    <p><b>{{ squawk.username }}:</b> {{ squawk.text }} ({{ squawk.time }})</p>
+  {% endfor %}
+</div>
