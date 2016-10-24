@@ -43,8 +43,9 @@ def root():
     conn = get_db()
     c = conn.cursor()
     c.execute("SELECT * FROM squawks")
-    squawks=list(reversed(c.fetchall()))
+    squawks = list(reversed(c.fetchall()))
     return render_template('index.html', squawks=squawks)
+
 
 @app.route('/submit', methods=['POST'])
 def submit():
