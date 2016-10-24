@@ -7,6 +7,7 @@ from squawker import server
 import string
 import tempfile
 import time
+from . import flaskclient_fix
 
 
 URL = '/'
@@ -143,7 +144,7 @@ def test_server_side_validation(browser):
 @pytest.mark.score(5)
 @pytest.mark.xfail
 def test_page_size_limit(browser):
-    bodies = create_squawks(browser, PAGE_SIZE + 1)
+    bodies = create_squawks(browser, PAGE_SIZE + 1, delay=1)
 
     browser.visit(URL)
     assert browser.is_text_not_present(bodies[0])
@@ -175,7 +176,7 @@ def test_next_not_present_on_last_page(browser):
 @pytest.mark.score(5)
 @pytest.mark.xfail
 def test_pagination(browser):
-    bodies = create_squawks(browser, PAGE_SIZE + 1)
+    bodies = create_squawks(browser, PAGE_SIZE + 1, delay=1)
 
     browser.visit(URL)
     browser.find_by_xpath(NEXT_XPATH).first.click()
