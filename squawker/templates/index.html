@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Carolina's Squawker</title>
+<link rel="stylesheet" href="main.css" />
+</head>
+<body>
+	<h1> Carolina's Squawker </h1>
+	<div class="newTweet">
+		<form action="/" method="Post">
+			<div>
+				<label for="Tweet_Message"> Your Tweet </label>
+				<textarea id="Tweet" name="Tweet_Message" maxlength="140"></textarea>
+			</div>
+			<div class="botton">
+				<button type="Submit"> Post your Tweet</button>
+				</div>
+
+				{{ error }}
+
+	</form>
+
+	<br><br>
+	
+	<div id="squawks">
+		<p>
+		There are {{num_squawks}} Tweets in the database!
+		</p>
+	</div>
+
+</body>
+</html>
+
+
+

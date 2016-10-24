@@ -1,6 +1,5 @@
-from flask import Flask, g
+from flask import Flask, g, render_template, request
 import sqlite3
-
 
 # -- leave these lines intact --
 app = Flask(__name__)
@@ -39,9 +38,29 @@ def close_connection(exception):
 
 @app.route('/')
 def root():
+    # create db connection
     conn = get_db()
-    # TODO change this
-    return "Hello World!"
+    # create cursor object with squawk query
+    cursor_object = conn.execute('SELECT ID, Tweet_Message from squawks order by id desc')
+    # iterate over all squawks and store
+    squawks_list = cursor_object.fetchall()
+    count = len(squawks_list)
+    squawks = get_squawks_for_page(squawks_list, page, PER_PAGE)
+    if not squawks and page != 1:
+        abort(404)
+    return render_template('index.html', squawks=squawks)
+
+
+
+# add a squawk via post request
+@app.route('/add_squawk', methods=['POST'])
+def add_squawk():
+    if len(request.form['Tweet_Message']) > 140:
+        abort(400)
+    conn = get_db()
+    conn.execute('INSERT INTO squawks (Tweet_Message) VALUES (?)', [request.form['Tweet_Message']])
+    conn.commit()
+    return redirect(url_for('root'))
 
 
 if __name__ == '__main__':
