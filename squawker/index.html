@@ -1,27 +1,17 @@
 <!DOCTYPE HTML>
 <html>
-	 <div>
-            <div>
-                <h1>Welcome to Squawker!</h1>
-                <h2>What's your latest squawk?</h2>
-                <form method = "post">
-    				      <textarea id="msg" name = "msg" maxlength="140"></textarea>
-                <br>
-                <button type="submit" >Post!</button>
-                </form>
-            </div>
-
-            <div>
-                <h3>Look at what you've recently Squawked about!</h3>
-            </div>
-
-            <div>
-                {% for squawks in squawks %}
-                    <p>{{ squawks }}</p>
-                {% endfor %}
-            </div>
-      </div>
-
+<head>
+	<title>Squawker!</title>
+</head>
+<body>
+	<div class= "button">
+		<button type="submit!">add post</button>
+	</div>
+	<div>
+		{% for squawks in squawks %}
+			<p>{{squawks}} </p>
+		(% endfor %}
+	</div>
 </body>
 
 </html>
