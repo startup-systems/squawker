@@ -1,4 +1,4 @@
-from flask import Flask, g, render_template, request, abort,url_for
+from flask import Flask, g, render_template, request, abort, url_for
 import sqlite3
 
 
