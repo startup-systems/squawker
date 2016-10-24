@@ -4,13 +4,14 @@ import datetime
 
 # -- leave these lines intact --
 from flask import abort
-from flask import flash
 from flask import redirect
 from flask import render_template
 from flask import request
 from flask import url_for
 
 app = Flask(__name__)
+
+COUNT = 20
 
 
 def get_db():
@@ -45,19 +46,41 @@ def close_connection(exception):
 
 # ------------------------------
 
+
+
 @app.route('/')
 def show_entries():
+    page = 0
+    if request.args.get('page'):
+        page = int(request.args.get('page'))
+
+    start_index = COUNT * page
+    # print("Page: " + str(page))
+    # print("StartIndex: " + str(start_index))
+
     conn = get_db()
-    cur = conn.execute('SELECT id, phrase, time FROM squawks ORDER BY time DESC')
+    cur = conn.execute(
+        'SELECT id, phrase, time FROM squawks ORDER BY time DESC LIMIT ' + str(COUNT + 1) + ' OFFSET ' + str(
+            start_index))
     entries = cur.fetchall()
 
-    return render_template('show_entries.html', entries=entries)
+    more = False
+    less = False
+    previous_page = None
+    if len(entries) > COUNT:
+        more = True
+        entries.remove(entries[COUNT])
+    if page > 0:
+        less = True
+        previous_page = page-1
+
+    return render_template('show_entries.html', entries=entries, more=more, next_page=(page+1), less=less, previous_page=previous_page)
 
 
 @app.route('/add', methods=['POST'])
 def add_entry():
     text = request.form['text']
-    if len(text)>140:
+    if len(text) > 140:
         abort(400)
         return
     db = get_db()
