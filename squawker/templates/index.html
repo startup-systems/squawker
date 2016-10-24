@@ -1,0 +1,24 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>My Squawker</title>
+</head>
+<body>
+    <form method="post">
+		<div>
+			<label for="post">Squawker:</label>
+			<textarea maxlength="140" id="post" name="squawker_post"></textarea>
+		<div>
+		<div class="button">
+	    	<button type="submit">Post Squawker!</button>
+		<div>
+		<div>
+        	<ul id="post">
+			{% for item in content %}
+	        	<li>{{item}}</li>
+			{% endfor %}
+			<ul>
+		<div>
+</body>
+</html>
