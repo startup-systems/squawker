@@ -57,7 +57,7 @@ def createSquawk():
         create_squawk(squawk)
         return get_homepage()
     else:
-        return '', 400
+        abort(400)
 
 
 def get_homepage():
