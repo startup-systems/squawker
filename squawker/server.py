@@ -1,5 +1,6 @@
-from flask import Flask, g
+from flask import Flask, g, abort, request, render_template
 import sqlite3
+import time
 
 
 # -- leave these lines intact --
@@ -37,11 +38,22 @@ def close_connection(exception):
 # ------------------------------
 
 
-@app.route('/')
+@app.route('/', methods=['GET', 'POST'])
 def root():
     conn = get_db()
-    # TODO change this
-    return "Hello World!"
+    data = conn.cursor()
+    if request.method == 'POST':
+        content = request.form['input']
+        time_posted = time.time()
+        if len(content) > 140:
+            abort(400)
+        else:
+            posts = (content, time_posted)
+            data.execute('INSERT INTO squawks VALUES (?, ?)', posts)
+            conn.commit()
+    data.execute('SELECT * from squawks ORDER BY TIME DESC')
+    posts = data.fetchall()
+    return render_template('index.html', posts=posts)
 
 
 if __name__ == '__main__':
