@@ -57,7 +57,7 @@ def createSquawk():
         create_squawk(squawk)
         return get_homepage()
     else:
-        abort(400)
+        return '', 400
 
 
 def get_homepage():
@@ -95,6 +95,8 @@ def marshal_squawk_row(row):
 
 
 def isValidSquawkForm(form):
+    if not form:
+        return False
     if 'text' not in form:
         return False
     text = form['text']
