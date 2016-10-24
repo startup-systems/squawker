@@ -42,13 +42,13 @@ def root():
     conn = get_db()
     c = conn.cursor()
     if request.method == "POST":
-	post = request.form.get("squawker_post")
+	post = request.form.get('squawker_post')
         if len(post) > 140:
 		abort(400)
 	elif len(post)>0 and len(message)<=140:
 		c.execute("INSERT INTO mytable (squawk) VALUES(?);", [post])
 		conn.commit()
-    c.execute("SELECT * FROM mytable ORDER BY createTime DESC")
+    c.execute("SELECT * FROM mytable ORDER BY id DESC")
     squawks = c.fetchall()
     return render_template("index.html", squawks=sqauwks)
 
