@@ -40,8 +40,7 @@ def close_connection(exception):
 @app.route('/', methods=["POST", "GET"])
 def root():
     conn = get_db()
-    c = conn.cursor()
-    
+    c = conn.cursor()    
     if request.method == 'POST':
         newSquawk = request.form.get('content')
         # post length check
@@ -49,14 +48,14 @@ def root():
             return "Input should be less than 140 characters!", 400
         else:
             query = "INSERT INTO squawks (squawk) VALUES (?)"
-            c.execute(query,[newSquawk])
+            c.execute(query, [newSquawk])
             conn.commit()
     # getting all the posts
     selectquery = "SELECT squawk FROM squawks order by id DESC"
     c.execute(selectquery)
     allSquawks = c.fetchall()
     c.close()
-    return render_template("index.html", squawks = allSquawks)
+    return render_template("index.html", squawks=allSquawks)
 
 
 if __name__ == '__main__':
