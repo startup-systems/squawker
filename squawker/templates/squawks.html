@@ -2,12 +2,12 @@
 
 {% block body %}
 
-    <form action "{{ url_for('add_squawk') }}" method ="post" class="add-squawk">
+    <form action="{{ url_for('add_squawk') }}" method ="post">
     	<dl>
     		<dt>Title:
 			<dd><input type="text" size="30" name="title">
 			<dt>Text:
-			<dd><textarea name="text" rows="5" cols="40"></textarea>
+			<dd><textarea name="text" rows="5" cols="140"></textarea>
 			<dd><input type="submit" value="Share">
     	</dl>
 	</form>

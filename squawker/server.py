@@ -57,8 +57,17 @@ def add_squawk():
     db.execute('insert into squawks (title, text) values (?,?)', [request.form['title'], request.form['text']])
     db.commit()
     flash('New entry was successfuly posted')
-    return redirect_for(url_for('root'))
+    return redirect(url_for('root'))
 
 
 if __name__ == '__main__':
+    # app.run()
+
+    app.config['SESSION_TYPE'] = 'filesystem'
+
+    sess.init_app(app)
+
+    app.debug = True
     app.run()
+
+app.secret_key = 'super secret key'
