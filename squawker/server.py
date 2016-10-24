@@ -48,7 +48,7 @@ def root(page):
     if page == 1:
         prevpage = False
     showout = allthepostmessage.fetchall()
-    if len(showout) == 0:
+    if count - 20 * page + 1 < 0:
         nextpage = False
     return render_template('index.html', allthepost=enumerate(showout), nowpage=page, prev=prevpage, nextp=nextpage)
 
