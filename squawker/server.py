@@ -38,19 +38,19 @@ def close_connection(exception):
 # ------------------------------
 
 
-@app.route('/',methods=['GET','POST'])
+@app.route('/', methods=['GET', 'POST'])
 def root():
 	conn = get_db()
 	c = conn.cursor()
 	if request.method == "POST":
 		post = request.form.get("user_post")
 		if len(post) > 140:
-			return "Squacker should less than 140 characters!",400
+			return "Squacker should less than 140 characters!", 400
 		else:
-			c.execute("INSERT INTO posts (post) VALUES(?);",[post])
+			c.execute("INSERT INTO posts (post) VALUES(?);", [post])
 			conn.commit()
 	c.execute("SELECT * FROM posts ORDER BY id DESC")
 	content = c.fetchall()
-	return render_template("newpost.html",content = content)
+	return render_template("newpost.html", content = content)
 if __name__ == '__main__':
     app.run()
