@@ -1,11 +1,17 @@
 <html>
    <head>
-      <title>SQUWAKER</title>
-      <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+		<title>SQUWAKER</title>
+		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+		<link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css" type="text/css">
+		<link rel="stylesheet" href="font-awesome/css/font-awesome.min.css" type="text/css"> 
    </head>
 
-   <body>
-      <h1>SQUAWKER</h1>
-      {% block body %} {% endblock %} 
+	<body>
+		<div class= "panel-section">
+			<div class="col-xs-6">
+				<h1>SQUAWKER</h1>
+				{% block body %} {% endblock %} 
+			</div>
+		</div>
    </body>
 </html>
