@@ -42,24 +42,27 @@ def close_connection(exception):
 # ------------------------------
 
 
-@app.route('/', methods=['GET','POST'])
+@app.route('/', methods=['GET', 'POST'])
 def root():
     conn = get_db()
     cursor = conn.cursor()
     # TODO change this
     if request.method == "POST":
-        if len(request.form['squawk']) > 140: abort(400)
+        if len(request.form['squawk']) > 140:
+             abort(400)
         time = datetime.now()
-        cursor.execute("""INSERT INTO Squawks (name,squawk,time) VALUES (?,?,?);""",(request.form['name'],request.form['squawk'],time))
+        cursor.execute("""INSERT INTO Squawks (squawk, time) VALUES (?,?);""", (request.form['squawk'], time))
+        # cursor.execute("""INSERT INTO Squawks (name, squawk, time) VALUES (?,?,?);""",(request.form['name'], request.form['squawk'], time))
         conn.commit()
         return redirect('/')
     else:
         cursor.execute("""SELECT * FROM Squawks;""")
         old_squawks = cursor.fetchall()
+
         def byTime(squawk):
-            return squawk[2]
+            return squawk[1]
         old_squawks = sorted(old_squawks, key=byTime, reverse=True)
-        return render_template('index.html', squawks = old_squawks)
+        return render_template('index.html', squawks=old_squawks)
 
 
 if __name__ == '__main__':
