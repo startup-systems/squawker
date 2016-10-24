@@ -60,7 +60,6 @@ def root():
     return render_template("index.html", num_squawks=count), status
 
 
-
 @app.context_processor
 def utility_processor():
     def loadSquawks():
