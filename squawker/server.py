@@ -40,7 +40,7 @@ def close_connection(exception):
 @app.route('/', methods=["POST", "GET"])
 def root():
     conn = get_db()
-    c = conn.cursor()    
+    c = conn.cursor()
     if request.method == 'POST':
         newSquawk = request.form.get('content')
         # post length check
