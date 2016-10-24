@@ -43,15 +43,20 @@ def root(page):
     error = ""
     status = 200
     conn = get_db()
+    # if click on the post button
     if(request.method == "POST"):
-        post_text = request.form['squawk_msg']
-        if len(msg) > 140:
+        # get the text from text area id as post_text
+        post_text = request.form['post_text']
+        # if longer than 140c, shoot ERROR 400
+        if len(post_text) > 140:
             error = "Post too long, limit to 140"
             status = 400
+        # insert into the database
         else:
-            c = conn.execute('INSERT INTO squawks (text) VALUES (?)', [post_text])
+            c = conn.execute("INSERT INTO squawks (\'posts\') VALUES (\'" + post_text + "\')")
             conn.commit()
-    c = conn.execute("SELECT COUNT(*) FROM squawks", ())
+    # sort by DESC timi
+    c = conn.execute("SELECT COUNT(*) FROM squawks ORDER BY time DESC", ())
     count = c.fetchone()[0]
     c.close()
     return render_template("index.html", num_squawks=count, page=page), status
@@ -66,7 +71,7 @@ def utility_processor():
         squawks = c.fetchall()
         c.close()
         slen = len(squawks)
-        return squawks[(page - 1) * 20:min(slen, page * 20)]
+        return squawks
     return dict(loadSquawks=loadSquawks)
 
 
