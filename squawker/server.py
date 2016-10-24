@@ -47,7 +47,7 @@ def root():
         squawks = request.form["messages"]
         if len(squawks) > 140:
                 abort(400)
-                error ='Squawks are limited to 140 characters'
+                error = 'Squawks are limited to 140 characters'
         else:
                 cur.execute("INSERT INTO squawks(squawks) VALUES(?) ", squawks)
                 conn.commit()
