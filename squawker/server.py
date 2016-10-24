@@ -46,13 +46,13 @@ def close_connection(exception):
 @app.route('/')
 def root():
     db = get_db()
-    cur = db.execute('select title, text from squawks')
+    cur = db.execute('select title, text from squawks order by id desc')
     squawks = cur.fetchall()
     return render_template('squawks.html', entries=squawks)
 
 
 @app.route('/add_squawk', methods=['POST'])
-def add_entry():
+def add_squawk():
     db = get_db()
     db.execute('insert into squawks (title, text) values (?,?)', [request.form['title'], request.form['text']])
     db.commit()
