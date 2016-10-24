@@ -49,7 +49,7 @@ def root():
             error = "Invalid Squawk!"
             status = 400
         elif len(message) > 0:
-            c.execute("INSERT INTO tweets (\'message\') VALUES (\'" + message + "\')")
+            c.execute("INSERT INTO squawks (message) VALUES ('" + message + "' + ")
             conn.commit()
     conn.close()
     return render_template('squawker.html', squawk=squawk, error=error), status
