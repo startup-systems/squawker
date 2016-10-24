@@ -46,7 +46,6 @@ def close_connection(exception):
 # http://flask.pocoo.org/snippets/44/
 
 
-
 class Pagination(object):
 
     def __init__(self, page, per_page, total_count):
@@ -71,7 +70,7 @@ class Pagination(object):
         last = 0
         for num in xrange(1, self.pages + 1):
             if num <= left_edge or \
-               (num > self.page - left_current - 1 and \
+               (num > self.page - left_current - 1 and
                 num < self.page + right_current) or \
                num > self.pages - right_edge:
                 if last + 1 != num:
@@ -108,7 +107,6 @@ def root(page):
     if not users and page != 1:
         abort(404)
     return render_template('index.html', rows=users, pagination=pagination)
-
 
 
 @app.route('/posts', methods=['POST'])
