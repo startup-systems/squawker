@@ -15,7 +15,6 @@ def get_db():
 
     return g.sqlite_db
 
-
 def init_db():
     with app.app_context():
         db = get_db()
@@ -23,13 +22,11 @@ def init_db():
             db.cursor().executescript(f.read())
         db.commit()
 
-
 @app.cli.command('initdb')
 def initdb_command():
     """Creates the database tables."""
     init_db()
     print('Initialized the database.')
-
 
 @app.teardown_appcontext
 def close_connection(exception):
@@ -42,8 +39,6 @@ def close_connection(exception):
 #     conn = get_db()
 #     #TODO change this
 #     return "Hello, post a new squawk!"
-
-
 @app.route('/', methods=["POST", "GET"])
 def root():
     conn = get_db()
@@ -78,6 +73,7 @@ def root():
 # def show_post(post_id):
 #     # show the post with the given id, the id is an integer
 #     return 'Post %d' % post_id
+
 
 
 # @app.route('/login', methods=['GET', 'POST'])
