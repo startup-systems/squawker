@@ -1,9 +1,10 @@
-from flask import Flask, g
+from flask import Flask, g, render_template, request, redirect, abort, url_for
 import sqlite3
 
 
 # -- leave these lines intact --
 app = Flask(__name__)
+app.secret_key = 'some_secret'
 
 
 def get_db():
@@ -40,9 +41,21 @@ def close_connection(exception):
 @app.route('/')
 def root():
     conn = get_db()
-    # TODO change this
-    return "Hello World!"
+    c = conn.cursor()
+    c.execute("SELECT * FROM squawks")
+    squawks=list(reversed(c.fetchall()))
+    return render_template('index.html', squawks=squawks)
 
+@app.route('/submit', methods=['POST'])
+def submit():
+    if len(request.form['squawk']) > 140:
+        abort(400)
+    else:
+        conn = get_db()
+        c = conn.cursor()
+        c.execute("INSERT INTO squawks(message) VALUES (?)", (request.form['squawk'],))
+        conn.commit()
+        return redirect(url_for('root'))
 
 if __name__ == '__main__':
     app.run()

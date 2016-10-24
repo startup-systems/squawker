@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Squawker</title>
+</head>
+
+<body>
+    <form action="submit" method="post">
+        <input type="text" name="squawk" value="Enter Squawk" size="140" maxlength="140" pattern=".{0,145}" required />
+        <button type="submit">Send!</button>
+    </form>
+
+    {% if squawks %}
+        <ul>
+            {% for item in squawks %}
+                <li>{{item[1]}}</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No squawks posted!</p>
+    {% endif %}
+</body>
