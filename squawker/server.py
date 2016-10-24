@@ -48,7 +48,7 @@ def root():
 
 @app.route('/', methods=['POST'])
 def createSquawk():
-    if isValidSquawkForm(form):
+    if isValidSquawkForm(request.form):
         squawk = {
             'text': request.form['text'],
             'time': time.time(),
