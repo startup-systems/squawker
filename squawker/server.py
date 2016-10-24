@@ -35,10 +35,10 @@ def close_connection(exception):
     if db is not None:
         db.close()
 # ------------------------------
-
-
 # reference: http://flask.pocoo.org/docs/0.10/quickstart/#http-methods
 # reference: https://docs.python.org/2/library/sqlite3.html
+
+
 @app.route('/', methods=['GET', 'POST'])
 def root():
     conn = get_db()
@@ -49,10 +49,9 @@ def root():
             error = "You have to enter a shorter message"
             abort(400)
         else:
-            cursor.execute("INSERT INTO table (\'message\') VALUES (\'" + msg + "\')")
+            cursor.execute("INSERT INTO squawk (\'message\') VALUES (\'" + msg + "\')")
             conn.commit()
-            conn.close()
-    cursor.execute("SELECT * FROM table ORDER BY time DESC")
+    cursor.execute("SELECT * FROM squawk ORDER BY time DESC")
     totalMsg = cursor.fetchall()
     return render_template("index.html", MSG=totalMsg)
 
