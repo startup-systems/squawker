@@ -44,20 +44,18 @@ def root():
     
     if request.method == 'POST':
         newSquawk = request.form.get('content')
-        #post length check
+        # post length check
         if len(newSquawk) > 140:
             return "Input should be less than 140 characters!", 400
         else:
             query = "INSERT INTO squawks (squawk) VALUES (?)"
-            c.execute(query, newSquawk)
+            c.execute(query,[newSquawk])
             conn.commit()
-
-    #getting all the posts
-    selectquery = "SELECT squawk FROM squawks order by time DESC"
+    # getting all the posts
+    selectquery = "SELECT squawk FROM squawks order by id DESC"
     c.execute(selectquery)
     allSquawks = c.fetchall()
     c.close()
-    
     return render_template("index.html", squawks = allSquawks)
 
 
