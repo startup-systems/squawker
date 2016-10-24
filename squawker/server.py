@@ -1,5 +1,6 @@
-from flask import Flask, g
+from flask import Flask, g, render_template, request, redirect, abort
 import sqlite3
+import time
 
 
 # -- leave these lines intact --
@@ -36,12 +37,39 @@ def close_connection(exception):
         db.close()
 # ------------------------------
 
+ENTRIES_PER_PAGE = 20
 
-@app.route('/')
-def root():
+def get_squawker_per_page(c, page):
+    output = c.execute('SELECT * FROM squawker ORDER BY created_at DESC LIMIT ' + str(ENTRIES_PER_PAGE) + ' OFFSET ' + str(ENTRIES_PER_PAGE * (page-1)))
+    return output.fetchall()
+
+def get_count_squawker(c):
+    output = c.execute('SELECT COUNT(*) FROM squawker')
+    return output.fetchone()[0]
+
+
+@app.route('/', methods=["GET", "POST"], defaults={'page': 1})
+@app.route('/<int:page>')
+def root(page):
     conn = get_db()
-    # TODO change this
-    return "Hello World!"
+    c = conn.cursor()
+    error = ""
+    status = 200
+    if request.method == "POST":
+      if len(request.form["message"]) > 140:
+        status = 400
+        error = "The message must have 140 characters at most"
+      else:
+        c.execute("INSERT INTO squawker (message, created_at) VALUES ('" + request.form["message"] + "', " + str(int(time.time())) + ")")
+        conn.commit()
+
+    last_page = get_count_squawker(c)
+    if page < 1 or page > last_page:
+      abort(404)
+
+    squawkers = get_squawker_per_page(c, page)
+    conn.close()
+    return render_template('index.html', squawkers=squawkers, page=page, last_page=last_page, error=error), status
 
 
 if __name__ == '__main__':
