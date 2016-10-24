@@ -51,4 +51,3 @@ def root():
     return render_template("index.html", allSquawks = listSq)
 
 if __name__ == '__main__':
-#app.run()
