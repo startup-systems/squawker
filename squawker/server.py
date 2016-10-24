@@ -68,7 +68,7 @@ def newComment():
     text = request.form['comment']
     print(text)
 
-    if(len(text) < 2):
+    if(len(text) < 2) or (len(text) > 140):
         rows = cur.execute('SELECT comment FROM mytable ORDER BY tstamp DESC LIMIT 2000')
         rowList = []
         for row in rows:
