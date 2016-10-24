@@ -40,9 +40,20 @@ def close_connection(exception):
 @app.route('/')
 def root():
     conn = get_db()
+    cursor = conn.cursor()
     # TODO change this
-    return "Hello World!"
-
+    if request.method == "POST":
+        msg = request.form["content"]
+        if len(msg) <= 140:
+            query = "INSERT INTO squawks (squawk, time_stamp) VALUES (?, ?)"
+            time = datetime.datetime.now()
+            cursor.execute(query, (msg, time))
+            conn.commit()
+        else:
+            abort(400)
+    cursor.execute("SELECT squawk FROM squawks ORDER BY time_stamp DESC")
+    res = cursor.fetchall()
+    return render_template("index.html", squawks=res)
 
 if __name__ == '__main__':
     app.run()
