@@ -2,7 +2,6 @@ from flask import Flask, g
 from flask import request, redirect
 from flask import render_template
 from flask import Blueprint
-from flask_paginate import Pagination
 import sqlite3
 
 
