@@ -54,18 +54,19 @@ def root():
         else:
             c = conn.execute("INSERT INTO squawks (\'posts\') VALUES (\'" + post_text + "\')")
             conn.commit()
-    # sort by DESC time
-    c = conn.execute("SELECT COUNT(*) FROM squawks ORDER BY time DESC", ())
+    c = conn.execute("SELECT COUNT(*) FROM squawks", ())
     count = c.fetchone()[0]
     c.close()
     return render_template("index.html", num_squawks=count), status
+
 
 
 @app.context_processor
 def utility_processor():
     def loadSquawks():
         conn = get_db()
-        c = conn.execute("SELECT posts FROM squawks ", ())
+        # sort by DESC time
+        c = conn.execute("SELECT posts FROM squawks ORDER BY timestamp DESC ", ())
         squawks = c.fetchall()
         c.close()
         slen = len(squawks)
