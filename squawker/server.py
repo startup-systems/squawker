@@ -45,8 +45,8 @@ def close_connection(exception):
 def root():
     db = get_db()
     cur = db.execute('select title, text from squawks')
-    entries = cur.fetchall()
-    return render_template('tweet.html', entries = squawks)
+    squawks = cur.fetchall()
+    return render_template('squawks.html', entries = squawks)
 
 
 
