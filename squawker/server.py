@@ -28,32 +28,21 @@ def initdb_command():
     init_db()
     print('Initialized the database.')
 
-
 @app.teardown_appcontext
 def close_connection(exception):
     db = getattr(g, 'sqlite_db', None)
     if db is not None:
         db.close()
-
-
 # ------------------------------
-
-
 # @app.route('/')
 # def root():
 #     conn = get_db()
 #     #TODO change this
-
-
 #     return "Hello, post a new squawk!"
-
-
 @app.route('/', methods=["POST", "GET"])
 def root():
-
     conn = get_db()
     c = conn.cursor()
-
     if request.method == 'POST':
         new_msg = request.form.get('msg')
         if len(new_msg) > 140:
@@ -67,22 +56,14 @@ def root():
     all = c.fetchall()
     c.close()
     return render_template("form.html", squawks=all)
-
-
 # @app.route('/') #set default?
 # @app.route('/', method=["GET","POST"])
-# @app.route('/page/<int:page>')
-#
 #
 # def root(page):
 #     return render_template('form.html')
-
-
 # @app.route('/hello')
 # def hello():
 #     return 'Hello, World'
-
-
 # @app.route('/user/<username>')
 # def show_user_profile(username):
 #     # show the user profile for that user
