@@ -39,8 +39,7 @@ def close_connection(exception):
 def root():
     conn = get_db()
     cur = conn.cursor()
-    error=None
-    if request.method=="POST"
+    if request.method=="POST":
         addSquawk=request.form['content']
         if len(addSquawk)>140:
             abort(400)
@@ -52,4 +51,4 @@ def root():
     return render_template("index.html", allSquawks = listSq)
 
 if __name__ == '__main__':
-    app.run()
+    #app.run()
