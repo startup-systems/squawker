@@ -7,6 +7,7 @@ from squawker import server
 import string
 import tempfile
 import time
+from . import flaskclient_fix
 
 
 URL = '/'
