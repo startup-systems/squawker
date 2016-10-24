@@ -1,10 +1,14 @@
 <html>
 	<head>
-	<script   src="https://code.jquery.com/jquery-3.1.1.min.js"   integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="   crossorigin="anonymous"></script>
 	</head>
 	<body>
-    {% include 'composer.html' %}
-    {% include 'feed.html' %}
-	<script type="text/javascript" src="{{ squawkerScript }}"></script>
+		<form action="/" method="post">
+			<textarea placeholder="What's on your mind?" name='text' rows='3' cols='50'  maxlength='140' required></textarea>
+			<br>
+			<input type=submit value="Squawk">
+		</form>
+		{% for squawk in squawks %}
+			<p><b>{{ squawk.username }}:</b> {{ squawk.text }} ({{ squawk.time }})</p>
+		{% endfor %}
 	</body>
 </html>
