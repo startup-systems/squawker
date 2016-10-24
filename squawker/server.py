@@ -68,8 +68,12 @@ def newComment():
     text = request.form['comment']
     print(text)
 
-    if(len(text) < 3):
-        return "FAILED - Posts must contain atleast 3 characters.", 400
+    if(len(text) < 2):
+        rows = cur.execute('SELECT comment FROM mytable ORDER BY tstamp DESC LIMIT 2000')
+        rowList = []
+        for row in rows:
+            rowList.append(row[0])
+        return render_template('index.html', rows=rowList), 400
     else:
         result = cur.execute("INSERT into mytable(comment) VALUES (?)", (text,))
         db.commit()
