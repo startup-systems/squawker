@@ -1,6 +1,5 @@
-from flask import Flask, g
+from flask import Flask, g, request, redirect, url_for, render_template
 import sqlite3
-
 
 # -- leave these lines intact --
 app = Flask(__name__)
@@ -37,12 +36,33 @@ def close_connection(exception):
 # ------------------------------
 
 
-@app.route('/')
-def root():
-    conn = get_db()
-    # TODO change this
-    return "Hello World!"
 
+@app.route('/')
+@app.route('/page/<int:page_id>', methods=['GET','POST'])
+def root(page_id=1):
+    status = 200
+    conn = get_db()
+    c = conn.cursor()
+    query = "SELECT msg FROM squawkers ORDER BY created_time DESC"
+    c.execute(query)
+    squawkers = c.fetchall()
+    conn.commit()
+    conn.close()
+    _start = (page_id-1)*20
+    _end = min(len(squawkers), (page_id-1)*20+20)
+    return render_template("index.html", num=_end-_start, page=page_id, msgs = squawkers[_start:_end]), status
+
+
+@app.route('/post', methods=['POST'])
+def post_squawker():
+    error = None
+    if request.method == 'POST':
+        conn = get_db()
+        c = conn.cursor()
+        c.execute('INSERT INTO squawkers (msg) VALUES (?)', [request.form['msg']])
+        conn.commit()
+        conn.close()
+        return redirect(url_for('root'))
 
 if __name__ == '__main__':
     app.run()
