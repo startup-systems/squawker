@@ -118,7 +118,7 @@ def index():
     # conn = init_db() # this may restart the database with no values!
     # TODO change this
     results = get_from_db()
-    print "num from results: " + str(len(results))
+    # print "num from results: " + str(len(results))
     # return html form
     return render_template('index.html',
                            saves=results)
