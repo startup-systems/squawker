@@ -44,12 +44,13 @@ def close_connection(exception):
 # https://www.sitepoint.com/basic-jquery-form-validation-tutorial/
 # http://opentechschool.github.io/python-flask/core/form-submission.html
 
+
 @app.route('/')
 def root():
     db = get_db()
     cur = db.cursor()
     rows = cur.execute('SELECT comment FROM mytable ORDER BY tstamp DESC LIMIT 2000')
-    rowList = [];
+    rowList = []
     for row in rows:
         rowList.append(row[0])
         print(row[0])
@@ -59,27 +60,24 @@ def root():
     return render_template('index.html', rows=rowList)
 
 
-
-
-@app.route('/posts', methods = ['POST'])
+@app.route('/posts', methods=['POST'])
 def newComment():
     db = get_db()
     cur = db.cursor()
 
     text = request.form['comment']
     print(text)
-    #print ('Comment:' + text)
+
     if(len(text) < 3):
         return "FAILED - Posts must contain atleast 3 characters.", 400
     else:
         result = cur.execute("INSERT into mytable(comment) VALUES (?)", (text,))
         db.commit()
         rows = cur.execute('SELECT comment FROM mytable ORDER BY tstamp DESC LIMIT 2000')
-        rowList = [];
+        rowList = []
         for row in rows:
             rowList.append(row[0])
         return render_template('index.html', rows=rowList)
-        #return "SUCCESS", 200
 
 
 if __name__ == '__main__':
