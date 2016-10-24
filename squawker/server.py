@@ -41,7 +41,6 @@ def close_connection(exception):
 @app.route('/', methods=["GET", "POST"])
 def root():
     conn = get_db()
-    return "Hello World!"
     cur = conn.cursor()
     if request.method == 'Post':
         squawks = request.form["messages"]
