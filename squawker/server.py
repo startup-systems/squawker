@@ -37,12 +37,22 @@ def close_connection(exception):
 # ------------------------------
 
 
-@app.route('/')
+@app.route('/', methods=["GET", "POST"])
 def root():
     conn = get_db()
-    # TODO change this
-    return "Hello World!"
-
+    c = conn.cursor()
+    error = ''
+    status = 200
+    if request.method == "POST":
+        message = request.form['tweet_msg']
+        if len(message) > 140:
+            error =  "Invalid Squawk!"
+            status = 200                                                
+        elif len(message) > 0:                                          
+            c.execute("INSERT INTO tweets (\'message\') VALUES (\'" + message + "\')")                  
+            conn.commit()                                               
+    conn.close()                                                    
+    return render_template('squawker.html', tweets=tweets, error=error), status                                 
 
 if __name__ == '__main__':
     app.run()

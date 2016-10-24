@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+    <title>Squawker</title>
+    <body>
+        <form action="/template" method="post">
+            <textarea id="msg" name="tweet_msg" maxlength="140"></textarea>
+            <div class="button">
+                <button type="submit">SUBMIT!</button>
+            </div>
+            <div>Error: {{ error }}</div>
+            {% endif %}
+        </form>
+        <div>
+            {% for item in squawks %}
+        </div>
+      </body>
+</html>
