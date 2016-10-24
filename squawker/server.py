@@ -6,10 +6,12 @@ import sqlite3
 # -- leave these lines intact --
 app = Flask(__name__)
 
+
 def connect_db():
     rv = sqlite3.connect(app.config['DATABASE'])
     rv.row_factory = sqlite3.Row
     return rv
+
 
 def get_db():
     if not hasattr(g, 'sqlite_db'):
