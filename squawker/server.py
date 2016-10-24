@@ -60,7 +60,6 @@ def formsubmit():
     conn = get_db()
     conn.execute('insert into mymessage (message) values (?);', (request.form['msg'],))
     conn.commit()
-    #return render_template('aftersubmit.html', message=request.form['msg'])
     return redirect(url_for('root'))
 
 
