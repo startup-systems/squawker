@@ -48,12 +48,12 @@ def root():
 
 @app.route('/', methods=['POST'])
 def createSquawk():
-    squawk = {
-        'text': request.form['text'],
-        'time': time.time(),
-        'username': 'trvslhlt'
-    }
-    if isValidSquawk(squawk):
+    if isValidSquawkForm(form):
+        squawk = {
+            'text': request.form['text'],
+            'time': time.time(),
+            'username': 'trvslhlt'
+        }
         create_squawk(squawk)
         return get_homepage()
     else:
@@ -94,10 +94,10 @@ def marshal_squawk_row(row):
     return squawk_rep
 
 
-def isValidSquawk(squawk):
-    if 'text' not in squawk:
+def isValidSquawkForm(form):
+    if 'text' not in form:
         return False
-    text = squawk['text']
+    text = form['text']
     if type(text) is str:
         return len(text) <= 140
     else:
