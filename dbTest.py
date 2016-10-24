@@ -16,5 +16,4 @@ msg = "Record successfully added"
 
 cur.execute("select * from tweets2")
 
-print cur.fetchall()
 conn.close()
