@@ -1,18 +1,17 @@
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <html>
-<head>
-	<title>Squawker!</title>
-</head>
-<body>
-	<div class= "button">
-		<button type="submit!">add post</button>
-	</div>
-	<div>
-		{% for squawks in squawks %}
-			<p>{{squawks}} </p>
-		(% endfor %}
-	</div>
-</body>
-
+    <title>Squawker!!</title>
+    <body>
+        <form action="/" method="post">
+            <textarea id="msg" name="squawks" maxlength="140"></textarea>
+            <div class="button">
+                <button type="submit">add post!</button>
+            </div>
+        </form>
+        <div>
+            {% for x in squawks %}
+            <p>{{ x[0] }}</p>
+            {% endfor %}
+        </div>
+      </body>
 </html>
-
