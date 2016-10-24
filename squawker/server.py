@@ -107,7 +107,6 @@ def save():
     # print "From Save: num from results: "+str(len(results))
     # for result in results:
     #     print result[1]
-    
 
     response = make_response(redirect(url_for('index')))
     return response
