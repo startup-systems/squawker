@@ -1,4 +1,4 @@
-from flask import Flask, g, render_template, request, url_for, abort
+from flask import Flask, g, render_template, request, url_for, abort, redirect
 import sqlite3
 
 
@@ -60,7 +60,8 @@ def formsubmit():
     conn = get_db()
     conn.execute('insert into mymessage (message) values (?);', (request.form['msg'],))
     conn.commit()
-    return render_template('aftersubmit.html', message=request.form['msg'])
+    #return render_template('aftersubmit.html', message=request.form['msg'])
+    return redirect(url_for('root'))
 
 
 if __name__ == '__main__':
