@@ -36,12 +36,46 @@ def close_connection(exception):
         db.close()
 # ------------------------------
 
-
-@app.route('/')
-def root():
+# Add posts
+def addPost(data):  
     conn = get_db()
-    # TODO change this
-    return "Hello World!"
+    cur = conn.cursor()
+    cur.execute("INSERT INTO squawks (body) VALUES(?)", (data,))
+    conn.commit()
+
+def getPosts:
+    conn = get_db()
+    cur = conn.cursor()
+    cur.execute("""SELECT id, body FROM
+                    squawks
+                    ORDER BY id DESC """)
+    temp = cur.fetchall()
+    data = []
+    idx = []
+    cur.close()
+    return temp
+
+# Routes
+
+# Index
+@app.route('/')  
+def root():
+    return page()
+
+# All Posts
+@app.route('/all')  
+def allPosts():
+    squawks = getPosts()
+    return render_template('index.html', squawks=squawks)
+
+
+@app.route('/add/', methods=['POST'])  # Add
+def add():
+    # Check if post is 140 characters
+    if (len(request.form["new_body"]) > 140):  
+        return abort(400)
+    addPost(request.form["new_body"])
+    return redirect(url_for('root'))
 
 
 if __name__ == '__main__':
