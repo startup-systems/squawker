@@ -1,4 +1,4 @@
-from flask import Flask, g, render_template, request, redirect, url_for
+from flask import Flask, g, render_template, request, redirect, url_for, abort
 import sqlite3
 from datetime import datetime, timezone
 import math
@@ -89,7 +89,7 @@ def do_post():
 
         return redirect(url_for("root"))
     else:
-        pass
+        abort(400)
 
 
 def is_valid(text):
