@@ -4,6 +4,7 @@ from flask import Flask, request, session, g, redirect, url_for, abort, render_t
 # -- leave these lines intact --
 app = Flask(__name__)
 
+
 def get_db():
     if not hasattr(g, 'sqlite_db'):
         db_name = app.config.get('DATABASE', 'squawker.db')
