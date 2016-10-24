@@ -54,8 +54,7 @@ def root():
 @app.route('/addsquawk', methods=['POST'])
 def add_entry():
     db = get_db()
-    db.execute('insert into squawks (title, text) values (?,?)',
-        [request.form['title'], request.form['text']])
+    db.execute('insert into squawks (title, text) values (?,?)', [request.form['title'], request.form['text']])
     db.commit()
     flash('New entry was successfuly posted')
     return redirect_for(url_for('tweet'))
