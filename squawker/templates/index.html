@@ -19,4 +19,10 @@
     {% else %}
         <p>No squawks posted!</p>
     {% endif %}
+
+    <p>{{total}} squawks available</p>
+    {% if has_next %}
+        <a href="{{ url_for('root', post=post+10) }}">Next</a>
+    {% endif %}
+
 </body>
