@@ -37,7 +37,7 @@ def close_connection(exception):
 
 
 @app.route('/', methods=["GET", "POST"])
-def root(page):
+def root():
     error = ""
     status = 200
     conn = get_db()
@@ -47,15 +47,12 @@ def root(page):
             status = 400
             error = "Error! Your Tweet needs to be at most 140 characters!"
         else:
-            c = conn.execute('INSERT INTO squawks (text) VALUES (?)', [post_text])
+            c = conn.execute('INSERT INTO squawks (squawk) VALUES (?)', [post_text])
             conn.commit()
-    c = conn.execute('SELECT * FROM squawks ORDER BY id desc')
+    c = conn.execute('SELECT squawk FROM squawks ORDER BY id desc')
     squawks = c.fetchall()
     count = len(squawks)
-    squawks = get_squawks_for_page(squawks, page)
-    if not squawks and page != 1:
-        abort(404)
-    return render_template('index.html', squawks=squawks, error=error), status
+    return render_template('index.html', squawks=squawks), status
 
 
 if __name__ == '__main__':

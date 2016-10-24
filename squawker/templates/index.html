@@ -14,13 +14,6 @@
 					Don't forget! 140 chars max <br>
 				<input type="Submit" value="Post Your Squawk">
 				</form>
-
-<!-- Now creating empty variables to fill up when the user inputs tweets -->
-				<!-- If there is an error, return error message from server.py -->
-				{% if error != "" %}
- 				<p>{{ error }}</p>
- 				<br>
- 			{% endif %}
  		</div>
 
  <!-- Now  creating the framework to collect and display all the incoming Tweets-->
@@ -29,11 +22,8 @@
  			
  			<div>
  				<!-- posting the tweet -->
- 			    {{ squawk[1] }} 
+ 			    {{ squawk[0] }} 
  			    <br>
- 			    <!-- posting the time tweeted -->
- 			    {{ squawk[2] }}
- 			    <br><br>
  			<div>
  	
  			{% else %}
