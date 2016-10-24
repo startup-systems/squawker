@@ -46,12 +46,12 @@ def root():
         if len(newmsg) > 140:
             return "Post length error", 400
         else:
-            conn.execute("INSERT INTO squawktable (message) VALUE (?)", [new_post])
+            conn.execute("INSERT INTO squawktable (message) VALUE (?);", [newmsg])
             conn.commit()
     c = conn.cursor()
     c.execute("SELECT * FROM squawktable ORDER BY createTime DESC")
     msgPool = c.fetchall()
-    return render_template("squawk.html", msgPool=msgPool)
+    return render_template("squawker.html", msgPool=msgPool)
 
 
 if __name__ == '__main__':
