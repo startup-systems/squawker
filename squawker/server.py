@@ -1,4 +1,4 @@
-from flask import Flask, g, render_template, request, abort
+from flask import Flask, g, render_template, request, abort,url_for
 import sqlite3
 
 
@@ -43,7 +43,7 @@ def root():
     conn = get_db()
     cur = conn.cursor()
     if request.method == 'Post':
-        squawks = request.form.get["squawks"]
+        squawks = request.form["squawks"]
         if len(squawks) > 140:
                 abort(400)
                 error = 'Squawks are limited to 140 characters'
@@ -52,7 +52,7 @@ def root():
                 conn.commit()
     cur.execute("SELECT squawks FROM squawker ORDER BY time DESC")
     all_squawks = cur.fetchall()
-    return render_template('index.html', squawks=all_squawks)
+    return render_template('index.html', squawkss=all_squawks)
 
 if __name__ == '__main__':
     app.run()
