@@ -108,7 +108,7 @@ def save():
     # for result in results:
     #     print result[1]
     else:
-        return render_template('error.html'), 400
+        
 
     response = make_response(redirect(url_for('index')))
     return response
@@ -125,7 +125,7 @@ def index():
     # print "num from results: " + str(len(results))
     # return html form
     return render_template('index.html',
-                           saves=results)
+                           saves=results[::-1])
 
 
 if __name__ == '__main__':
