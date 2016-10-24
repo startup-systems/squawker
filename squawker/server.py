@@ -1,4 +1,4 @@
-from flask import Flask, g， request, abort, render_template
+from flask import Flask, g, request, abort, render_template
 import sqlite3
 import os
 import datetime
@@ -38,7 +38,7 @@ def close_connection(exception):
 # ------------------------------
 
 
-@app.route('/', methods = ["POST", "GET"])
+@app.route('/', methods=['POST', 'GET'])
 def root():
     conn = get_db()
     cursor = conn.cursor()
