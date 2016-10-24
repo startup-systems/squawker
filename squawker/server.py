@@ -49,7 +49,7 @@ def root():
     # TODO change this
     if request.method == "POST":
         if len(request.form['squawk']) > 140:
-             abort(400)
+            abort(400)
         time = datetime.now()
         cursor.execute("""INSERT INTO Squawks (squawk, time) VALUES (?,?);""", (request.form['squawk'], time))
         # cursor.execute("""INSERT INTO Squawks (name, squawk, time) VALUES (?,?,?);""",(request.form['name'], request.form['squawk'], time))
