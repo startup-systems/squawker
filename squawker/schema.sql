@@ -6,3 +6,23 @@ CREATE TABLE squawker (id INTEGER PRIMARY KEY AUTOINCREMENT,
 
 INSERT INTO squawker (post) VALUES ("Hello, I'm test.");
 INSERT INTO squawker (post) VALUES ("Hello, I'm 2nd test.");
+INSERT INTO squawker (post) VALUES ("Hello, I'm test.");
+INSERT INTO squawker (post) VALUES ("Hello, I'm test.");
+INSERT INTO squawker (post) VALUES ("Hello, I'm test.");
+INSERT INTO squawker (post) VALUES ("Hello, I'm test.");
+INSERT INTO squawker (post) VALUES ("Hello, I'm test.");
+INSERT INTO squawker (post) VALUES ("Hello, I'm test.");
+INSERT INTO squawker (post) VALUES ("Hello, I'm test.");
+INSERT INTO squawker (post) VALUES ("Hello, I'm test.");
+INSERT INTO squawker (post) VALUES ("Hello, I'm test.");
+INSERT INTO squawker (post) VALUES ("Hello, I'm test.");
+INSERT INTO squawker (post) VALUES ("Hello, I'm 2nd test.");
+INSERT INTO squawker (post) VALUES ("Hello, I'm 2nd test.");
+INSERT INTO squawker (post) VALUES ("Hello, I'm 2nd test.");
+INSERT INTO squawker (post) VALUES ("Hello, I'm 2nd test.");
+INSERT INTO squawker (post) VALUES ("Hello, I'm 2nd test.");
+INSERT INTO squawker (post) VALUES ("Hello, I'm 2nd test.");
+INSERT INTO squawker (post) VALUES ("Hello, I'm 2nd test.");
+INSERT INTO squawker (post) VALUES ("Hello, I'm 2nd test.");
+INSERT INTO squawker (post) VALUES ("Hello, I'm 2nd test.");
+INSERT INTO squawker (post) VALUES ("Hello, I'm 2nd test.");
