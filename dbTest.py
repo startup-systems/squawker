@@ -5,7 +5,6 @@ conn = sqlite3.connect('squaker.db')
 #
 cur = conn.cursor()
 conn.execute('CREATE TABLE IF NOT EXISTS tweets2 (tweet TEXT)')
-print "Table created successfully"
 
 
 cur.execute("INSERT INTO tweets2 (tweet) VALUES (?)", ("Hello Squaker!",))
