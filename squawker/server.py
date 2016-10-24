@@ -100,7 +100,7 @@ def save():
     #     print len(squawk)
 
     result = request.form['name'].encode("utf-8")
-    if len(result)<=140:
+    if len(result) <= 140:
         add_to_db(result)
     # Will get new squawk, and save into database
     #  results = get_from_db()
@@ -108,7 +108,6 @@ def save():
     # for result in results:
     #     print result[1]
     else:
-        
 
     response = make_response(redirect(url_for('index')))
     return response
