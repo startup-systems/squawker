@@ -35,10 +35,8 @@ def close_connection(exception):
         db.close()
 # ------------------------------
 
-
-
 @app.route('/')
-@app.route('/page/<int:page_id>', methods=['GET','POST'])
+@app.route('/page/<int:page_id>', methods=['GET', 'POST'])
 def root(page_id=1):
     status = 200
     conn = get_db()
@@ -48,9 +46,9 @@ def root(page_id=1):
     squawkers = c.fetchall()
     conn.commit()
     conn.close()
-    _start = (page_id-1)*20
-    _end = min(len(squawkers), (page_id-1)*20+20)
-    return render_template("index.html", num=_end-_start, page=page_id, msgs = squawkers[_start:_end]), status
+    _start = (page_id - 1) * 20
+    _end = min(len(squawkers), (page_id - 1) * 20 + 20)
+    return render_template("index.html", num=_end - _start, page=page_id, msgs=squawkers[_start:_end]), status
 
 
 @app.route('/post', methods=['POST'])
