@@ -51,8 +51,11 @@ def root():
 @app.route('/squawk', methods=['POST'])
 def createSquawk():
     json = request.get_json()
-    create_squawk(json)
-    return '', 201
+    if isValidSquawkJson(json):
+        create_squawk(json)
+        return '', 201
+    else:
+        return '', 400
 
 
 @app.route('/squawks', methods=['GET'])
@@ -88,6 +91,16 @@ def marshal_squawk_row(row):
         'text': row[3]
     }
     return squawk_rep
+
+
+def isValidSquawkJson(squawkJson):
+    if 'text' not in squawkJson:
+        return False
+    text = squawkJson['text']
+    if type(text) is str:
+        return len(text) <= 140
+    else:
+        return False
 
 
 if __name__ == '__main__':
