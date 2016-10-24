@@ -48,11 +48,10 @@ def root():
     db = get_db()
     cur = db.execute('select title, text from squawks')
     squawks = cur.fetchall()
-    return render_template('squawks.html', entries = squawks)
+    return render_template('squawks.html', entries=squawks)
 
 
-
-@app.route('/addsquawk',methods = ['POST'])
+@app.route('/addsquawk', methods=['POST'])
 def add_entry():
     db = get_db()
     db.execute('insert into squawks (title, text) values (?,?)',
@@ -60,8 +59,6 @@ def add_entry():
     db.commit()
     flash('New entry was successfuly posted')
     return redirect_for(url_for('tweet'))
-
-
 
 
 if __name__ == '__main__':
