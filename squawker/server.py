@@ -71,7 +71,7 @@ def close_connection(exception):
         db.close()
 # ------------------------------
 
-PER_PAGE = 10
+PER_PAGE = 20
 
 
 # URL generation helper
