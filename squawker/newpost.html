@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Squawker Homepage</title>
+</head>
+<body>
+    <div class="button">
+	    <button type="submit">add post</button>
+	<div>
+	<div>
+        <ul id="post">
+		{% for item in content %}
+	        <li>{{item}}</li>
+		{% endfor %}
+		<ul>
+	<div>
+</body>
+</html>
