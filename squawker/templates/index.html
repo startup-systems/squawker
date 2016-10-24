@@ -37,7 +37,7 @@
 <div class="container">
   <div class="row">
     <div class="col-md-8 col-md-offset-2">
-     </div> <!-- col -->
+
      <h3 class="text-center">POSTS</h3>
           <HR/>
           {% for x in rows %}
@@ -47,6 +47,23 @@
           <BR/>
 
      </div> <!-- row -->
+    </div> <!-- col -->
+
+    <div class="row">
+      <div class="col-md-6 text-left">
+        {% if pagination.has_prev %}
+        <h4><a href="{{ url_for_other_page(pagination.page - 1) }}">&laquo; PREVIOUS</a></h4>
+        {% endif %}
+       </div> <!-- col -->
+
+
+        <div class="col-md-6 text-right">
+         {% if pagination.has_next %}
+         <h4><a href="{{ url_for_other_page(pagination.page + 1) }}"> NEXT &raquo;</a></h4>
+         {% endif %}
+       </div> <!-- col -->
+    </div> <!-- row -->
+
    </div><!-- /.container -->
 
   </body>

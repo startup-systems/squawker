@@ -1,7 +1,7 @@
 from flask import Flask, g
 from flask import request, redirect
-from flask import render_template
-from flask import Blueprint
+from flask import render_template, url_for
+from math import ceil
 import sqlite3
 
 
@@ -43,10 +43,53 @@ def close_connection(exception):
 # http://www.w3schools.com/
 # https://www.sitepoint.com/basic-jquery-form-validation-tutorial/
 # http://opentechschool.github.io/python-flask/core/form-submission.html
+# http://flask.pocoo.org/snippets/44/
 
 
-@app.route('/')
-def root():
+
+class Pagination(object):
+
+    def __init__(self, page, per_page, total_count):
+        self.page = page
+        self.per_page = per_page
+        self.total_count = total_count
+
+    @property
+    def pages(self):
+        return int(ceil(self.total_count / float(self.per_page)))
+
+    @property
+    def has_prev(self):
+        return self.page > 1
+
+    @property
+    def has_next(self):
+        return self.page < self.pages
+
+    def iter_pages(self, left_edge=2, left_current=2,
+                   right_current=5, right_edge=2):
+        last = 0
+        for num in xrange(1, self.pages + 1):
+            if num <= left_edge or \
+               (num > self.page - left_current - 1 and \
+                num < self.page + right_current) or \
+               num > self.pages - right_edge:
+                if last + 1 != num:
+                    yield None
+                yield num
+                last = num
+
+
+def url_for_other_page(page):
+    args = request.view_args.copy()
+    args['page'] = page
+    return url_for(request.endpoint, **args)
+app.jinja_env.globals['url_for_other_page'] = url_for_other_page
+
+
+@app.route('/', defaults={'page': 1})
+@app.route('/page/<int:page>')
+def root(page):
     db = get_db()
     cur = db.cursor()
     rows = cur.execute('SELECT comment FROM mytable ORDER BY tstamp DESC LIMIT 2000')
@@ -55,9 +98,17 @@ def root():
         rowList.append(row[0])
         print(row[0])
 
-    LIMIT = 5
+    PER_PAGE = 20
     count = len(rowList)
-    return render_template('index.html', rows=rowList)
+    start = (page - 1) * 20
+    end = start + 20
+    users = rowList[start:end]
+    pagination = Pagination(page, PER_PAGE, count)
+
+    if not users and page != 1:
+        abort(404)
+    return render_template('index.html', rows=users, pagination=pagination)
+
 
 
 @app.route('/posts', methods=['POST'])
@@ -73,7 +124,7 @@ def newComment():
         rowList = []
         for row in rows:
             rowList.append(row[0])
-        return render_template('index.html', rows=rowList), 400
+        return redirect(url_for('root')), 400
     else:
         result = cur.execute("INSERT into mytable(comment) VALUES (?)", (text,))
         db.commit()
@@ -81,7 +132,7 @@ def newComment():
         rowList = []
         for row in rows:
             rowList.append(row[0])
-        return render_template('index.html', rows=rowList)
+        return redirect(url_for('root'))
 
 
 if __name__ == '__main__':
