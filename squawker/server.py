@@ -1,8 +1,15 @@
 from flask import Flask, g
 import sqlite3
-
+import datetime
 
 # -- leave these lines intact --
+from flask import abort
+from flask import flash
+from flask import redirect
+from flask import render_template
+from flask import request
+from flask import url_for
+
 app = Flask(__name__)
 
 
@@ -34,14 +41,30 @@ def close_connection(exception):
     db = getattr(g, 'sqlite_db', None)
     if db is not None:
         db.close()
+
+
 # ------------------------------
 
-
 @app.route('/')
-def root():
+def show_entries():
     conn = get_db()
-    # TODO change this
-    return "Hello World!"
+    cur = conn.execute('SELECT id, phrase, time FROM squawks ORDER BY time DESC')
+    entries = cur.fetchall()
+
+    return render_template('show_entries.html', entries=entries)
+
+
+@app.route('/add', methods=['POST'])
+def add_entry():
+    text = request.form['text']
+    if len(text)>140:
+        abort(400)
+        return
+    db = get_db()
+    db.execute('INSERT INTO squawks (phrase, time) VALUES (?, ?)', [text, datetime.datetime.utcnow()])
+    db.commit()
+    # flash('New entry was successfully posted')
+    return redirect(url_for('show_entries'))
 
 
 if __name__ == '__main__':
