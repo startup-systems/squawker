@@ -40,8 +40,7 @@ def close_connection(exception):
 @app.context_processor
 def utility_processor():
     def loadSquawks(page_number=1):
-        query = "SELECT squawk from mysquawktable ORDER BY id DESC"
-        query_exec = get_db().execute(query, ())
+        query_exec = get_db().execute("SELECT squawk from mysquawktable ORDER BY id DESC", ())
         squawks = query_exec.fetchall()
         query_exec.close()
         squawk_length = len(squawks)
@@ -54,17 +53,15 @@ def utility_processor():
 def root(page_number):
     status = 200
     if request.form:
-        message = request.form['squawk_msg']
+        message = request.form['squawk_message']
         if len(message) > 140:
             err = "Squawk is too long"
             status = 400
         elif len(message) > 0 and len(message) <= 140:
-            query = "INSERT INTO mysquawktable (\'squawk\') VALUES (\'" + message + "\')"
-            query_exec = get_db().execute(query, ())
+            query_exec = get_db().execute("INSERT INTO mysquawktable (\'squawk\') VALUES (\'" + message + "\')", ())
             get_db().commit()
             query_exec.close()
-    cmd = "SELECT COUNT(*) FROM mysquawktable"
-    cmd_exec = get_db().execute(cmd, ())
+    cmd_exec = get_db().execute("SELECT COUNT(*) FROM mysquawktable", ())
     count = cmd_exec.fetchone()[0]
     cmd_exec.close()
     return render_template("index.html", num_squawks=count, page_number=page_number), status

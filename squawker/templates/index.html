@@ -8,16 +8,16 @@
 <body>
 	<form action="/" method="post">
 		<div>
-			<label for="msg">Enter your squawk here (140 characters or less):</label>
+			<label for="msg"><b>Enter your squawk here (140 characters or less):</b></label>
 			<br>
-			<textarea id="msg" name="squawk_msg" required maxlength="140"></textarea>
+			<input type="text" id="msg" name="squawk_message" required maxlength="140"></input>
 		</div>
 		<div class="button">
 			<button type="submit">Post Squawk</button>
 		</div>
 	</form>
 	<div id="listsquawks">
-		<p>Number of Squawks: {{num_squawks}}</p>
+		<p>Total Number of Squawks: {{num_squawks}}</p>
 		{% if page_number > 1 %}
 			<a href="/page/{{ page_number-1 }}">Previous Page</a>
 			&nbsp
