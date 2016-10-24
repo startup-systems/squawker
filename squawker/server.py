@@ -91,14 +91,15 @@ def get_current_page_feed(feeds, page):
 def root(page):
     conn = get_db()
     # TODO change this
+    status = 200
     cursor_object = conn.execute('SELECT * FROM squawks ORDER BY post_time DESC')
     feeds = cursor_object.fetchall()
     count = len(feeds)
     feeds = get_current_page_feed(feeds, page)
     if not feeds and page != 1:
-        abort(404)
+        status = 404
     pagination = Pagination(page, PER_PAGE, count)
-    return render_template('homepage.html', pagination=pagination, feeds=feeds)
+    return render_template('homepage.html', pagination=pagination, feeds=feeds), status
 
 
 @app.route('/new_sq', methods=['POST'])

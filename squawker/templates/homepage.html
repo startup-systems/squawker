@@ -18,8 +18,7 @@ li a:hover { background-color: #111;}
 input {background-color: #555555; border: none; color: white; padding: 15px 32px;
     text-align: center; text-decoration: none; display: inline-block; font-size: 16px;
     margin: 4px 4px; cursor: pointer;}
-input:invalid { border: 1px solid red;}
-input:valid { border: 1px solid green;}
+
 
 .title { margin-left: 2%; margin-top: 5%; font-size: 150%; font-weight: bold;}
 .profile { border-radius: 50%; width: 6%; height: 6%;}
@@ -44,10 +43,14 @@ input:valid { border: 1px solid green;}
 <fieldset>
   <legend>What's happening?</legend>
   <a href="https://github.com/ichigooo"><img src="https://ichigooo.github.io/startup-systems/asset/profile.JPG" class="profile"/></a>
-  <textarea name=content placeholder="New squawk" rows=7 cols=80 required></textarea>
+  <input type="text" name="content" pattern=".{1,140}" width="50%" height="6%"
+   oninvalid="alert('Please keep your squawk within 140 characters!')">
   <input align="right" type="submit" value="Send">
 </fieldset>
 </form>
+{% if error != "" %}
+  <p style="color:red;">{{ error }}</p><br>
+{% endif %}
 <div>
     <h2>What Happened:</h2>
     {% for feed in feeds %}
