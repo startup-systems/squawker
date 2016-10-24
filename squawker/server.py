@@ -43,7 +43,7 @@ def root():
     conn = get_db()
     cur = conn.cursor()
     if request.method == 'Post':
-        squawks = request.form["messages"]
+        squawks = request.form.get["squawks"]
         if len(squawks) > 140:
                 abort(400)
                 error = 'Squawks are limited to 140 characters'
