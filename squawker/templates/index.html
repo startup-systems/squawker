@@ -1,33 +1,47 @@
 <!DOCTYPE html>
+<!-- Making html with buttons and form to input text -->
 <html>
-<head>
-<title>Carolina's Squawker</title>
-<link rel="stylesheet" href="main.css" />
-</head>
-<body>
-	<h1> Carolina's Squawker </h1>
-	<div class="newTweet">
-		<form action="/" method="Post">
+	<head>
+		<title>Carolina's Squawker</title>
+			<link rel="stylesheet" href="main.css" />
+	</head>
+	<body>
+		<h1> Carolina's Squawker </h1>
 			<div>
-				<label for="Tweet_Message"> Your Tweet </label>
-				<textarea id="Tweet" name="Tweet_Message" maxlength="140"></textarea>
-			</div>
-			<div class="botton">
-				<button type="Submit"> Post your Tweet</button>
-				</div>
+				<form action="/" method="Post">
+					<textarea placeholder= "What's your squawk?" name="post_text" maxlength="140" required></textarea>
+					<br>
+					Don't forget! 140 chars max <br>
+				<input type="Submit" value="Post Your Squawk">
+				</form>
 
-				{{ error }}
+<!-- Now creating empty variables to fill up when the user inputs tweets -->
+				<!-- If there is an error, return error message from server.py -->
+				{% if error != "" %}
+ 				<p>{{ error }}</p>
+ 				<br>
+ 			{% endif %}
+ 		</div>
 
-	</form>
-
-	<br><br>
-	
-	<div id="squawks">
-		<p>
-		There are {{num_squawks}} Tweets in the database!
-		</p>
-	</div>
-
+ <!-- Now  creating the framework to collect and display all the incoming Tweets-->
+ 		<div>
+ 			{% for squawk in squawks %}
+ 			
+ 			<div>
+ 				<!-- posting the tweet -->
+ 			    {{ squawk[1] }} 
+ 			    <br>
+ 			    <!-- posting the time tweeted -->
+ 			    {{ squawk[2] }}
+ 			    <br><br>
+ 			<div>
+ 	
+ 			{% else %}
+ 			    <p>Empty.</p>
+ 		    {% endfor %}
+ 		
+ 		</div>
+ 
 </body>
 </html>
 

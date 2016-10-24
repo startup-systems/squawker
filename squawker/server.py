@@ -36,31 +36,26 @@ def close_connection(exception):
 # ------------------------------
 
 
-@app.route('/')
-def root():
-    # create db connection
+@app.route('/', methods=["GET", "POST"])
+def root(page):
+    error = ""
+    status = 200
     conn = get_db()
-    # create cursor object with squawk query
-    cursor_object = conn.execute('SELECT ID, Tweet_Message from squawks order by id desc')
-    # iterate over all squawks and store
-    squawks_list = cursor_object.fetchall()
-    count = len(squawks_list)
-    squawks = get_squawks_for_page(squawks_list, page, PER_PAGE)
+    if(request.method == "POST"):
+        post_text = request.form['post_text']
+        if len(post_text) > 140:
+            status = 400
+            error = "Error! Your Tweet needs to be at most 140 characters!"
+        else:
+            c = conn.execute('INSERT INTO squawks (text) VALUES (?)', [post_text])
+            conn.commit()
+    c = conn.execute('SELECT * FROM squawks ORDER BY id desc')
+    squawks = c.fetchall()
+    count = len(squawks)
+    squawks = get_squawks_for_page(squawks, page)
     if not squawks and page != 1:
         abort(404)
-    return render_template('index.html', squawks=squawks)
-
-
-
-# add a squawk via post request
-@app.route('/add_squawk', methods=['POST'])
-def add_squawk():
-    if len(request.form['Tweet_Message']) > 140:
-        abort(400)
-    conn = get_db()
-    conn.execute('INSERT INTO squawks (Tweet_Message) VALUES (?)', [request.form['Tweet_Message']])
-    conn.commit()
-    return redirect(url_for('root'))
+    return render_template('index.html', squawks=squawks, error=error), status
 
 
 if __name__ == '__main__':
