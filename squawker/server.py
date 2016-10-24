@@ -1,8 +1,10 @@
-from flask import Flask, g, abort, redirect, render_template, url_for, request
+  from flask import Flask, g, abort, redirect, render_template, url_for, request
 import sqlite3
+
 
 # -- leave these lines intact --
 app = Flask(__name__)
+
 
 def get_db():
     if not hasattr(g, 'sqlite_db'):
@@ -48,6 +50,7 @@ def root():
             conn.commit()
     conn.execute("SELECT* FROM squawks ORDER BY createTime DESC")
     listSq = cur.fetchall()
-    return render_template("index.html", allSquawks = listSq)
+    return render_template("index.html", allSquawks=listSq)
 
 if __name__ == '__main__':
+    app.run()
