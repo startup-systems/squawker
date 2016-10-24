@@ -42,6 +42,10 @@ def close_connection(exception):
 def root(pageN):
     if request.form:
         msg = request.form['squawk']
+        if len(msg) == 0:
+            err = "Error: Your squawk is empty!"
+            abort(400)
+
         if len(msg) > 140:
             err = "Error: Please keep your squawk less than 140 characters!"
             abort(400)
