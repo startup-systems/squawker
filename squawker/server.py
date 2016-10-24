@@ -1,6 +1,7 @@
-from flask import Flask, g, jsonify, request, url_for
+from flask import Flask, g, request
 import datetime
 import sqlite3
+import time
 from jinja2 import Environment, PackageLoader
 env = Environment(loader=PackageLoader('squawker', 'templates'))
 
@@ -40,36 +41,35 @@ def close_connection(exception):
 # ------------------------------
 
 
-@app.route('/')
+@app.route('/', methods=['GET'])
 def root():
-    conn = get_db()
-    script = url_for('static', filename='js/squawker.js')
-    template = env.get_template('index.html')
-    return template.render(squawkerScript=script)
+    return get_homepage()
 
 
-@app.route('/squawk', methods=['POST'])
+@app.route('/', methods=['POST'])
 def createSquawk():
-    json = request.get_json()
-    if isValidSquawkJson(json):
-        create_squawk(json)
-        return '', 201
+    squawk = {
+        'text': request.form['text'],
+        'time': time.time(),
+        'username': 'trvslhlt'
+    }
+    if isValidSquawk(squawk):
+        create_squawk(squawk)
+        return get_homepage()
     else:
         return '', 400
 
 
-@app.route('/squawks', methods=['GET'])
-def getAllSquawks():
-    squawkRows = get_all_squawks()
-    squawkReps = [marshal_squawk_row(row) for row in squawkRows]
-    template = env.get_template('feed.html')
-    return template.render(squawks=squawkReps)
+def get_homepage():
+    squawks = get_all_squawks()
+    template = env.get_template('index.html')
+    return template.render(squawks=squawks)
 
 
 def create_squawk(data):
     db = get_db()
     c = db.cursor()
-    squawk = (data['time'] / 1000.0, data['username'], data['text'])
+    squawk = (data['time'], data['username'], data['text'])
     c.execute('INSERT INTO squawks(time, username, text) VALUES (?, ?, ?)', squawk)
     db.commit()
 
@@ -79,12 +79,13 @@ def get_all_squawks():
     c = db.cursor()
     c.execute('SELECT * FROM squawks ORDER BY TIME DESC')
     all_rows = c.fetchall()
-    return all_rows
+    squawks = [marshal_squawk_row(row) for row in all_rows]
+    return squawks
 
 
 def marshal_squawk_row(row):
     time = datetime.datetime.fromtimestamp(int(row[1]))
-    pretty_time = time.strftime('%Y-%m-%d %H:%M:%S')
+    pretty_time = time.strftime('%Y/%m/%d %H:%M:%S')
     squawk_rep = {
         'time': pretty_time,
         'username': row[2],
@@ -93,10 +94,10 @@ def marshal_squawk_row(row):
     return squawk_rep
 
 
-def isValidSquawkJson(squawkJson):
-    if 'text' not in squawkJson:
+def isValidSquawk(squawk):
+    if 'text' not in squawk:
         return False
-    text = squawkJson['text']
+    text = squawk['text']
     if type(text) is str:
         return len(text) <= 140
     else:

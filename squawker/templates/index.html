@@ -1,10 +1,13 @@
 <html>
 	<head>
-	<script   src="https://code.jquery.com/jquery-3.1.1.min.js"   integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="   crossorigin="anonymous"></script>
 	</head>
 	<body>
-    {% include 'composer.html' %}
-    {% include 'feed.html' %}
-	<script type="text/javascript" src="{{ squawkerScript }}"></script>
+		<form action="/" method="post" id="squawk-composer">
+		  Text: <input type="text" name="text">
+		</form>
+		<button type="submit" form="squawk-composer" value="Submit">Squawk</button>
+		{% for squawk in squawks %}
+			<p><b>{{ squawk.username }}:</b> {{ squawk.text }} ({{ squawk.time }})</p>
+		{% endfor %}
 	</body>
 </html>
