@@ -1,25 +1,31 @@
 
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <title>My Squawker</title>
-</head>
-<body>
-    <form method="post">
-		<div>
-			<label for="post">Squawker:</label>
-			<textarea maxlength="140" id="squawk" name="squawk_post"></textarea>
+<html>
+	<head>
+		<title>My Squawker</title>
+	</head>
+	<body>
+		<div class="postMsg">
+			<form action="/" method="POST">
+				<div>
+					<label for="msg">Your Message</label>
+					<textarea maxlength="140" id="squawk" name="squawk_message"></textarea>
+				</div>
+				<div class="button">
+					<button type="submit">Post</button>
+				</div>
+			</form>
 		</div>
-		<div class="button">
-	    	<button type="submit">Post Squawker!</button>
-		</div>
-		<div>
-        	<ul id="post">
-			{% for item in squawks %}
-	        	<li>{{item}}</li>
+		<br>
+		<br>
+		<div class="getMsg">
+			<label for="previousMsg">These are messages you have post from newest to oldest</label>
+			{% for msg in squawks %}
+				<div class="preMsg">
+					<p>{{ msg[2] }}</p>
+					<p>{{ msg[1] }}</p>
+				</div>
 			{% endfor %}
-			</ul>
-	    </div>
-	    </form>
-</body>
+		</div>
+	</body>
 </html>
