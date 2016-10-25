@@ -3,6 +3,7 @@ from flask import Flask, g, abort
 from flask import render_template
 from flask import request
 from flask import redirect
+from flask import url_for
 import sqlite3
 from types import *
 
@@ -54,7 +55,7 @@ def root():
         cursor.execute("""INSERT INTO Squawks (squawk, time) VALUES (?,?);""", (request.form['squawk'], time))
         # cursor.execute("""INSERT INTO Squawks (name, squawk, time) VALUES (?,?,?);""",(request.form['name'], request.form['squawk'], time))
         conn.commit()
-        return redirect('/')
+        return redirect(url_for('root'))
     else:
         cursor.execute("""SELECT * FROM Squawks;""")
         old_squawks = cursor.fetchall()
