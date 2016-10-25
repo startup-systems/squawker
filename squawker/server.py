@@ -1,6 +1,6 @@
 from flask import Flask, g
 import sqlite3
-
+import time
 
 # -- leave these lines intact --
 app = Flask(__name__)
@@ -21,6 +21,8 @@ def init_db():
             db.cursor().executescript(f.read())
         db.commit()
 
+init_db()
+
 
 @app.cli.command('initdb')
 def initdb_command():
@@ -37,12 +39,24 @@ def close_connection(exception):
 # ------------------------------
 
 
+
 @app.route('/')
 def root():
+def root():
     conn = get_db()
-    # TODO change this
-    return "Hello World!"
-
+    cursor = conn.cursor()
+    if request.method == "POST":
+        msg = request.form["content"]
+        if len(msg) <= 140:
+            query = "INSERT INTO squawks (twit, time_stamp) VALUES (?, ?)"
+            time = datetime.datetime.now()
+            cursor.execute(query, (msg, time))
+            conn.commit()
+        else:
+            abort(400)
+    cursor.execute("SELECT squawk FROM squawks ORDER BY time_stamp DESC")
+    res = cursor.fetchall()
+    return render_template("index.html", squawks=res)
 
 if __name__ == '__main__':
     app.run()

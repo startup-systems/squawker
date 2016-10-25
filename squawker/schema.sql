@@ -1,3 +1,6 @@
 -- TODO change this
 DROP TABLE IF EXISTS mytable;
-CREATE TABLE mytable (id integer);
+CREATE TABLE squawks (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  twit VARCHAR(140),
+  time_stamp DATETIME);
