@@ -46,7 +46,7 @@ def close_connection(exception):
 @app.route('/')
 def root():
     db = get_db()
-    cur = db.execute('select title, text from squawks order by id desc')
+    cur = db.execute('select text from squawks order by id desc')
 
     squawks = cur.fetchall()
     # raise ValueError
@@ -56,7 +56,7 @@ def root():
 @app.route('/add_squawk', methods=['POST'])
 def add_squawk():
     db = get_db()
-    db.execute('insert into squawks (text) values (?)', request.form['text']])
+    db.execute('insert into squawks (text) values (?)', [request.form['text']])
     db.commit()
     flash('New entry was successfuly posted')
     return redirect(url_for('root'))
