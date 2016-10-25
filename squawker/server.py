@@ -21,6 +21,7 @@ def init_db():
             db.cursor().executescript(f.read())
         db.commit()
 
+
 @app.cli.command('initdb')
 def initdb_command():
     """Creates the database tables."""
