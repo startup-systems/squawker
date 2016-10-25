@@ -1,6 +1,6 @@
-from flask import Flask, request, g, abort, render_template
 import sqlite3
 import os
+from flask import Flask, request, g, abort, render_template
 import datetime
 
 # -- leave these lines intact --
@@ -38,20 +38,20 @@ def close_connection(exception):
 # ------------------------------
 
 
-@app.route('/')
+@app.route('/', methods=['POST', 'GET'])
 def root():
     conn = get_db()
     cursor = conn.cursor()
     if request.method == "POST":
         msg = request.form["content"]
         if len(msg) <= 140:
-            query = "INSERT INTO squawks (twit, time_stamp) VALUES (?, ?)"
+            query = "INSERT INTO squawks (squawk, time_stamp) VALUES (?, ?)"
             time = datetime.datetime.now()
             cursor.execute(query, (msg, time))
             conn.commit()
         else:
             abort(400)
-    cursor.execute("SELECT twit FROM squawks ORDER BY time_stamp DESC")
+    cursor.execute("SELECT squawk FROM squawks ORDER BY time_stamp DESC")
     res = cursor.fetchall()
     return render_template("index.html", squawks=res)
 

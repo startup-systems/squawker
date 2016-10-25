@@ -6,14 +6,14 @@
     </head>
     
     <body>
-        <h1>My Squawker</h1>
+        <h1>Squawker!</h1>
         <form method="post">
             <textarea name="content" maxlength="140" placeholder="Say something..."></textarea>
             <input type="submit">
-            <h2>Post your squawks here</h2>
+            <h2>Your squawks</h2>
             {% for s in squawks %}
             <p>{{s[0]}}</p>
             {% endfor %}
         </form>
     </body>
-</html> 
+</html>
