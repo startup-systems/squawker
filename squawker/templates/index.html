@@ -6,13 +6,13 @@
                 <h1>Your Squawks</h1>
                 <div class="postSquawk">
                         <form action="/" method="POST">
-                                <p><input type="text" name="message" maxlength="140" placeholder="Post something!" /></p>
+                                <p><input type="text" name="post" id="post" maxlength="140" placeholder="Post something!" /></p>
                                 <p><input type="submit" value="Post"></p>
                         </form>
                 </div>
-                {% for post in posts %}
+                {% for p in posts %}
                 <div class="getSquawk">
-                        {{ post[0] }}
+                        {{ p[0] }}
                 </div>
                 {% endfor %}
         </body>

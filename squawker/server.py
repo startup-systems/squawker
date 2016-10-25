@@ -42,18 +42,18 @@ def root():
     conn = get_db()
     c = conn.cursor()
     if request.method == "POST":
-        msg = request.form["post"]
-        if len(msg) > 140:
+        post = request.form["post"]
+        if len(post) > 140:
             err = "Message is too long"
             abort(400)
         else:
-            result = c.execute("INSERT INTO posts (msg) VALUES (?)", [msg])
+            result = c.execute("INSERT INTO posts (post) VALUES (?)", [post])
             conn.commit()
 
     result = c.execute("SELECT * FROM posts ORDER BY timestamp desc")
-    squawks = c.fetchall()
+    squawks = result.fetchall()
     rows = []
-    for r in result:
+    for r in squawks:
         rows.append(r[0])
     return render_template('index.html', posts=rows)
 
