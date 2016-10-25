@@ -6,6 +6,6 @@ CREATE TABLE squawks (
 	'text' text not null
     CHECK(
         length("text") <= 140,
-        lenth("title") <=140
+        length("title") <= 140
     )
 );
