@@ -1,6 +1,6 @@
 from flask import Flask, g, render_template, request, abort, url_for
 import sqlite3
-
+from datetime import datetime
 
 # -- leave these lines intact --
 app = Flask(__name__)
@@ -42,13 +42,13 @@ def close_connection(exception):
 def root():
     conn = get_db()
     cur = conn.cursor()
-    if request.method == 'Post':
+    if request.method == 'POST':
         squawks = request.form["squawks"]
         if len(squawks) > 140:
                 abort(400)
                 error = 'Squawks are limited to 140 characters'
         else:
-                cur.execute("INSERT INTO squawker(squawks) VALUES(?) ", squawks)
+                cur.execute("INSERT INTO squawker (squawks,time) VALUES (?,?);", (squawks,datetime.now()))
                 conn.commit()
     cur.execute("SELECT squawks FROM squawker ORDER BY time DESC")
     all_squawks = cur.fetchall()
