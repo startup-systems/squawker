@@ -38,7 +38,6 @@ def close_connection(exception):
 # ------------------------------
 
 
-
 @app.route('/')
 def root():
     conn = get_db()
@@ -55,6 +54,7 @@ def root():
     cursor.execute("SELECT twit FROM squawks ORDER BY time_stamp DESC")
     res = cursor.fetchall()
     return render_template("index.html", squawks=res)
+
 
 if __name__ == '__main__':
     app.run()
