@@ -1,5 +1,5 @@
 import os
-from flask import Flask, g, render_template, flash, request, redirect, url_for
+from flask import Flask, g, render_template, flash, request, redirect, url_for, abort 
 import sqlite3
 
 
@@ -55,6 +55,8 @@ def root():
 
 @app.route('/add_squawk', methods=['POST'])
 def add_squawk():
+    if len(request.form['text']<140):
+            abort(400)
     db = get_db()
     db.execute('insert into squawks (text) values (?)', [request.form['text']])
     db.commit()
