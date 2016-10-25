@@ -42,7 +42,6 @@ def close_connection(exception):
 
 @app.route('/')
 def root():
-def root():
     conn = get_db()
     cursor = conn.cursor()
     if request.method == "POST":
