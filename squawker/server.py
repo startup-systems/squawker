@@ -1,6 +1,6 @@
+from flask import Flask, request, g, abort, render_template
 import sqlite3
 import os
-from flask import Flask, request, g, abort, render_template
 import datetime
 
 # -- leave these lines intact --
