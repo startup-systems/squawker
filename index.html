@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Squawker Nation</title>
+        <style>
+        body {
+            margin:auto;
+            background-color:	#D3D3D3;
+            text-decoration-color: blue;
+        </style>
+    </head>
+    
+    <body>
+    <div class="postSquawk">
+        <form action="/" method = "post">
+            
+            <div>
+                <label for="squawk">What's happening?</label>
+                <textarea maxlength="140" id="sqwk" name="usr_sqwk"></textarea>
+            </div>
+            
+            <div class="button">
+                <button type = "submit">Squawk!</button>
+            </div>
+            
+        </form>
+        
+    </div>
+    
+    <br>
+    <img src="http://farm9.static.flickr.com/8016/7102983445_59098c4bc3_m.jpg">
+        
+    <div class="recieveSquawk">
+        
+        <label for="pastSquawks">Squawk Central</label>
+        {% for sqawk in sqawks %}
+        <div class="sqwks">
+            {{squawk[2]}}
+            {{squawk[1]}}
+        </div>
+        {% endfor %}
+    </div>
+        
+            
+    </body>
+</html>
