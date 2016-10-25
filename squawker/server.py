@@ -55,7 +55,7 @@ def root():
 
 @app.route('/add_squawk', methods=['POST'])
 def add_squawk():
-    if len(request.form['text']) < 140:
+    if len(request.form['text']) > 140:
         abort(400)
     db = get_db()
     db.execute('insert into squawks (text) values (?)', [request.form['text']])
