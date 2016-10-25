@@ -40,13 +40,12 @@ def close_connection(exception):
 @app.route('/', methods=["POST", "GET"])
 def root():
     conn = get_db()
-    # To change this
-    if request.mode == "POST":
+    if request.method == "POST":
         newmsg = request.form["user_post"]
         if len(newmsg) > 140:
             return "Post length error", 400
         else:
-            conn.execute("INSERT INTO squawktable (message) VALUE (?);", [newmsg])
+            conn.execute("INSERT INTO squawktable (message) VALUES(?)", [newmsg])
             conn.commit()
     c = conn.cursor()
     c.execute("SELECT * FROM squawktable ORDER BY createTime DESC")
