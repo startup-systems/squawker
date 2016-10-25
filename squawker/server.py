@@ -61,6 +61,7 @@ def add_post():
             conn.commit()
             flash('Successfully posted')
     return redirect(url_for('root'))
- 
+
+
 if __name__ == '__main__':
     app.run()
