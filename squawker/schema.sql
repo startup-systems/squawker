@@ -1,3 +1,6 @@
--- TODO change this
-DROP TABLE IF EXISTS mytable;
-CREATE TABLE mytable (id integer);
+DROP TABLE IF EXISTS posts;
+CREATE TABLE posts (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    message VARCHAR(140) NOT NULL,
+    timestamp INTEGER DEFAULT CURRENT_TIMESTAMP
+);

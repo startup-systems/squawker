@@ -1,4 +1,4 @@
-from flask import Flask, g
+from flask import Flask, g, request, render_template, abort
 import sqlite3
 
 
@@ -21,7 +21,6 @@ def init_db():
             db.cursor().executescript(f.read())
         db.commit()
 
-
 @app.cli.command('initdb')
 def initdb_command():
     """Creates the database tables."""
@@ -37,12 +36,26 @@ def close_connection(exception):
 # ------------------------------
 
 
-@app.route('/')
+@app.route('/', methods=['GET', 'POST'])
 def root():
     conn = get_db()
-    # TODO change this
-    return "Hello World!"
+    c = conn.cursor()
+    if request.method == "POST":
+        msg = request.form["post"]
+        if len(msg) > 140:
+            err = "Message is too long"
+            abort(400)
+        else:
+            result = c.execute("INSERT INTO posts (msg) VALUES (?)", [msg])
+            conn.commit()
+
+    result = c.execute("SELECT * FROM posts ORDER BY timestamp desc")
+    squawks = c.fetchall()
+    rows = []
+    for r in result:
+        rows.append(r[0])
+    return render_template('index.html', posts=rows)
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(Debug=True)
