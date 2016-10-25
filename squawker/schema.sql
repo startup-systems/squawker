@@ -1,3 +1,5 @@
--- TODO change this
-DROP TABLE IF EXISTS mytable;
-CREATE TABLE mytable (id integer);
+DROP TABLE IF EXISTS squawktable;
+CREATE TABLE squawktable (id integer PRIMARY KEY NOT NULL,
+                       timestamp DATETIME DEFAULT CURRENT_TIMESTAMP, 
+                       squawk char(140)
+                      );
