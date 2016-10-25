@@ -1,6 +1,7 @@
-from flask import Flask, g
+from flask import Flask, request, g, abort, render_template
 import sqlite3
-import time
+import os
+import datetime
 
 # -- leave these lines intact --
 app = Flask(__name__)
@@ -53,7 +54,7 @@ def root():
             conn.commit()
         else:
             abort(400)
-    cursor.execute("SELECT squawk FROM squawks ORDER BY time_stamp DESC")
+    cursor.execute("SELECT twit FROM squawks ORDER BY time_stamp DESC")
     res = cursor.fetchall()
     return render_template("index.html", squawks=res)
 

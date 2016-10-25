@@ -1,5 +1,5 @@
 -- TODO change this
-DROP TABLE IF EXISTS mytable;
+DROP TABLE IF EXISTS squawks;
 CREATE TABLE squawks (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   twit VARCHAR(140),
