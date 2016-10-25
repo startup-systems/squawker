@@ -47,7 +47,7 @@ def root(pageN):
             err = "Maximum 140 characters"
             status = 400
         elif len(msg) > 0 and len(msg) <= 140:
-            query=get_db().execute("INSERT INTO squawktable (\'squawk\') VALUES (\'" + msg + "\')", ())
+            query = get_db().execute("INSERT INTO squawktable (\'squawk\') VALUES (\'" + msg + "\')", ())
             get_db().commit()
             query.close()
     command = get_db().execute("SELECT COUNT(*) FROM squawktable", ())
