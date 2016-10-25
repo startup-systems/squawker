@@ -48,7 +48,7 @@ def root():
                 abort(400)
                 error = 'Squawks are limited to 140 characters'
         else:
-                cur.execute("INSERT INTO squawker (squawks,time) VALUES (?,?);", (squawks,datetime.now()))
+                cur.execute("INSERT INTO squawker (squawks, time) VALUES (?,?);", (squawks, datetime.now()))
                 conn.commit()
     cur.execute("SELECT squawks FROM squawker ORDER BY time DESC")
     all_squawks = cur.fetchall()
