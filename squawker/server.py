@@ -37,8 +37,8 @@ def close_connection(exception):
 # ------------------------------
 
 
-@app.route('/', methods=['GET','POST'],defaults={'pageN': 1})
-@app.route('/page/<int:pageN>',methods=['GET','POST'])
+@app.route('/', methods=['GET', 'POST'], defaults={'pageN': 1})
+@app.route('/page/<int:pageN>', methods=['GET', 'POST'])
 def root(pageN):
     status = 200
     if request.form:
@@ -47,22 +47,23 @@ def root(pageN):
             err = "Maximum 140 characters"
             status = 400
         elif len(msg) > 0 and len(msg) <= 140:
-            query=get_db().execute("INSERT INTO squawktable (\'squawk\') VALUES (\'" + msg + "\')", ())
+            query=get_db().execute("INSERT INTO squawktable (\'squawk\') VALUES (\'" + msg +0 "\')", ())
             get_db().commit()
             query.close()
-    command = get_db().execute("SELECT COUNT(*) FROM squawktable",())
+    command = get_db().execute("SELECT COUNT(*) FROM squawktable", ())
     count = command.fetchone()[0]
     command.close()
-    return render_template("index.html", num = count, pageN = pageN), status
+    return render_template("index.html", num=count, pageN=pageN), status
 
-@app.context_processor 
-def utility_processor(): 
-    def loadSquawks(pageN=1): 
-        command = get_db().execute("SELECT squawk FROM squawktable ORDER BY timestamp DESC", ()) 
-        squawks = command.fetchall() 
-        command.close() 
-        return squawks[(pageN - 1) * 20:min(len(squawks), pageN * 20)] 
-    return dict(loadSquawks=loadSquawks) 
+
+@app.context_processor
+def utility_processor():
+    def loadSquawks(pageN=1):
+        command = get_db().execute("SELECT squawk FROM squawktable ORDER BY timestamp DESC", ())
+        squawks = command.fetchall()
+        command.close()
+        return squawks[(pageN - 1) * 20:min(len(squawks), pageN * 20)]
+    return dict(loadSquawks=loadSquawks)
 
 if __name__ == '__main__':
     app.run()
