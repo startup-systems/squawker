@@ -7,6 +7,21 @@
             margin:auto;
             background-color:	#D3D3D3;
             text-decoration-color: blue;
+            }
+            
+        label
+            {
+            font-family:fantasy;
+            display: block;
+            width: 156px;
+            cursor: pointer;
+            padding-right: 6px;
+            padding-bottom: 1px;
+            }     
+        form {
+                
+                margin: auto;
+            }
         </style>
     </head>
     
@@ -32,12 +47,12 @@
         
     <div class="recieveSquawk">
         
-        <label for="pastSquawks">Squawk Central</label>
-        {% for sqawk in sqawks %}
-        <div class="sqwks">
+        <label>Trending on Squawker</label>
+        <ul>
+        {% for squawk in squawks %}
             {{squawk[2]}}
             {{squawk[1]}}
-        </div>
+        </ul>
         {% endfor %}
     </div>
         

@@ -1,7 +1,6 @@
-
 from flask import Flask, g, request, render_template
 import sqlite3
-
+import datetime
 
 # -- leave these lines intact --
 app = Flask(__name__)
@@ -43,14 +42,16 @@ def root():
     conn = get_db()
     cur=conn.cursor()
     if request.method == "POST":
-       newS=request.form.get("content")
-       if len(newS)<140:
-          toExecute="INSERT INTO squawks (squawk) VALUES (?)"
-          cur.execute(toExecute, [newS])
-          cur.commit()
-    sel="SELECT squawk FROM squawks ORDER BY id DESC"
+        newS=request.form.get("content")
+        if len(newS)<=140:
+            toExecute="INSERT INTO squawks (squawk, ts) VALUES (?, ?)"
+            cur.execute(toExecute, [newS, newTS])
+            cur.commit()
+        else:
+            abort(400)
+    sel="SELECT squawk FROM squawks ORDER BY ts DESC"
     cur.execute(sel)
-    all=cur.fetchall()
+    allS=cur.fetchall()
     cur.close()
     return render_template("index.html", squawks=allS)
 
