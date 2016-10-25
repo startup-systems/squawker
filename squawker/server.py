@@ -42,7 +42,7 @@ def root():
     conn = get_db()
     c = conn.cursor()
     if request.method == "POST":
-        post = request.form["squawk_message"]
+        post = request.form["squawk_post"]
         if len(post) > 140:
             abort(400)
         else:
