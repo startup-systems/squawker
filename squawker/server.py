@@ -39,15 +39,16 @@ def close_connection(exception):
 # ------------------------------
 
 
-@app.route('/',methods=['POST','GET'])
+@app.route('/', methods=['POST', 'GET'])
 def root():
     conn = get_db()
     cur = conn.cursor()
     conts = cur.execute('SELECT posts From mytable ORDER BY ID DESC')
     posts = conts.fetchall()
-    return render_template('index.html',posts=posts)
+    return render_template('index.html', posts=posts)
 
-@app.route('/add', methods=['POST','GET'])
+
+@app.route('/add', methods=['POST', 'GET'])
 def add_post():
     conn = get_db()
     cur = conn.cursor()
@@ -56,7 +57,7 @@ def add_post():
         if len(apost) > 140:
             abort(400)
         else:
-            cur.execute('INSERT INTO mytable (posts) VALUES (?)',[apost])
+            cur.execute('INSERT INTO mytable (posts) VALUES (?)', [apost])
             conn.commit()
             flash('Successfully posted')
     return redirect(url_for('root'))
