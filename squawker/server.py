@@ -46,8 +46,8 @@ def root(post=0):
     c = conn.cursor()
     c.execute("SELECT * FROM squawks")
     squawks = list(reversed(c.fetchall()))
-    has_next = (len(squawks) > post+10)
-    return render_template('index.html', squawks=squawks[post:post+10], post=post, has_next=has_next, total=len(squawks))
+    has_next = (len(squawks) > post+20)
+    return render_template('index.html', squawks=squawks[post:post+20], post=post, has_next=has_next, total=len(squawks))
 
 
 @app.route('/submit', methods=['POST'])
