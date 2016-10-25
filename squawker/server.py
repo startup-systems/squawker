@@ -40,14 +40,14 @@ def close_connection(exception):
 
 @app.route('/')
 def root(post=0):
-    if request.args.get('post') != None:
+    if request.args.get('post') is not None:
         post = int(request.args.get('post'))
     conn = get_db()
     c = conn.cursor()
     c.execute("SELECT * FROM squawks")
     squawks = list(reversed(c.fetchall()))
-    has_next = (len(squawks) > post+20)
-    return render_template('index.html', squawks=squawks[post:post+20], post=post, has_next=has_next, total=len(squawks))
+    has_next = (len(squawks) > post + 20)
+    return render_template('index.html', squawks=squawks[post:post + 20], post=post, has_next=has_next, total=len(squawks))
 
 
 @app.route('/submit', methods=['POST'])
