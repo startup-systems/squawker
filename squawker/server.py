@@ -38,7 +38,7 @@ def close_connection(exception):
 
 def getSquawks():
     conn = get_db()
-    res = conn.execute('Select * From squawks ORDER BY id desc')
+    res = conn.execute('Select * From squawks ORDER BY time desc')
     squawks = res.fetchall()
     return squawks
     
@@ -60,7 +60,7 @@ def root():
             error = "greater than 140 characters"
         else:
             conn = get_db()
-            conn.execute('INSERT INTO squawks (squawk) VALUES (?)', [squawk])
+            conn.execute('INSERT INTO squawks (squawk) VALUES (?)', [squawk + str(i)])
             conn.commit()
         
     return render_template('index.html', squawks=getSquawks())#"Hello World!"
