@@ -1,4 +1,4 @@
-from flask import Flask, g
+from flask import Flask, g, jsonify
 import sqlite3
 from flask import render_template, request, redirect, url_for, abort
 from math import ceil
@@ -124,6 +124,18 @@ def add_squawk():
     conn.execute('INSERT INTO squawks (squawk_text) VALUES (?)', [request.form['squawk_text']])
     conn.commit()
     return redirect(url_for('root'))
+
+
+# TODO create a JSON API that lists all possible squawks
+@app.route('/api/squawks', methods=['GET'])
+def list_squawks():
+    # create db connection
+    conn = get_db()
+    # create cursor object with squawk query
+    cursor_object = conn.execute('SELECT ID, squawk_text from squawks order by id desc')
+    # iterate over all squawks and store
+    squawks = cursor_object.fetchall()
+    return jsonify(squawks)
 
 
 if __name__ == '__main__':

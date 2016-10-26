@@ -34,7 +34,7 @@
   <div>
     <div class="container">
       <div class=pagination>
-      {%- for page in pagination.iter_pages() %}
+      {% for page in pagination.iter_pages() %}
         {% if page %}
           {% if page != pagination.page %}
             <a href="{{ url_for_pages(page) }}">{{ page }}</a>
@@ -44,7 +44,7 @@
         {% else %}
           <span class=ellipsis>…</span>
         {% endif %}
-      {%- endfor %}
+      {% endfor %}
       {% if pagination.has_next %}
         <a href="{{ url_for_pages(pagination.page + 1)
           }}">Next &raquo;</a>
