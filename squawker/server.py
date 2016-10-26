@@ -1,4 +1,4 @@
-from flask import Flask, g
+from flask import Flask, request, session, g, redirect, url_for, abort, render_template, flash
 import sqlite3
 
 
@@ -36,13 +36,34 @@ def close_connection(exception):
         db.close()
 # ------------------------------
 
-
-@app.route('/')
-def root():
+def getSquawks():
     conn = get_db()
-    # TODO change this
-    return "Hello World!"
+    res = conn.execute('Select * From squawks ORDER BY id desc')
+    squawks = res.fetchall()
+    return squawks
+    
+#@app.route('/', methods=['POST'])
+def addSquawk():
 
+    return render_template('index.html', squawks=squawks)#"Hello World!"
+    #projectpath = request.form.projectFilePath
+
+@app.route('/', methods=['POST'])
+@app.route('/')
+def root():    
+    # TODO change this
+    status = 200
+    if request.method == 'POST':
+        squawk = request.form['squawk']
+        if (len(squawk) > 140):
+            status = 400
+            error = "greater than 140 characters"
+        else:
+            conn = get_db()
+            conn.execute('INSERT INTO squawks (squawk) VALUES (?)', [squawk])
+            conn.commit()
+        
+    return render_template('index.html', squawks=getSquawks())#"Hello World!"
 
 if __name__ == '__main__':
     app.run()

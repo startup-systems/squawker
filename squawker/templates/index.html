@@ -1,0 +1,42 @@
+<head>
+<title>Squawker</title>
+<style>
+.squawk_button:hover{
+    background-color:darkorange;
+    border-style: outset;
+    border-color: orange;
+    border-width: 2px;
+    padding: 6px 13px;
+}
+.squawk_button{
+    background-color:orange;
+    padding: 8px 15px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    float:right;
+}
+table{
+    width 25%;
+}
+.squawk_row{
+    padding: 15px 10px;
+    border-bottom: solid;
+    border-width: 1px;
+}
+</style>
+</head>
+<body>
+<table align="center">
+<form action="/" method="post">
+<tr><td><textarea rows="4" cols="40" name="squawk" maxlength="140" placeholder="Type your squawk here..."></textarea></td></tr>
+<tr><td><input class="squawk_button" type="Submit" value="Squawk!" /></td></tr>
+</form>
+</table>
+
+<table align="center">
+{%for squawk in squawks: %}
+    <tr><td class="squawk_row" > {{ squawk[1]}} </td></tr>
+{% endfor %}
+</table
+</body>
