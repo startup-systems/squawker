@@ -15,6 +15,8 @@
     border-radius: 10px;
     cursor: pointer;
     float:right;
+    color:black;
+    text-decoration:none;
 }
 table{
     width 25%;
@@ -38,5 +40,6 @@ table{
 {%for squawk in squawks: %}
     <tr><td class="squawk_row" > {{ squawk[1]}} </td></tr>
 {% endfor %}
-</table
+    <td><form action="/" method="get"><input type="hidden" value="{{page_num}}" name="page_num"/><input class="squawk_button" type="submit"  /></form></td>
+</table>
 </body>

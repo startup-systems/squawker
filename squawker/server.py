@@ -36,21 +36,17 @@ def close_connection(exception):
         db.close()
 # ------------------------------
 
+
 def getSquawks():
     conn = get_db()
-    res = conn.execute('Select * From squawks ORDER BY time desc')
+    res = conn.execute('Select * From squawks ORDER BY time desc LIMIT 20 OFFSET (?)', '0')
     squawks = res.fetchall()
     return squawks
-    
-#@app.route('/', methods=['POST'])
-def addSquawk():
 
-    return render_template('index.html', squawks=squawks)#"Hello World!"
-    #projectpath = request.form.projectFilePath
 
 @app.route('/', methods=['POST'])
 @app.route('/')
-def root():    
+def root():
     # TODO change this
     status = 200
     if request.method == 'POST':
@@ -62,8 +58,8 @@ def root():
             conn = get_db()
             conn.execute('INSERT INTO squawks (squawk) VALUES (?)', [squawk])
             conn.commit()
-        
-    return render_template('index.html', squawks=getSquawks())#"Hello World!"
+
+    return render_template('index.html', squawks=getSquawks())
 
 if __name__ == '__main__':
     app.run()
