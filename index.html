@@ -9,11 +9,11 @@
             text-decoration-color: blue;
             }
             
-        label
+        h2
             {
-            font-family:fantasy;
+            font-family: Helvetica; 
             display: block;
-            width: 156px;
+            width: 260px;
             cursor: pointer;
             padding-right: 6px;
             padding-bottom: 1px;
@@ -30,8 +30,8 @@
         <form action="/" method = "post">
             
             <div>
-                <label for="squawk">What's happening?</label>
-                <textarea maxlength="140" id="sqwk" name="usr_sqwk"></textarea>
+                What's happening? <br>                
+                <textarea name = "msg" id = "msg" maxlength = "140"></textarea>                
             </div>
             
             <div class="button">
@@ -44,16 +44,18 @@
     
     <br>
     <img src="http://farm9.static.flickr.com/8016/7102983445_59098c4bc3_m.jpg">
-        
+    <br>    
     <div class="recieveSquawk">
-        
-        <label>Trending on Squawker</label>
+    {% block content %}
+        <h2>Trending on Squawker</h2>
         <ul>
-        {% for squawk in squawks %}
-            {{squawk[2]}}
-            {{squawk[1]}}
+        {% for sqk in squawks %}
+            <ul>{{ sqk[2] }}</ul>
+            <ul>{{ sqk[1] }}</ul>
+        {% else %}
+        <ul>Get squawking!</ul>    
         </ul>
-        {% endfor %}
+        {% endfor %}    
     </div>
         
             
