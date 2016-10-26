@@ -52,7 +52,7 @@ def root():
     cur.execute(sel)
     allS = cur.fetchall()
     cur.close()
-    return render_template("index.html", squawks=allS)
+    return render_template("index.html", squawks = allS)
 
 if __name__ == '__main__':
     app.debug = True
