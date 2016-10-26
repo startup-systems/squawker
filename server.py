@@ -42,17 +42,18 @@ def root():
     if request.method == "POST":
         newS = request.form["msg"]
         if len(newS) <= 140:
-            newTS = datetime.datetime.now()
-            toExecute = "INSERT INTO squawks (msg, ts) VALUES (?, ?)"
-            cur.execute(toExecute, [newS, newTS])
-            cur.commit()
+            toExecute="INSERT INTO squawks (squawk) VALUES (?)"
+            cur.execute(toExecute, [newS])
+            conn.commit()
         else:
             abort(400)
+            
+            
     sel = "SELECT * FROM squawks ORDER BY ts DESC"
     cur.execute(sel)
     allS = cur.fetchall()
     cur.close()
-    return render_template("index.html", squawks = allS)
+    return render_template("index.html", squawks=allS)
 
 if __name__ == '__main__':
     app.debug = True
