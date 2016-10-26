@@ -60,7 +60,7 @@ def root():
             error = "greater than 140 characters"
         else:
             conn = get_db()
-            conn.execute('INSERT INTO squawks (squawk) VALUES (?)', [squawk + str(i)])
+            conn.execute('INSERT INTO squawks (squawk) VALUES (?)', [squawk])
             conn.commit()
         
     return render_template('index.html', squawks=getSquawks())#"Hello World!"
