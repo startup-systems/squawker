@@ -1,3 +1,2 @@
--- TODO change this
-DROP TABLE IF EXISTS mytable;
-CREATE TABLE mytable (id integer);
+DROP TABLE IF EXISTS squaks;
+CREATE TABLE squaks (id integer primary key, squak TEXT);

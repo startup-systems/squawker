@@ -1,6 +1,7 @@
-from flask import Flask, g
+from __future__ import print_function
+from flask import Flask, g, render_template, request, redirect, url_for
 import sqlite3
-
+import sys
 
 # -- leave these lines intact --
 app = Flask(__name__)
@@ -38,10 +39,36 @@ def close_connection(exception):
 
 
 @app.route('/')
-def root():
+def root(scroll=0):
     conn = get_db()
-    # TODO change this
-    return "Hello World!"
+    cursor = conn.cursor()
+    count = cursor.execute('SELECT COUNT(*) FROM squaks').fetchall()[0][0]
+    print("count", count, file=sys.stderr)
+    if request.args.get('scroll') is not None:
+        scroll = int(request.args.get('scroll'))
+        print("scroll", scroll, file=sys.stderr)
+    else:
+        scroll = 0
+        print("No scrolling")
+    if count:
+        cursor.execute('SELECT * FROM squaks')
+        squaks = list(reversed(cursor.fetchall()))
+        print(squaks, scroll, file=sys.stderr)
+        return render_template('index.html', squaks=squaks[scroll:scroll + 20], nextButton=(count > scroll + 20), scroll=scroll)
+    else:
+        return render_template('index.html', squaks=[], nextButton=False, scroll=0)
+
+
+@app.route('/submit', methods=['POST'])
+def newSquak():
+    print(request.form['newSquak'], file=sys.stderr)
+    conn = get_db()
+    cur = conn.cursor()
+    cur.execute('INSERT INTO squaks(squak) VALUES (?)', (request.form['newSquak'],))
+    cur.execute('SELECT * from squaks')
+    conn.commit()
+    print(cur.fetchall(), file=sys.stderr)
+    return redirect(url_for('root'))
 
 
 if __name__ == '__main__':
