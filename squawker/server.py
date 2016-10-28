@@ -61,10 +61,13 @@ def root(scroll=0):
 
 @app.route('/submit', methods=['POST'])
 def newSquak():
-    print(request.form['newSquak'], file=sys.stderr)
+    newSquak = request.form['newSquak']
+    if not newSquak or len(newSquak) > 140:
+        return redirect(url_for('root'))
+    print(newSquak, file=sys.stderr)
     conn = get_db()
     cur = conn.cursor()
-    cur.execute('INSERT INTO squaks(squak) VALUES (?)', (request.form['newSquak'],))
+    cur.execute('INSERT INTO squaks(squak) VALUES (?)', (newSquak,))
     cur.execute('SELECT * from squaks')
     conn.commit()
     print(cur.fetchall(), file=sys.stderr)
