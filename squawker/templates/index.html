@@ -8,7 +8,7 @@
 			<form action="/" method="POST">
 				<div>
 					<label for="msg">Type your message:</label>
-					<textarea id="message" name="caption"></textarea>
+					<br><textarea id="message" name="caption"></textarea>
 				</div>
 				<div class="button">
 					<button type="submit">Post it!</button>
@@ -17,7 +17,7 @@
 		</div>
 
 		<div class="getMsg">
-			<label for="previousMsg">The previous squawks</label>
+			<label for="previousMsg">Below are the previous squawks:</label>
 			{% for msg in captions %}
 				<div>
 					<p>{{ msg[2] }}</p>
