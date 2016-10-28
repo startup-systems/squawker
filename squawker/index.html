@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>My homepage</title>
+	</head>
+	<body>
+		<div class="postMsg">
+			<form action="/" method="POST">
+				<div>
+					<label for="msg">Type your message:</label>
+					<textarea id="message" name="caption"></textarea>
+				</div>
+				<div class="button">
+					<button type="submit">Post it!</button>
+				</div>
+			</form>
+		</div>
+
+		<div class="getMsg">
+			<label for="previousMsg">The previous squawks</label>
+			{% for msg in allMsg %}
+				<div>
+					<p>{{ msg[2] }}</p>
+					<p>{{ msg[1] }}</p>
+				</div>
+			{% endfor %}
+		</div>
+	</body>
+</html>
