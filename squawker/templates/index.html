@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>My homepage</title>
+		<title>Elya's squawker assignment</title>
 	</head>
 	<body>
 		<div class="postMsg">
 			<form action="/" method="POST">
 				<div>
 					<label for="msg">Type your message:</label>
-					<br><textarea id="message" name="caption" maxlength="140"></textarea>
+					<br><textarea name="caption" id="message" maxlength="140"></textarea>
 				</div>
 				<div class="button">
 					<button type="submit">Post it!</button>
@@ -20,7 +20,6 @@
 			<label for="previousMsg">Below are the previous squawks:</label>
 			{% for msg in captions %}
 				<div>
-<!--					<p>{{ msg[2] }}</p> -->
 					<p>{{ msg[1] }}</p>
 				</div>
 			{% endfor %}
