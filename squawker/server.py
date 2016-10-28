@@ -41,19 +41,16 @@ def close_connection(exception):
 def root():
     conn = get_db()
     if request.method == "POST":
-      getCaption = request.form['caption']
-      if len(getCaption) > 140:
-        abort(400)
-      else:
-        cc_object = conn.execute('INSERT INTO listOfSquawks (caption) VALUES (?)', [getCaption])
-        conn.commit()
-    cc_object = conn.execute('SELECT * FROM listOfSquawks ORDER BY id desc')  
+        getCaption = request.form['caption']
+        if len(getCaption) > 140:
+            abort(400)
+        else:
+            cc_object = conn.execute('INSERT INTO listOfSquawks (caption) VALUES (?)', [getCaption])
+            conn.commit()
+    cc_object = conn.execute('SELECT * FROM listOfSquawks ORDER BY id desc')
     squawkers = cc_object.fetchall()
     
     return render_template('index.html', captions=squawkers)
-    
-    
-
 
 if __name__ == '__main__':
     app.run()
