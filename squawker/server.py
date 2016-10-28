@@ -49,7 +49,6 @@ def root():
             conn.commit()
     cc_object = conn.execute('SELECT * FROM listOfSquawks ORDER BY id desc')
     squawkers = cc_object.fetchall()
-    
     return render_template('index.html', captions=squawkers)
 
 if __name__ == '__main__':
