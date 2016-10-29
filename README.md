@@ -28,3 +28,12 @@ Visual styling is not considered as part of the score, though feel free to get c
 * Pagination (**10%**)
     * The squawks are shown 20 at a time
     * There's a `Next` link to see older squawks, if there are any
+
+### Tips
+
+* You will set up Django in your fork of this repository yourself.
+* Run Django with the following from within your [virtual machine](https://github.com/startup-systems/vm):
+
+    ```sh
+    python3 manage.py runserver 0.0.0.0:8000
+    ```
