@@ -63,7 +63,6 @@ def root():
 
 @app.route("/api/squawk", methods=["POST"])
 def receive_squawk():
-    print(request.form)
     if ((request.form['squawk']) == "" or len(request.form['squawk']) > 140):
         abort(400)
     else:
