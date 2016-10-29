@@ -6,3 +6,5 @@ __pycache__/
 *.db3
 *.sqlite
 *.sqlite3
+*.log
+local_settings.py
