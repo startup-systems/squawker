@@ -70,3 +70,7 @@ pep8
 # check the extra credit
 pytest --tb short --runxfail
 ```
+
+### Code Climate checks
+
+To run locally, see [the instructions](https://docs.google.com/document/d/1-hk6GzhV1yHU1T0E7uqcdNTtvv3fuq1_WECQOWOT2zw/edit#heading=h.w5f2vmvyb0n).
