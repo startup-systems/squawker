@@ -31,9 +31,16 @@ Visual styling is not considered as part of the score, though feel free to get c
 
 ### Tips
 
-* You will set up Django in your fork of this repository yourself.
+* You will set up Django project in your copy of this repository yourself. To do so, run the following from this directory:
+
+    ```sh
+    django-admin startproject squawker .
+    ```
+
 * Run Django with the following from within your [virtual machine](https://github.com/startup-systems/vm):
 
     ```sh
     python3 manage.py runserver 0.0.0.0:8000
     ```
+
+* Django will use SQLite3 as it's database by default, but you'll have to change this to PostgreSQL ("Postgres") before you deploy to Heroku.
