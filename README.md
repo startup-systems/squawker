@@ -31,12 +31,24 @@ Visual styling is not considered as part of the score, though feel free to get c
 
 ### Tips
 
+* You will need to set up the project dependencies yourself. Add the following to your [`requirements.txt`]:
+
+    ```
+    Django~=1.10.2
+    pep8~=1.7.0
+    pytest~=3.0.3
+    pytest-django~=3.0.0
+    pytest-json~=0.4.0
+    git+https://github.com/startup-systems/splinter.git@acfac451ee3943e1e155d06249f6ed0aa851b948#egg=splinter[django]
+    ```
+
 * You will set up Django project in your copy of this repository yourself. To do so, run the following from this directory:
 
     ```sh
     django-admin startproject squawker .
     ```
 
+* If your project is named something other than `squawker`, you will need to modify the `DJANGO_SETTINGS_MODULE` value in [`pytest.ini`].
 * Run Django with the following from within your [virtual machine](https://github.com/startup-systems/vm):
 
     ```sh
