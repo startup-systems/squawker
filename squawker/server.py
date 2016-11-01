@@ -41,8 +41,23 @@ def close_connection(exception):
 def root():
     conn = get_db()
     # TODO change this
-    return "Hello World!"
+    cur = conn.execute('select title, text from entries order by id desc')
+    entries = cur.fetchall()
+    return render_template('show_entries.html', entries=entries)
 
+
+@app.route('/add', methods=['POST'])
+def add_entry():
+    conn = get_db()
+    conn.execute('insert into entries (title, text) values (?,?)',
+        [request.form['title'], request.form['text']])
+    conn.commit()
+    flash('new entry was successfully posted')
+    return redirect(url_for('show_entries'))
 
 if __name__ == '__main__':
     app.run()
+
+
+
+
