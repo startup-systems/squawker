@@ -1,0 +1,8 @@
+Django~=1.10.2
+pep8~=1.7.0
+pytest~=3.0.3
+pytest-django~=3.0.0
+pytest-json~=0.4.0
+git+https://github.com/startup-systems/splinter.git@acfac451ee3943e1e155d06249f6ed0aa851b948#egg=splinter[django]
+dj-database-url~=0.4.1
+psycopg2~=2.6.2
