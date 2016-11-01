@@ -4,7 +4,7 @@
     <title>My Squawker</title>
 </head>
 <body>
-    <form method="post">
+    <form method="Post">
 		<div>
 			<label for="post">Squawker:</label>
 			<textarea maxlength="140" id="squawk" name="squawk_post"></textarea>
@@ -14,7 +14,7 @@
 		</div>
 	    </form>
 		<div>
-        	<ul id="post">
+        	<ul id="squawk">
 			{% for item in squawks %}
 	        	<li>{{item}}</li>
 			{% endfor %}

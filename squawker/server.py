@@ -40,7 +40,6 @@ def close_connection(exception):
 @app.route('/', methods=["POST", "GET"])
 def root():
     conn = get_db()
-    c = conn.cursor()
     if request.method == "POST":
         post = request.form.get["squawk_post"]
         if len(post) > 140:
@@ -48,9 +47,10 @@ def root():
         else:
             c.execute("INSERT INTO mytable (squawk) VALUES (?)", [post])
             conn.commit()
+    c = conn.cursor()        
     c.execute("SELECT * FROM mytable ORDER BY id DESC")
-    squawkers = c.fetchall()
-    return render_template("index.html", squawks=squawkers)
+    squawks = c.fetchall()
+    return render_template("index.html", squawks=squawks)
 
 
 
