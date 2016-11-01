@@ -119,7 +119,7 @@ def test_server_side_validation(browser):
     TEXT = random_string(minlength=141, maxlength=200)
     create_squawk(browser, TEXT)
     # TODO ignore if it's in the `value` of the `<input>`
-    assert browser.is_text_not_present(TEXT)
+    assert browser.status_code.code == 400 or browser.is_text_not_present(TEXT)
 
 
 @pytest.mark.score(2.5)
