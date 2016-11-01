@@ -7,7 +7,7 @@ from .models import Squawk
 def root(request):
     if (request.method == "POST"):
         inputMessage = request.POST['message']
-    	if (len(inputMessage) <= 140):
+        if (len(inputMessage) <= 140):
             squawk = Squawk(message=inputMessage)
             squawk.save()
         else:
