@@ -1,5 +1,6 @@
-Flask~=0.11.1
+Django~=1.10.2
 pep8~=1.7.0
 pytest~=3.0.3
+pytest-django~=3.0.0
 pytest-json~=0.4.0
--e git+https://github.com/startup-systems/splinter.git@ba3afc8a0750dcfea096f8f89adb58f8f8d78276#egg=splinter[flask]
+git+https://github.com/startup-systems/splinter.git@acfac451ee3943e1e155d06249f6ed0aa851b948#egg=splinter[django]
