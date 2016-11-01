@@ -43,7 +43,7 @@ def root():
     if request.method == "POST":
         post = request.form["squawk_post"]
         if len(post) > 140:
-            abort(400)
+            return "Message is too long", 400
         else:
             conn.execute("INSERT INTO mytable (squawk) VALUES(?)", [post])
             conn.commit()
