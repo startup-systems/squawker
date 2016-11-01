@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.http import HttpResponseBadRequest
 from django.http import HttpResponse
 from .models import Squawk
 
@@ -12,5 +13,5 @@ def root(request):
   else:
     return HttpResponseBadRequest("Error: Message Exceeded Max Length of 140")
 
-  squawkers = Squawk.objects.all()
+  squawkers = Squawk.objects.order_by('-created')
   return render(request, "index.html", {"squawks":squawkers})
