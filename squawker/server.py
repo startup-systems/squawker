@@ -42,13 +42,13 @@ def show_entries():
     db = get_db()
     cur = db.execute('SELECT id, squawk FROM entries ORDER BY id DESC')
     entries = cur.fetchall()
-    return render_template('show_entries.html', entries=entries)    
+    return render_template('show_entries.html', entries=entries)
 
 
 @app.route('/add', methods=['POST'])
 def add_entry():
     squawk = request.form['text']
-    if len(squawk)>140:
+    if len(squawk) > 140:
         abort(400)
         return
     db = get_db()
