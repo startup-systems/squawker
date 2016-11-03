@@ -1,7 +1,5 @@
 from flask import Flask, g, request, redirect, url_for, abort, render_template
 import sqlite3
-
-
 # -- leave these lines intact --
 app = Flask(__name__)
 
@@ -36,7 +34,6 @@ def close_connection(exception):
         db.close()
 # ------------------------------
 
-
 @app.route('/')
 def root():
     db = get_db()
@@ -44,7 +41,6 @@ def root():
     cur = db.execute('select title, text from entries order by id desc')
     entries = cur.fetchall()
     return render_template('show_entries.html', entries=entries)
-
 
 @app.route('/add', methods=['POST'])
 def add_entry():
@@ -59,4 +55,3 @@ def add_entry():
 
 if __name__ == '__main__':
     app.run()
-    
