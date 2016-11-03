@@ -36,7 +36,7 @@ def close_connection(exception):
 
 
 @app.route('/')
-def root():
+def show_entries():
     db = get_db()
     # TODO change this
     cur = db.execute('SELECT id, squawk FROM entries ORDER BY id DESC')
@@ -53,7 +53,7 @@ def add_entry():
     db = get_db()
     db.execute('INSERT INTO entries (squawk) VALUES (?)', [squawk])
     db.commit()
-    return redirect(url_for('/'))
+    return redirect(url_for('show_entries'))
 
 if __name__ == '__main__':
     app.run()
