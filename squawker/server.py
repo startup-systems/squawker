@@ -2,8 +2,10 @@ from flask import Flask
 from flask import g
 from flask import render_template
 from flask import request
-import sqlite3, time
-import datetime, random
+import sqlite3
+import time
+import datetime
+import random
 import webbrowser
 
 # -- leave these lines intact --
@@ -25,7 +27,7 @@ def init_db():
             db.cursor().executescript(f.read())
         db.commit()
 
-        
+  
 @app.cli.command('initdb')
 def initdb_command():
     """Creates the database tables."""
