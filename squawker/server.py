@@ -1,4 +1,4 @@
-from flask import Flask, g
+from flask import Flask, g, request, redirect, url_for, abort, render_template
 import sqlite3
 
 
@@ -39,20 +39,22 @@ def close_connection(exception):
 
 @app.route('/')
 def root():
-    conn = get_db()
+    db = get_db()
     # TODO change this
-    cur = conn.execute('select title, text from entries order by id desc')
+    cur = db.execute('select title, text from entries order by id desc')
     entries = cur.fetchall()
     return render_template('show_entries.html', entries=entries)
 
 
 @app.route('/add', methods=['POST'])
 def add_entry():
-    conn = get_db()
-    conn.execute('insert into entries (title, text) values (?,?)',
-        [request.form['title'], request.form['text']])
-    conn.commit()
-    flash('new entry was successfully posted')
+    squawk = request.form['text']
+    if len(squawk) > 140:
+        abort(400)
+        return
+    db = get_db()
+    db.execute('INSERT INTO entries (squawk) VALUES (?)', [squawk])
+    db.commit()
     return redirect(url_for('show_entries'))
 
 if __name__ == '__main__':
