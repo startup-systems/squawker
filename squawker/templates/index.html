@@ -5,8 +5,6 @@
     <body>
         <h1>Your Timeline!</h1>
         <form action='/api/squawk' method="POST">
-        <!-- <p>Name: 
-            <input name="name" type = "text" placeholder="Name"  maxlength="40"  required/></p>-->
         <p> <input name="squawk" type="text" placeholder="140 length message" maxlength="140" style="width: 300px; height: 75px;" required/></p>
            <p> <input  Value = "Squawk" type="submit" /></p>
         </form>
@@ -17,6 +15,14 @@
             <p>{{ squawk[1]}}</p>
         </div>
         {% endfor %}
+         {% if has_prev %}
+          <a href="{{url_for('root', page=page-1) }}"> &laquo; Previous</a>
+          {% endif %}
+           <div>
+          {% if has_next %}
+            <a href= "{{url_for('root', page=page+1)}}">Next &raquo;</a>
+          {% endif %}
+           </div>
     </div>
     </body>
 </html>
