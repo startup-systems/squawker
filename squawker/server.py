@@ -39,7 +39,7 @@ def close_connection(exception):
 def root():
     db = get_db()
     # TODO change this
-    cur = db.execute('select title, text from entries order by id desc')
+    cur = db.execute('SELECT id, squawk FROM entries ORDER BY id DESC')
     entries = cur.fetchall()
     return render_template('show_entries.html', entries=entries)
 
