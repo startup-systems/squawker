@@ -1,4 +1,5 @@
-from flask import Flask, g, render_template, request
+from flask import Flask
+import g, render_template, request
 import sqlite3, time, datetime, random, webbrowser
 
 # -- leave these lines intact --
@@ -20,7 +21,6 @@ def init_db():
             db.cursor().executescript(f.read())
         db.commit()
 
-
 @app.cli.command('initdb')
 def initdb_command():
     """Creates the database tables."""
@@ -38,34 +38,34 @@ def close_connection(exception):
 
 @app.route('/', methods=['GET', 'POST'])
 def root():
-	conn = get_db()
-	c = conn.cursor()
-	c.execute('CREATE TABLE IF NOT EXISTS allSquawksIEverMade(datestamp TEXT, squawk TEXT)')		
-	s = []
-	c.execute('SELECT * FROM allSquawksIEverMade')
-	for row in c.fetchall():
-		s.append(row[1])
-	t = []
-	for i in reversed(s):
-		t.append(i)
-	return render_template('Homepage.html', s=t)
+    conn = get_db()
+    c = conn.cursor()
+    c.execute('CREATE TABLE IF NOT EXISTS allSquawksIEverMade(datestamp TEXT, squawk TEXT)')
+    s = []
+    c.execute('SELECT * FROM allSquawksIEverMade')
+    for row in c.fetchall():
+        s.append(row[1])
+        t = []
+        for i in reversed(s):
+            t.append(i)
+    return render_template('Homepage.html', s=t)
 
 @app.route('/send', methods=['GET', 'POST'])
 def send():
-	conn = get_db()
-	c = conn.cursor()
-	if request.method == 'POST':
-		data = str(request.form['squawk'])
-		if len(data) > 140:
-			s = []
-			s.append('Error Code 400: Input correct form details')
-			return render_template('Homepage.html', s=s)
-		unix = time.time()
-		timestamp = str(datetime.datetime.fromtimestamp(unix).strftime('%Y-%m-%d %H:%M:%S'))
-		c.execute("INSERT INTO allSquawksIEverMade (datestamp, squawk) VALUES (?, ?)", (timestamp, data))
-		conn.commit()
-		webbrowser.open('http://localhost:5000/')
-	return 'all Ok'
+    conn = get_db()
+    c = conn.cursor()
+    if request.method == 'POST':
+        data = str(request.form['squawk'])
+        if len(data) > 140:
+            s = []
+            s.append('Error Code 400: Input correct form details')
+            return render_template('Homepage.html', s=s)
+        unix = time.time()
+        timestamp = str(datetime.datetime.fromtimestamp(unix).strftime('%Y-%m-%d %H:%M:%S'))
+        c.execute("INSERT INTO allSquawksIEverMade (datestamp, squawk) VALUES (?, ?)", (timestamp, data))
+        conn.commit()
+        webbrowser.open('http://localhost:5000/')
+        return 'all Ok'
 
 if __name__ == '__main__':
     app.run()
