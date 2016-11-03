@@ -1,6 +1,10 @@
 from flask import Flask
-import g, render_template, request
-import sqlite3, time, datetime, random, webbrowser
+from flask import g
+from flask import render_template
+from flask import request
+import sqlite3, time
+import datetime, random
+import webbrowser
 
 # -- leave these lines intact --
 app = Flask(__name__)
@@ -21,6 +25,7 @@ def init_db():
             db.cursor().executescript(f.read())
         db.commit()
 
+        
 @app.cli.command('initdb')
 def initdb_command():
     """Creates the database tables."""
@@ -50,6 +55,7 @@ def root():
             t.append(i)
     return render_template('Homepage.html', s=t)
 
+
 @app.route('/send', methods=['GET', 'POST'])
 def send():
     conn = get_db()
@@ -66,6 +72,7 @@ def send():
         conn.commit()
         webbrowser.open('http://localhost:5000/')
         return 'all Ok'
+
 
 if __name__ == '__main__':
     app.run()
