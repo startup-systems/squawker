@@ -53,7 +53,7 @@ def add_entry():
     db = get_db()
     db.execute('INSERT INTO entries (squawk) VALUES (?)', [squawk])
     db.commit()
-    return redirect(url_for('show_entries'))
+    return redirect(url_for('/'))
 
 if __name__ == '__main__':
     app.run()
