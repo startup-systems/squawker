@@ -34,6 +34,7 @@ def close_connection(exception):
         db.close()
 # ------------------------------
 
+
 @app.route('/')
 def root():
     db = get_db()
@@ -41,6 +42,7 @@ def root():
     cur = db.execute('select title, text from entries order by id desc')
     entries = cur.fetchall()
     return render_template('show_entries.html', entries=entries)
+
 
 @app.route('/add', methods=['POST'])
 def add_entry():
