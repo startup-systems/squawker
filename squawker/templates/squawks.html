@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block body %}
+
+    <form action="{{ url_for('add_squawk') }}" method ="post">
+<!--     	<dl>
+    		<dt>Title:
+			<dd><input type="text" size="30" name="title" maxlength"140"> -->
+			<dt>Text:
+			<dd><textarea name="text" maxlength="140" required placeholder="Sqauwks should be less than 140 characters!" size="200"></textarea>
+			<dd><input type="submit" value="Share">
+    	</dl>
+	</form>
+
+	
+    <ul class= "form-group">
+	    {% for squawk in entries %}
+	    	<li><h2>{{ squawk.0}}</h2>{{squawk.1|safe}}</li>
+	    {% else %}
+	    	<li><em>No squawks for this session!</em></li>
+	    {% endfor %}
+	</ul>
+
+
+{% endblock %}
