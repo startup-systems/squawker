@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Squawker Flask</title>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+		<style media="screen" type="text/css">
+			#squawk-block{
+				padding: 50px;
+			}
+			#form-block{
+				padding: 50px;
+			}
+		</style>
+	</head>
+	
+	<body>
+		
+		<div id="squawk-block">
+			<h1>Squawks Today</h1>
+			{% for squawk in s %}
+    			{{ squawk }}<br>
+			{% endfor %}
+		</div>
+		
+		<div id="form-block">
+			<form method="POST" action="/send">
+				<div class="form-group">
+					<input type="text" name="squawk" required maxlength="140" >
+				</div>
+				<input class="btn btn-primary" type="submit" value="Post Squawk!">
+			</form>
+		</div>
+		
+	</body>
+</html>
