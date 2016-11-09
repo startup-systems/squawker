@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+{% block body %}
+    <form action="{{ url_for('add_entry') }}" method=post class=add-entry>
+      <dl>
+        <dt>Text:
+        <dd><textarea name=text rows=5 cols=40 maxlength="140"></textarea>
+        <dd><input type=submit value=Share>
+      </dl>
+    </form>
+  <ul class=entries>
+  {% for entry in entries %}
+    <li><h2>{{ entry[1]|safe }}</h2>
+  {% else %}
+    <li><em>Unbelievable.  No entries here so far</em>
+  {% endfor %}
+  </ul>
+  {% if less %}
+  <a href="/?page={{ previous_page }}">Previous Page</a>
+  {% endif %}
+  {% if more %}
+  <a href="/?page={{ next_page }}">Next Page</a>
+  {% endif %}
+{% endblock %}
