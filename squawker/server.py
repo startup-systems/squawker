@@ -1,6 +1,5 @@
-from flask import Flask, g
 import sqlite3
-
+from flask import Flask, request, session, g, redirect, url_for, abort, render_template, flash
 
 # -- leave these lines intact --
 app = Flask(__name__)
@@ -37,11 +36,19 @@ def close_connection(exception):
 # ------------------------------
 
 
-@app.route('/')
+@app.route('/', methods=["GET", "POST"])
 def root():
     conn = get_db()
-    # TODO change this
-    return "Hello World!"
+    if request.method == "POST":
+        content = request.form['squawker_post']
+        if len(content) > 140:
+            abort(400)
+        else:
+            req = conn.execute('INSERT INTO squawks (text) VALUES (?)', [content])
+            conn.commit()
+    req2 = conn.execute('SELECT * FROM squawks ORDER BY timestamp desc')
+    allSquawks = req2.fetchall()
+    return render_template('index.html', squawkers=allSquawks)
 
 
 if __name__ == '__main__':

@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Jaldeep's Squawker</title>
+</head>
+
+<body>
+    <form action="/" method="POST">
+        <input type="text" name="squawker_post" placeholder="Write down your idea..." size="140" maxlength="140" pattern=".{0,145}" required />
+        <button type="submit">Post</button>
+    </form>
+
+    {% if squawkers %}
+        <ul>
+            {% for squawks in squawkers %}
+                <li>{{squawks[1]}}</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No squawks have been posted yet!</p>
+    {% endif %}
+</body>
