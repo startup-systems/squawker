@@ -1,0 +1,18 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <title>Squawkers</title>
+    </head>
+    
+    <body>
+        <h1>Squawkers</h1>
+        <form method="post">
+            <textarea name="content" maxlength="140" placeholder="max length is 140 characters"></textarea>
+            <input type="submit">
+            <h2>Start squawking</h2>
+            {% for s in squawks %}
+            <p>{{s[0]}}</p>
+            {% endfor %}
+        </form>
+    </body>
+</html>
