@@ -1,0 +1,20 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <title>start-up Xi Yu</title>
+    </head>
+    
+    <body>
+        <h1> start-up squawker </h1>
+        <form method="post">
+            <textarea name="content" maxlength="140" placeholder="Type"></textarea>
+            <input type="submit">
+            <h2>
+                response
+            </h2>
+            {% for s in squawks %}
+            <p> {{s[0]}} </p>
+            {% endfor %}
+        </form>
+    </body>
+</html>
