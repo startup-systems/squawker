@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head></head>
+<body>
+	<p>Squawk !</p>
+	<p>Squawk Page: {{ scroll }}</p>
+	<div>
+		<form action="submit" method="post">
+			<input name="newSquak" type="text" placeholder="Enter a squak" maxlength="140" required>
+			<input type="submit" value="newSquak">
+		</form>
+	</div>
+	<div>
+		{% for squak in squaks %}
+		<p>{{ squak[1] }}</p>
+		{% endfor %}
+		{% if nextButton %}
+			<a href="{{ url_for('root',scroll=scroll+20) }}" type="submit" method="post" name="scroll"><button type="button">Next</button></a>
+		{% endif %}
+	</div>
+</body>
+</html>
