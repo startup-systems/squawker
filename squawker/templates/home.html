@@ -1,0 +1,46 @@
+<!doctype html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Squawker</title>
+</head>  
+  <div>
+    <form action="{{ url_for('add_squawker')}}" method="post">
+      <dl>
+        <dt><h3>Enter New Squawk:</h3>
+        <dd><input type="text" size="150" name="squawker" required placeholder="Enter a valid squawk less than 140 characters" maxlength="140">
+        <dd><input type="submit" value="Submit">
+      </dl>
+    </form>
+  </div>
+  <div>
+      <h3>
+        Previous squawks:
+      </h3>
+    <div>
+    {% for entry in squawks_entries %}
+        <p>{{entry[0]}}</p>
+    {% endfor %}
+      </div>
+    </div>
+  </div>
+
+  <div>
+      <div class=pagination>
+      {%- for page in pagination.iter_pages() %}
+        {% if page %}
+          {% if page != pagination.page %}
+            <a href="{{ url_for_pages(page) }}">{{ page }}</a>
+          {% else %}
+            <strong>{{ page }}</strong>
+          {% endif %}
+        {% else %}
+          <span class=ellipsis>…</span>
+        {% endif %}
+      {%- endfor %}
+      {% if pagination.has_next %}
+        <a href="{{ url_for_pages(pagination.page + 1)
+          }}">Next &raquo;</a>
+      {% endif %}
+      </div>
+  </div>
