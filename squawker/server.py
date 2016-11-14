@@ -34,7 +34,7 @@ def close_connection(exception):
     db = getattr(g, 'sqlite_db', None)
     if db is not None:
         db.close()
-# ------------------------------
+# -------------------------------
 
 
 @app.route('/', methods=['GET', 'POST'], defaults={'page': 1})
