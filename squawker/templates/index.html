@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Squawker Nation</title>
+        <style>
+        body {
+            margin:auto;
+            background-color:	#D3D3D3;
+            text-decoration-color: blue;
+            }
+            
+        h2
+            {
+            font-family: Helvetica; 
+            display: block;
+            width: 260px;
+            cursor: pointer;
+            padding-right: 6px;
+            padding-bottom: 1px;
+            }     
+        form {
+                
+                margin: auto;
+            }
+        </style>
+    </head>
+    
+    <body>
+    <div class="postSquawk">
+        <form action="/" method = "post">
+            
+            <div>
+                What's happening? <br>                
+                <textarea name = "msg" id = "msg" maxlength = "140"></textarea>                
+            </div>
+            
+            <div class="button">
+                <button type = "submit">Squawk!</button>
+            </div>
+            
+        </form>
+        
+    </div>
+    
+    <br>
+    <img src="http://farm9.static.flickr.com/8016/7102983445_59098c4bc3_m.jpg">
+    <br>    
+    <div class="recieveSquawk">
+        <h2>Trending on Squawker</h2>
+        <ul>
+        {% for sqk in squawks %}
+            <ul>{{ sqk[2] }}</ul>
+            <ul>{{ sqk[1] }}</ul>
+        {% else %}
+        <ul>Get squawking!</ul>    
+        </ul>
+        {% endfor %}    
+    </div>
+        
+            
+    </body>
+</html>
