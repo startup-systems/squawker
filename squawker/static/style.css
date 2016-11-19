@@ -1,0 +1,17 @@
+h1{
+	font-family: 'Josefin Slab', serif;
+	font-weight: 600;
+}
+
+.squawk, h2{
+	font-family: 'Raleway', sans-serif;
+}
+
+p{
+	font-family: 'Raleway', sans-serif;
+	font-size: 48px;	
+}
+
+div.pagination{
+	font-size: 24px;
+}

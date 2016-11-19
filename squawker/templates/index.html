@@ -1,0 +1,56 @@
+{% extends "layout.html" %}
+{% block body %}
+  <div class="container">
+    <form action="{{ url_for('add_squawk') }}" method="post">
+      <div class="form-group">
+        <label for="squawk_text">what's on your mind?</label>
+        <input type="text" class="form-control" name="squawk_text" pattern=".{1,140}" size="100" placeholder="Squawk" oninvalid="alert('140 characters or fewer')">
+      </div>
+      <input type="submit" class="btn btn-default" value="submit">
+    </form>
+  </div>
+
+  <div class="container">
+    <div class="columns large-12">
+  		<h2>
+        Past squawks
+      </h2>
+  	</div>
+
+  	<div class="squawks">
+    {% for squawk in squawks %}
+      <blockquote class="blockquote">
+        {{ squawk[1] }}
+      </blockquote>
+
+    {% else %}
+      <div class="error">
+        <em>Unbelievable.  No entries here so far</em>
+    {% endfor %}
+    	</div>
+    </div>
+  </div>
+
+  <div>
+    <div class="container">
+      <div class=pagination>
+      {% for page in pagination.iter_pages() %}
+        {% if page %}
+          {% if page != pagination.page %}
+            <a href="{{ url_for_pages(page) }}">{{ page }}</a>
+          {% else %}
+            <strong>{{ page }}</strong>
+          {% endif %}
+        {% else %}
+          <span class=ellipsis>…</span>
+        {% endif %}
+      {% endfor %}
+      {% if pagination.has_next %}
+        <a href="{{ url_for_pages(pagination.page + 1)
+          }}">Next &raquo;</a>
+      {% endif %}
+      </div>
+    </div>
+  </div>
+
+{% endblock %}
