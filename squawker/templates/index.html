@@ -1,0 +1,27 @@
+<!DOCTYPE html5>
+ <html>
+ <head>
+  <title>squawker</title>
+  <link rel="stylesheet" href="static/index.css">
+ </head>
+ <body>
+ 
+   <form action="/" method="POST">
+     <div>
+      <label>Creat New Squawker</label>
+       <textarea name="message" type="text" maxlength="140" required></textarea>
+     </div>
+     <div class="button">
+       <button type="submit">Post New Squawk</button>
+     </div>
+   </form>
+   
+   {% for post in allpost %}
+     <div class="allposts">
+ 	        <p>{{ post[0] }}<br>
+ 	        {{ post[1] }}<p>
+     </div>
+   {% endfor %}
+ 
+ </body>
+ </html>
