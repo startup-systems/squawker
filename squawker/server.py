@@ -1,9 +1,11 @@
-from flask import Flask, g
+from flask import Flask, request, g, session, redirect, url_for, abort, render_template, flash
 import sqlite3
 
 
 # -- leave these lines intact --
 app = Flask(__name__)
+app.config.from_object(__name__)
+app.secret_key = "super secret key"
 
 
 def get_db():
@@ -37,11 +39,28 @@ def close_connection(exception):
 # ------------------------------
 
 
-@app.route('/')
+@app.route('/', methods=['POST', 'GET'])
 def root():
     conn = get_db()
-    # TODO change this
-    return "Hello World!"
+    cur = conn.cursor()
+    conts = cur.execute('SELECT posts From mytable ORDER BY ID DESC')
+    posts = conts.fetchall()
+    return render_template('index.html', posts=posts)
+
+
+@app.route('/add', methods=['POST', 'GET'])
+def add_post():
+    conn = get_db()
+    cur = conn.cursor()
+    if request.method == "POST":
+        apost = request.form['posts']
+        if len(apost) > 140:
+            abort(400)
+        else:
+            cur.execute('INSERT INTO mytable (posts) VALUES (?)', [apost])
+            conn.commit()
+            flash('Successfully posted')
+    return redirect(url_for('root'))
 
 
 if __name__ == '__main__':
