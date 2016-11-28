@@ -1,0 +1,25 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Squawker</title>
+  </head>
+  <body>
+    <form method="POST">
+		    <div>
+			    <label for="newmsg">Post Your Squawker</label>
+			    <textarea maxlength="140" id="message" name="user_post"></textarea>
+		    </div>
+		    <div class="button">
+	        <button type="submit">Post it!</button>
+		    </div>
+		</form>
+    <div>
+      <ul id="message">
+  			{% for msg in msgPool %}
+  				<li>{{msg}}</li>
+  		  {% endfor %}
+      </ul>
+  	</div>
+  </body>
+</html>
