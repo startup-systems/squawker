@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Squawker</title>
+</head>
+<body style="font-size: 14pt">
+<form action="/post" method="post" style="width: 80%;">
+    <div class="input" style="width: 80%; height: auto">
+        <textarea class="text" name="input-post"
+                  placeholder="Type in your post here"
+                  cols="60" rows="4"
+                  maxlength="140"
+        ></textarea>
+        <div style="width: 100%">
+            <button type="submit" style="font-size: 14pt; float: right"><span>Post</span></button>
+        </div>
+    </div>
+</form>
+<div style="height: 50px;"></div>
+{% if items %}
+    <div class="feed">
+        <table>
+            <tr>
+                <th class="tb-content">Content</th>
+                <th class="tb-time">Time</th>
+            </tr>
+            {% for item, ts in items %}
+                <tr>
+                    <td class="tb-content">
+                        <div><p>{{ item }}</p>
+                        </div>
+                    </td>
+                    <td class="tb-time">{{ ts }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+    <div class="pagination">
+        <a href="/"><span>Prev</span></a>
+        {% for i in range(1,(page_count+1)) %}
+            <a href="/"><span>{{ i }}</span></a>
+        {% endfor %}
+        <a href="/"><span>Next</span></a>
+    </div>
+{% else %}
+    <div><p>No posts yet.</p></div>
+{% endif %}
+
+<style scoped>
+    .text {
+        display: inline-block;
+        font-size: 14pt;
+        text-align: left;
+        padding-top: 5px
+    }
+
+    .feed {
+        width: 60%;
+    }
+
+    .tb-content {
+        width: 40%;
+        height: auto;
+        text-align: left;
+        font-family: sans-serif;
+    }
+
+    .tb-time {
+        width: 10%;
+        height: auto;
+        text-align: left;
+        font-family: sans-serif;
+    }
+
+    .pagination {
+        width: 60%;
+        text-align: center;
+    }
+</style>
+</body>
+</html>
