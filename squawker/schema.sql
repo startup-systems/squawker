@@ -1,3 +1,2 @@
--- TODO change this
 DROP TABLE IF EXISTS mytable;
-CREATE TABLE mytable (id integer);
+CREATE TABLE mytable (id INTEGER PRIMARY KEY AUTOINCREMENT, squawk VARCHAR(140) DEFAULT NULL);
