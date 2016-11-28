@@ -14,7 +14,7 @@
 
     {% for squawk in squawks %}
     <div>
-      <div># {{ squawk[0] }}</div>
+      <h4>{{ squawk[0] }}</h4>
       <div><p>{{ squawk[1] }}</p></div>
     </div>
     {% endfor %}
@@ -22,8 +22,6 @@
     <div>
       <div>
         <form action="add/" method="post">
-
-          <label for="new_body">New Post</label>
 
           <textarea placeholder="Type post..." name="new_body" id="new_body"  maxlength="140" ></textarea>
 

@@ -1,4 +1,4 @@
-from flask import Flask, g
+from flask import Flask, g, render_template, request, redirect, url_for
 import sqlite3
 
 
@@ -43,7 +43,7 @@ def addPost(data):
     cur.execute("INSERT INTO squawks (body) VALUES(?)", (data,))
     conn.commit()
 
-def getPosts:
+def getPosts():
     conn = get_db()
     cur = conn.cursor()
     cur.execute("""SELECT id, body FROM
@@ -60,14 +60,8 @@ def getPosts:
 # Index
 @app.route('/')  
 def root():
-    return page()
-
-# All Posts
-@app.route('/all')  
-def allPosts():
     squawks = getPosts()
     return render_template('index.html', squawks=squawks)
-
 
 @app.route('/add/', methods=['POST'])  # Add
 def add():
