@@ -1,0 +1,34 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<title>Squawker</title>
+</head>
+<body>
+	<!-- Form to post a squawk -->
+	<form action="/" method="post">
+		<div>
+				<label for="msg">Type in your post:</label>
+						<br>
+				<textarea placeholder="What's going on?" name='post_text' rows='4' cols='80' id="post_text"  maxlength="140"></textarea>
+		</div>
+		<div class="button">
+			<button type="submit">Post</button>
+		</div>
+	</form>
+		<!-- List of sqawks -->
+	<div id="squawks">
+		<p>Total Squaks Counts: {{num_squawks}}</p>
+		<br>
+		{% for squawk in loadSquawks() %}
+    		<br>
+    		<div>{{ squawk[0] }}</div>
+		{% endfor %}
+
+	</div>
+
+	<br><br>
+
+
+
+</body>
+</html>
