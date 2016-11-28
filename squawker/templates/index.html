@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Elya's squawker assignment</title>
+	</head>
+	<body>
+		<div class="postMsg">
+			<form action="/" method="POST">
+				<div>
+					<label for="msg">Type your message:</label>
+					<br><textarea name="caption" id="message" maxlength="140"></textarea>
+				</div>
+				<div class="button">
+					<button type="submit">Post it!</button>
+				</div>
+			</form>
+		</div>
+
+		<div class="getMsg">
+			<label for="previousMsg">Below are the previous squawks:</label>
+			{% for msg in captions %}
+				<div>
+					<p>{{ msg[1] }}</p>
+				</div>
+			{% endfor %}
+		</div>
+	</body>
+</html>

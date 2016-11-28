@@ -1,8 +1,8 @@
-from flask import Flask, g
+from flask import Flask, g, request, render_template, abort
 import sqlite3
 
 
-# -- leave these lines intact --
+# -- leave these lines intact test--
 app = Flask(__name__)
 
 
@@ -37,12 +37,19 @@ def close_connection(exception):
 # ------------------------------
 
 
-@app.route('/')
+@app.route('/', methods=["GET", "POST"])
 def root():
     conn = get_db()
-    # TODO change this
-    return "Hello World!"
-
+    if request.method == "POST":
+        getCaption = request.form['caption']
+        if len(getCaption) > 140:
+            abort(400)
+        else:
+            cc_object = conn.execute('INSERT INTO listOfSquawks (caption) VALUES (?)', [getCaption])
+            conn.commit()
+    cc_object = conn.execute('SELECT * FROM listOfSquawks ORDER BY id desc')
+    squawkers = cc_object.fetchall()
+    return render_template('index.html', captions=squawkers)
 
 if __name__ == '__main__':
     app.run()

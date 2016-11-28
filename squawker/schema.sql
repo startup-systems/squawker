@@ -1,3 +1,2 @@
--- TODO change this
-DROP TABLE IF EXISTS mytable;
-CREATE TABLE mytable (id integer);
+DROP TABLE IF EXISTS listOfSquawks;
+CREATE TABLE listOfSquawks (id integer primary key, caption VARCHAR(140));
