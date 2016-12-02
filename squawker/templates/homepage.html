@@ -1,0 +1,78 @@
+<!DOCTYPE>
+<html>
+    <head>
+        <title>Ruirui's Squawker</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    </head>
+    <style>
+        .main-content{
+            margin-top: 30px;
+        }
+        
+        .oldposts{
+            margin-top: 15px;
+            border: 1px solid #ccc;
+            padding: 8px 12px;
+            border-radius: 4px;
+        }
+        .writediv{
+            height: 170px;
+            margin-top: 16px;
+            border: 1px solid #ccc;
+            padding: 12px 12px;
+            border-radius: 4px;
+        }
+        .middlehr{
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+        .postbtn{
+            float: right;
+        }
+        .writebox{
+            resize: none;
+        }
+    </style>
+    <body>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-3">
+                </div>
+                <div class="col-sm-6">
+                    <form action="/" method="POST">
+                    <div class="main-content">
+                        <div>
+                            <h3>Ruirui's Squawker</h3>
+                        </div>
+                        <div class="writediv">
+                            <textarea class="form-control writebox" placeholder="Write down your idea..." rows="4" cols="50" name="squawker_info" maxlength="140"></textarea>
+                            <hr class="middlehr">
+                            <button class="btn btn-default postbtn" type="submit">POST</button>
+                            
+                        </div>
+                        <div>
+                            {% for squawker in squawkers %}
+                            <div class="oldposts">
+                                <p>
+                                    {{squawker[1]}}
+                                </p>
+                                <hr class="middlehr">
+                                <p>Posted at: 
+                                
+                                    {{squawker[2]}}
+                                </p>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    </form>
+                </div>
+                <div class="col-sm-3">
+                </div>
+            </div>
+        
+        </div>
+    </body>
+</html>
