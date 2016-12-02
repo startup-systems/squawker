@@ -1,0 +1,54 @@
+<!DOCTYPE>
+<html>
+	<head>
+		<title>Squawker</title>
+	</head>
+	<body>
+		<h1>Welcome to Squawker!</h1>
+
+		<!-- Form to post a squawk -->
+		<div>
+			<form action="/" method="post">
+				<textarea placeholder="Enter your squawk"name='post_text' rows='4' cols='80'  maxlength='140' required></textarea>
+				<br>
+				140 chars max<br>
+				<input type=submit value="Squawk">
+			</form>
+
+			{% if error != "" %}
+				<p style="color:red;">{{ error }}</p>
+				<br>
+			{% endif %}
+
+		</div>
+
+		<!-- List of sqawks -->
+		<div>
+			{% for squawk in squawks %}
+			<div>
+			    {{ squawk[1] }} <!-- Post text -->
+			<div>
+
+			{% else %}
+			    <p>Sorry, no squawks yet.</p>
+		    {% endfor %}
+		</div>
+
+		<!-- Handle pagination (reference: http://flask.pocoo.org/snippets/44/) -->
+		<div>
+		  {%- for page in pagination.iter_pages() %}
+		    {% if page %}
+		      {% if page != pagination.page %}
+		        <a href="{{ url_for_other_page(page) }}">{{ page }}</a>
+		      {% endif %}
+		    {% else %}
+		      <span class=ellipsis>…</span>
+		    {% endif %}
+		  {%- endfor %}
+		  {% if pagination.has_next %}
+		    <a href="{{ url_for_other_page(pagination.page + 1)
+		      }}">Next &raquo;</a>
+		  {% endif %}
+  		</div>
+	</body>
+</html>
