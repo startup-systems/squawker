@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<!-- Making html with buttons and form to input text -->
+<html>
+	<head>
+		<title>Carolina's Squawker</title>
+			<link rel="stylesheet" href="main.css" />
+	</head>
+	<body>
+		<h1> Carolina's Squawker </h1>
+			<div>
+				<form action="/" method="Post">
+					<textarea placeholder= "What's your squawk?" name="post_text" maxlength="140" required></textarea>
+					<br>
+					Don't forget! 140 chars max <br>
+				<input type="submit" value="Post Your Squawk">
+				</form>
+ 		</div>
+
+ <!-- Now  creating the framework to collect and display all the incoming Tweets-->
+ 		<div>
+ 			{% for squawk in squawks %}
+ 			
+ 			<div>
+ 				<!-- posting the tweet -->
+ 			    {{ squawk[0] }} 
+ 			    <br>
+ 			<div>
+ 	
+ 			{% else %}
+ 			    <p>Empty.</p>
+ 		    {% endfor %}
+ 		
+ 		</div>
+ 
+</body>
+</html>
+
+
+

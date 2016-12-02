@@ -1,0 +1,16 @@
+body {
+	background-color:#6cbdc9;
+	color: white;
+	text-align: center;
+
+}
+
+h1 {
+	font-size: 30px;
+
+}	
+
+div.button {
+	left: 50;
+
+}

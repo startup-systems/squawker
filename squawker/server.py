@@ -1,6 +1,5 @@
-from flask import Flask, g
+from flask import Flask, g, render_template, request
 import sqlite3
-
 
 # -- leave these lines intact --
 app = Flask(__name__)
@@ -37,12 +36,25 @@ def close_connection(exception):
 # ------------------------------
 
 
-@app.route('/')
+@app.route('/', methods=["GET", "POST"])
 def root():
+    error = ""
+    status = 200
     conn = get_db()
-    # TODO change this
-    return "Hello World!"
+    if(request.method == "POST"):
+        post_text = request.form['post_text']
+        if len(post_text) > 140:
+            status = 400
+            error = "Error! Your Tweet needs to be at most 140 characters!"
+        else:
+            c = conn.execute('INSERT INTO squawks (squawk) VALUES (?)', [post_text])
+            conn.commit()
+    c = conn.execute('SELECT squawk FROM squawks ORDER BY id desc')
+    squawks = c.fetchall()
+    count = len(squawks)
+    return render_template('index.html', squawks=squawks), status
 
 
 if __name__ == '__main__':
     app.run()
+    app.run(host="0.0.0.0")
