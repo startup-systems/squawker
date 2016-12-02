@@ -1,4 +1,4 @@
-from flask import Flask, g
+from flask import Flask, g, request, render_template
 import sqlite3
 
 
@@ -37,11 +37,34 @@ def close_connection(exception):
 # ------------------------------
 
 
-@app.route('/')
-def root():
-    conn = get_db()
-    # TODO change this
-    return "Hello World!"
+@app.context_processor
+def utility_processor():
+    def loadSquawks(page_number=1):
+        query_exec = get_db().execute("SELECT squawk from mysquawktable ORDER BY id DESC", ())
+        squawks = query_exec.fetchall()
+        query_exec.close()
+        squawk_length = len(squawks)
+        return squawks[(page_number - 1) * 20:min(squawk_length, page_number * 20)]
+    return dict(loadSquawks=loadSquawks)
+
+
+@app.route('/', methods=['GET', 'POST'], defaults={'page_number': 1})
+@app.route('/page/<int:page_number>', methods=['GET', 'POST'])
+def root(page_number):
+    status = 200
+    if request.form:
+        message = request.form['squawk_message']
+        if len(message) > 140:
+            err = "Squawk is too long"
+            status = 400
+        elif len(message) > 0 and len(message) <= 140:
+            query_exec = get_db().execute("INSERT INTO mysquawktable (\'squawk\') VALUES (\'" + message + "\')", ())
+            get_db().commit()
+            query_exec.close()
+    cmd_exec = get_db().execute("SELECT COUNT(*) FROM mysquawktable", ())
+    count = cmd_exec.fetchone()[0]
+    cmd_exec.close()
+    return render_template("index.html", num_squawks=count, page_number=page_number), status
 
 
 if __name__ == '__main__':

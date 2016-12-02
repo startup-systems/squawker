@@ -1,0 +1,51 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Squawker</title>
+</head>
+<body>
+	<form action="/" method="post">
+		<div>
+			<label for="msg"><b>Enter your squawk here (140 characters or less):</b></label>
+			<br>
+			<input type="text" id="msg" name="squawk_message" required maxlength="140"></input>
+		</div>
+		<div class="button">
+			<button type="submit">Post Squawk</button>
+		</div>
+	</form>
+	<div id="listsquawks">
+		<p>Total Number of Squawks: {{num_squawks}}</p>
+		{% if page_number > 1 %}
+			<a href="/page/{{ page_number-1 }}">Previous Page</a>
+			&nbsp
+		{% endif %}
+		{% if (num_squawks > 20) %}
+			{% if (num_squawks%20 == 0) and (page_number != num_squawks//20) %}
+				<a href="/page/{{ page_number+1 }}">Next Page</a>
+			{% elif (num_squawks%20 != 0) and (page_number != (num_squawks//20)+1) %}
+				<a href="/page/{{ page_number+1 }}">Next Page</a>
+			{% endif %}
+			 
+		{% endif %}
+		{% for squawk in loadSquawks(page_number) %}
+		<br>
+		<div>{{ squawk[0] }}</div>
+		{% endfor %}
+		{% if page_number > 1 %}
+			<a href="/page/{{ page_number-1 }}">Previous Page</a>
+			&nbsp
+		{% endif %}
+		{% if (num_squawks > 20) %}
+                        {% if (num_squawks%20 == 0) and (page_number != num_squawks//20) %}
+                        	<a href="/page/{{ page_number+1 }}">Next Page</a>
+                        {% elif (num_squawks%20 != 0) and (page_number != (num_squawks//20)+1) %}
+                        	<a href="/page/{{ page_number+1 }}">Next Page</a>
+                        {% endif %}
+                         
+                {% endif %}
+	</div>
+</body>
+</html>
