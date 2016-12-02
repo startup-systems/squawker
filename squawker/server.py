@@ -1,4 +1,4 @@
-from flask import Flask, g
+from flask import Flask, g, render_template, request, abort
 import sqlite3
 
 
@@ -37,11 +37,21 @@ def close_connection(exception):
 # ------------------------------
 
 
-@app.route('/')
+@app.route('/', methods=["GET", "POST"])
 def root():
     conn = get_db()
-    # TODO change this
-    return "Hello World!"
+    if request.method == "POST":
+        getContent = request.form['usr_message']
+        if len(getContent) > 140:
+            abort(400)
+        else:
+            cc_object = conn.execute('INSERT INTO messages (message) VALUES (?)', [getContent])
+            conn.commit()
+
+    cc_object = conn.execute('SELECT * FROM messages ORDER BY createTime desc')
+    squawkers = cc_object.fetchall()
+
+    return render_template('index.html', allMsg=squawkers)
 
 
 if __name__ == '__main__':
