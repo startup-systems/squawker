@@ -1,0 +1,25 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<title>Squawker</title>
+</head>
+
+<body>
+<form action="/submitMessage" method="post">
+		<div>
+    		<label>Enter your post:</label>
+            <br>
+    		<textarea id="msg" name="msg" maxlength="140"></textarea>
+		</div>
+		<div class="button">
+			<button type="submit">Post</button>
+		</div>
+	</form>
+<p> All the available Squawks</p>
+<ul>
+    {% for row in rows %}
+        <li> {{row}}</li>
+    {% endfor %}
+</ul>
+</body>
+</html>
