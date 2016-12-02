@@ -1,0 +1,19 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <title>Squawker</title>
+    </head>
+    
+    <body>
+        <h1>Post New Squawk</h1>
+        <form method = "post">
+            <textarea name = "content" maxlength="140"></textarea>
+            <br>
+            <input type="submit">
+
+            {% for squawk in squawks %}
+            <p>{{ squawk }}</p>
+            {% endfor %}
+        </form>
+    </body>
+</html>
