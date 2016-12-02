@@ -94,6 +94,7 @@ def test_all_squawks_present(browser):
 
     # in case they didn't return to the homepage
     browser.visit(URL)
+    print(browser.html)
     for body in bodies:
         assert browser.is_text_present(body)
 

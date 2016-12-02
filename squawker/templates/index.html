@@ -1,0 +1,26 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<title>Squawker!</title>
+</head>
+<body>
+	<form action="{{url_for('root')}}", method="post">
+	<div>
+		<label>New Squawk!</label>
+		<textarea type="text" name="squawks" maxlength="140" required></textarea>
+	</div>	
+	<div class= "button">
+		<input type="submit">
+	</div>
+	</form>
+	<div>
+		{% for item in squawkss %}
+			<div class="squawks">
+				<p>{{item[0]}} <br>{{item[1]}}</p>	
+			</div>
+		{% endfor %}
+	</div>
+</body>
+
+</html>
+
