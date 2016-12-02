@@ -1,0 +1,42 @@
+p {
+    font-family: "Helvetica", Times, serif;
+}
+
+form {
+    font-family: "Helvetica", Times, serif;
+    margin: 0 auto;
+    width: 500px;
+    padding: 1em;
+    border: 1px solid #ffcc66;
+    border-radius: 1em;
+}
+
+div + div {
+    margin-top: 1em;
+}
+
+input, textarea {
+    font: 1em sans-serif;
+	width: 500px;
+	-moz-box-sizing: border-box;
+	     box-sizing: border-box;
+	border: 4px solid #ffff66;
+}
+
+input:focus, textarea:focus {
+    border-color: #ffff66;
+}
+
+textarea {
+    vertical-align: top;
+    height: 5em;
+    resize: vertical;
+}
+
+.button {
+}
+
+button {
+    font-family: "Helvetica", Times, serif;
+	margin-left: .5em;
+}

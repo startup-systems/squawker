@@ -1,0 +1,25 @@
+<!DOCTYPE html5>
+<html>
+<head>
+  <link rel="stylesheet" href="static/i.css">
+</head>
+<body>
+
+  <form action="/" method="post">
+    <div>
+      <textarea name="input" type="text" placeholder="What's up?" maxlength="140" required></textarea>
+	</div>
+    <div class="button">
+      <button type="submit">Post your Squawk!</button>
+    </div>
+  </form>
+  
+  {% for post in posts %}
+    <div align="center">
+	<p>{{ post[0] }}</p>
+	<p>{{ post[1] }}</p>
+    </div>
+  {% endfor %}
+
+</body>
+</html>
