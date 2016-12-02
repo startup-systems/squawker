@@ -1,5 +1,6 @@
-from flask import Flask, g
-import sqlite3
+import os
+from sqlite3 import dbapi2 as sqlite3
+from flask import Flask, request, session, g, redirect, url_for, abort, render_template, flash
 
 
 # -- leave these lines intact --
@@ -37,11 +38,20 @@ def close_connection(exception):
 # ------------------------------
 
 
-@app.route('/')
+@app.route('/', methods=["POST", "GET"])
 def root():
     conn = get_db()
-    # TODO change this
-    return "Hello World!"
+    c = conn.cursor()
+    if request.method == "POST":
+        newPost = request.form["npost"]
+        if len(newPost) > 140:
+            abort(400)
+        else:
+            c.execute("INSERT INTO posts (msg) VALUES (?)", [newPost])
+            conn.commit()
+    c.execute("SELECT msg FROM posts ORDER BY id DESC")
+    all_posts = c.fetchall()
+    return render_template("index.html", allMsg=all_posts)
 
 
 if __name__ == '__main__':
