@@ -1,0 +1,27 @@
+<!doctype html>
+<html>	
+	<head>
+	<title>Squawker</title>
+	</head>
+	<body>
+		<h1>Please enter your new squawker here:</h1>
+		<p></p>
+		<form action='{{url_for('formsubmit')}}' method='POST'>
+			<textarea name='msg' rows='2' cols='70' maxlength='140'></textarea>
+			<input type='submit'>
+		</form>
+		
+		<h1>Here are new posts:</h1>
+		<p></p> 
+		{% for j,i in allthepost %}
+			<p>{{j+1}}:{{i[1]}}<p>
+		{% endfor %}
+		{%if prev==True%}
+			<button><a href='{{url_for('root',page = nowpage-1)}}'>prev</a></button>
+		{% endif %}
+		{%if nextp==True%}
+			<button><a href='{{url_for('root',page = nowpage+1)}}'>next</a></button>
+		{% endif %}
+		
+	</body>
+<html>
