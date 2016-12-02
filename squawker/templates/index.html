@@ -1,0 +1,30 @@
+<!doctype html>
+<head>
+  <title>Squawker</title>
+</head>
+<body>
+<form action="{{ url_for('root') }}" method="post">
+<p>Message</p>
+<input type="text" name="message" maxlength="140" size="140" />
+<input type="submit" value"Send!" />
+{% if error != "" %}
+<div>Error: {{  error }}</div>
+{% endif %}
+</form>
+<div> 
+  {% for item in squawkers %}
+    <p>{{ item[1] }}</p>
+  {% else %}
+    <li><em>Unbelievable.  No entries here so far</em>
+  {% endfor %}
+</div>
+<div>
+{% if page > 1  %}
+<a href="{{ url_for('root', page=page-1) }}">Prev</a>
+{% endif %}
+{% if page < last_page  %}
+<a href="{{ url_for('root', page=page+1) }}">Next</a>
+{% endif %}
+</div>
+</body>
+</html>
