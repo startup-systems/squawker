@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>squawker</title>
+	<head>
+	<body>
+		<div class="postMsg">
+			<form action="/" method="POST">
+				<div>
+					<label for="msg">New message</label>
+					<textarea id="message" name="usr_message" maxlength="140"></textarea>
+				</div>
+				<div class="button">
+					<button type="submit">Post</button>
+				<div>
+			</form>
+		</div>
+		<div class="getMsg">
+			<label for="post">Posts</label>
+			{% for msg in allMsg %}
+				<div class="prePost">
+					<p>{{ msg[2] }}</p>
+					<p>{{ msg[1] }}</p>
+				</div>
+			{% endfor %}
+		</div>
+	</body>
+</html>
+			
