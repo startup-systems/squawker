@@ -1,3 +1,3 @@
 -- TODO change this
 DROP TABLE IF EXISTS mytable;
-CREATE TABLE mytable (id integer);
+CREATE TABLE mytable (auto INTEGER PRIMARY KEY , str TEXT);
