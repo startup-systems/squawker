@@ -1,4 +1,4 @@
-from flask import Flask, g
+from flask import Flask, g, request, render_template, url_for, abort
 import sqlite3
 
 
@@ -35,13 +35,25 @@ def close_connection(exception):
     if db is not None:
         db.close()
 # ------------------------------
+# reference: http://flask.pocoo.org/docs/0.10/quickstart/#http-methods
+# reference: https://docs.python.org/2/library/sqlite3.html
 
 
-@app.route('/')
+@app.route('/', methods=['GET', 'POST'])
 def root():
     conn = get_db()
-    # TODO change this
-    return "Hello World!"
+    cursor = conn.cursor()
+    if request.method == "POST":
+        msg = request.form["squawkpost"]
+        if len(msg) > 140:
+            error = "You have to enter a shorter message"
+            abort(400)
+        else:
+            cursor.execute("INSERT INTO squawk (\'message\') VALUES (\'" + msg + "\')")
+            conn.commit()
+    cursor.execute("SELECT * FROM squawk ORDER BY time DESC")
+    totalMsg = cursor.fetchall()
+    return render_template("index.html", MSG=totalMsg)
 
 
 if __name__ == '__main__':
