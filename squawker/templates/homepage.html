@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Homepage of Squawker</title>
+	</head>
+	<body>
+		<div class="postMsg">
+			<form action="/" method="POST">
+				<div>
+					<label for="msg">Your Message</label>
+					<textarea maxlength="140" id="message" name="usr_message"></textarea>
+				</div>
+				<div class="button">
+					<button type="submit">Post your message</button>
+				</div>
+			</form>
+		</div>
+		<br>
+		<br>
+		<div class="getMsg">
+			<label for="previousMsg">These are messages you have post from newest to oldest</label>
+			{% for msg in allMsg %}
+				<div class="preMsg">
+					<p>{{ msg[2] }}</p>
+					<p>{{ msg[1] }}</p>
+				</div>
+			{% endfor %}
+		</div>
+	</body>
+</html>
