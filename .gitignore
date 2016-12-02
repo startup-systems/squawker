@@ -6,3 +6,4 @@ __pycache__/
 *.db3
 *.sqlite
 *.sqlite3
+.DS_Store

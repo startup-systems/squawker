@@ -1,0 +1,68 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>Squawker</title>
+  <meta name="description" content="Squawker">
+  <meta name="author" content="Osasu Eboh">
+
+  <!-- Mobile Specific Metas ––––– -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- FONT –––––––––––––––––––––– -->
+  <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
+
+  <!-- CSS ------––––––––––––––––– -->
+  <link rel="stylesheet" href="static/css/normalize.css">
+  <link rel="stylesheet" href="static/css/skeleton.css">
+
+  <!-- Favicon ––––––––––––––––––– -->
+  <link rel="icon" type="image/png" href="static/images/favicon.png">
+<!--  <link rel="stylesheet" href="css/styles.css?v=1.0">-->
+
+  <!--[if lt IE 9]>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script>
+  <![endif]-->
+</head>
+
+<body>
+  <div class="container">
+    <h2>Squawker</h2>
+
+    {% for squawk in squawks %}
+    <div class="row">
+      <div class="one column"># {{ squawk[0] }}</div>
+      <div class="eleven columns"><p>{{ squawk[1] }}</p></div>
+    </div>
+    {% endfor %}
+
+    <div class="row">
+      <div class="twelve column">
+        <form action="add/" method="post">
+          <label for="new_body">New Post</label>
+          <textarea class="u-full-width" placeholder="Type post..." name="new_body" id="new_body"  maxlength="140" ></textarea>
+          <input class="button-primary" type="submit" value="Submit">
+        </form>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="twelve column">
+        <form>
+        {% if currPage != 1 %}
+        <label>Previous Page</label>
+        <a type="submit" id="Prev" name="Prev" href="{{ url_for('page', pageNum=currPage - 1) }}">Prev</a>
+        {%  endif %}
+
+        {% if last == False %}
+        <label>Next Page</label>
+        <a type="submit" id="Next" name="Next" href="{{ url_for('page', pageNum=currPage + 1) }}">Next </a>
+        {% endif %}
+        </form>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,4 +1,4 @@
-from flask import Flask, g
+from flask import Flask, g, jsonify, render_template, request, redirect, url_for, abort
 import sqlite3
 
 
@@ -35,14 +35,77 @@ def close_connection(exception):
     if db is not None:
         db.close()
 # ------------------------------
+# ---Methods----#
 
 
-@app.route('/')
-def root():
+def getPosts(page=0):  # Grab posts
     conn = get_db()
+    cur = conn.cursor()
+    if (page):  # Paginate posts by 20
+        offset = (page - 1) * 20
+        cur.execute("""SELECT id, body FROM
+                        squawks
+                        ORDER BY id DESC
+                        LIMIT 20 OFFSET (?)""", (offset, ))
+    else:  # Get all posts
+        cur.execute("""SELECT id, body FROM
+                        squawks
+                        ORDER BY id DESC """)
+    temp = cur.fetchall()
+    data = []
+    idx = []
+    cur.close()
+    return temp
+
+
+def addPost(data):  # Add posts
+    conn = get_db()
+    cur = conn.cursor()
+    cur.execute("INSERT INTO squawks (body) VALUES(?)", (data,))
+    conn.commit()
+
+# ---- Routes  ---- #
+
+
+@app.route('/')  # Index
+def root():
+    return page()
+
+
+@app.route('/<int:pageNum>')  # Pages
+def page(pageNum=1):
+    squawks = getPosts(pageNum)
+    if(len(squawks) == 0 or squawks[len(squawks) - 1][0] == 1):
+        last = True
+    else:
+        last = False
     # TODO change this
-    return "Hello World!"
+    return render_template('index.html', squawks=squawks, currPage=pageNum, last=last)
+
+
+@app.route('/all')  # All Posts
+def allPosts():
+    squawks = getPosts()
+    # TODO change this
+    return render_template('index.html', squawks=squawks, currPage=1, last=True)
+
+
+@app.route('/add/', methods=['POST'])  # Add
+def add():
+    if (len(request.form["new_body"]) > 140):  # Check length of post
+        return abort(400)
+    addPost(request.form["new_body"])
+    return redirect(url_for('root'))
+
+
+@app.route('/next/', methods=['GET'])  # Next
+def nextPage():
+    pageNum = int(request.path[1:])
+    return redirect(url_for('page'), pageNum=pageNum)
 
 
 if __name__ == '__main__':
     app.run()
+
+# Sources:
+# http://stackoverflow.com/questions/109232/what-is-the-best-way-to-paginate-results-in-sql-server
