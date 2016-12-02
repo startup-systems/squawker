@@ -1,0 +1,18 @@
+<!doctype html>
+<html>
+<h1>Squawker</h1>
+<form action="{{ url_for('save') }}" method="POST">
+		<label> Tweet Here</label>
+		<input type="text" rows="4" cols="50" name="name" value='' maxlength="140" autofocus>
+		<input type="submit" value="Lets build it">
+</form>
+{% block content %}
+<ul>
+	{% for elem in saves %}
+	<li>{{elem[1]}}</li>
+	{%endfor%}
+</ul>
+{% endblock %}
+
+</html>
+
