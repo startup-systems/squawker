@@ -1,3 +1,5 @@
 -- TODO change this
-DROP TABLE IF EXISTS mytable;
-CREATE TABLE mytable (id integer);
+DROP TABLE IF EXISTS Squawks;
+CREATE TABLE Squawks (squawk, time);
+
+
