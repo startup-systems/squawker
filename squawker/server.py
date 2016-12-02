@@ -1,4 +1,4 @@
-from flask import Flask, g
+from flask import Flask, g, request, render_template, abort
 import sqlite3
 
 
@@ -37,11 +37,38 @@ def close_connection(exception):
 # ------------------------------
 
 
-@app.route('/')
-def root():
-    conn = get_db()
-    # TODO change this
-    return "Hello World!"
+@app.route('/', methods=['GET', 'POST'], defaults={'pageN': 1})
+@app.route('/page/<int:pageN>', methods=['GET', 'POST'])
+def root(pageN):
+    if request.form:
+        msg = request.form['squawk']
+        if len(msg) == 0:
+            err = "Error: Your squawk is empty!"
+            abort(400)
+
+        if len(msg) > 140:
+            err = "Error: Please keep your squawk less than 140 characters!"
+            abort(400)
+
+        elif len(msg) > 0 and len(msg) <= 140:
+            query = get_db().execute("INSERT INTO squawker_table (\'message\') VALUES (\'" + msg + "\')", ())
+            get_db().commit()
+            query.close()
+
+    command = get_db().execute("SELECT COUNT(*) FROM squawker_table", ())
+    count = command.fetchone()[0]
+    command.close()
+    return render_template("index.html", numSquawks=count, pageN=pageN)
+
+
+@app.context_processor
+def utility_processor():
+    def loadSquawks(pageN=1):
+        command = get_db().execute("SELECT message FROM squawker_table ORDER BY timestamp DESC", ())
+        squawks = command.fetchall()
+        command.close()
+        return squawks[(pageN - 1) * 20:min(len(squawks), pageN * 20)]
+    return dict(loadSquawks=loadSquawks)
 
 
 if __name__ == '__main__':
