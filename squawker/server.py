@@ -49,6 +49,7 @@ def root():
     c = conn.cursor()
     c.execute('CREATE TABLE IF NOT EXISTS allSquawksIEverMade(datestamp TEXT, squawk TEXT)')
     s = []
+    t = []
     c.execute('SELECT * FROM allSquawksIEverMade')
     for row in c.fetchall():
         s.append(row[1])
