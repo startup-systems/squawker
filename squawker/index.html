@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<link rel="stylesheet" type="text/css" href="style.css"></style>
+<head>
+	<title>Squawker</title>
+</head>
+<body>
+	<div class="addSquawk">
+		<form action="/" method="POST">
+			<div class="feed"> 
+				<text maxlength="140" id="feed" name="content" style="border:double 1px #984e00;"></text>
+				</div>
+
+				<div>
+					<button type="submit">Add Squawk</button>
+				</div>
+
+			</form>
+		</div>
+		<div class="seeSquawks">
+			<label for="allSquawks">SquawkFeed</label>
+			{% for squawk in allSquawks %}
+			<div class="sq">
+				<p>{{squawk[1]}}</p>
+				<p>{{squawk[2]}}</p>
+			</div>
+			{% endfor %}
+		</div>
+
+</body>
+</div>
+</html>
+
