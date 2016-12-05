@@ -1,5 +1,6 @@
-Flask~=0.11.1
+Django~=1.10.2
 pep8~=1.7.0
 pytest~=3.0.3
+pytest-django~=3.0.0
 pytest-json~=0.4.0
 splinter[flask]~=0.7.5
