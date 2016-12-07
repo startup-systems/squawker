@@ -1,6 +1,6 @@
 from flask import Flask, g
 import sqlite3
-
+from flask import render_template, request, redirect, url_for, abort
 
 # -- leave these lines intact --
 app = Flask(__name__)
@@ -36,12 +36,33 @@ def close_connection(exception):
         db.close()
 # ------------------------------
 
+@app.route('/squawk/', methods=['POST'])
+def squawk():
+    s = request.form['squawkText']
+
+    # Do nothing if form is empty
+    if s is None:
+        return redirect(url_for('root'))
+
+    # If more than 140 characters, bad request
+    if len(s) > 140:
+        return "<h1>ERROR 400 BAD REQUEST</h1>"
+
+    # Insert squawk into database
+    conn = get_db()
+    cursor = conn.execute("INSERT INTO squawks (squawk) VALUES (?)", [s])
+    conn.commit()
+    conn.close()
+    return redirect(url_for('root'))
 
 @app.route('/')
 def root():
     conn = get_db()
-    # TODO change this
-    return "Hello World!"
+
+    cursor = conn.execute("SELECT id, squawk FROM squawks ORDER BY id desc")
+    allRows = cursor.fetchall()
+
+    return render_template("index.html", squawks=allRows)
 
 
 if __name__ == '__main__':
