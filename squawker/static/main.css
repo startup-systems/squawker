@@ -1,0 +1,8 @@
+body {background: #03a9f4; margin: 0; padding: 20px;}
+input {padding: 7px 20px; height: 45px; width: 800px; border: none;
+font-size: 24px;}
+
+input[type="submit"] {width: 200px; display: block; margin-top: 20px}
+
+ul {padding: 0;}
+li {list-style-type: none; border-top: 2px solid #000; padding-top: 20px; margin-top: 20px;}

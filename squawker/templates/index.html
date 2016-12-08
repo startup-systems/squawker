@@ -3,26 +3,17 @@
     <head>
         <meta charset="utf-8">
         <title>squaker</title>
-        <link rel="stylesheet" href="css/main.css">
+        <link rel="stylesheet" href="{{url_for('static', filename='main.css')}}">
     </head>
     <body id="index">
       <form class="" action="{{ url_for('squawk') }}" method="post">
-        <input type="text" placeholder="Squawk here silly" name="squawk" value="">
+        <input type="text" placeholder="Squawk here silly" name="squawkText" value="">
         <input type="submit" />
       </form>
       <ul>
-        <li>
-          {% for item in squawks %}
-            {{ item[1] }}
-          {% endfor %}
-        </li>
+      {% for item in squawks %}
+            <li>{{ item[1] }}</li>
+      {% endfor %}
       </ul>
     </body>
 </html>
-
-<form method="post" action="{{ url_for('squawk') }}">
-<div class="form-group">
-<input maxlength="140" class="form-control" type="text" name="squawkText" placeholder="Squawk something..."/><br />
-<input type="submit" class="btn btn-primary btn-lg"/>
-</div>
-</form>

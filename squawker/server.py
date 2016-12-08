@@ -1,6 +1,6 @@
 from flask import Flask, g
 import sqlite3
-from flask import render_template, request, redirect, url_for, abort
+from flask import render_template, request, redirect, url_for
 
 # -- leave these lines intact --
 app = Flask(__name__)
@@ -8,7 +8,7 @@ app = Flask(__name__)
 
 def get_db():
     if not hasattr(g, 'sqlite_db'):
-        db_name = app.config.get('DATABASE', 'squawks.db')
+        db_name = app.config.get('DATABASE', 'squawker.db')
         g.sqlite_db = sqlite3.connect(db_name)
 
     return g.sqlite_db
@@ -36,7 +36,6 @@ def close_connection(exception):
         db.close()
 # ------------------------------
 
-
 @app.route('/squawk/', methods=['POST'])
 def squawk():
     s = request.form['squawkText']
@@ -53,7 +52,6 @@ def squawk():
     conn.close()
     return redirect(url_for('root'))
 
-
 @app.route('/')
 def root():
     conn = get_db()
@@ -61,6 +59,10 @@ def root():
     allRows = cursor.fetchall()
 
     return render_template("index.html", squawks=allRows)
+
+    conn = get_db()
+    # TODO change this
+    return "Hello vash!"
 
 
 if __name__ == '__main__':
