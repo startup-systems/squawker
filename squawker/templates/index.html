@@ -7,7 +7,7 @@
     </head>
     <body id="index">
       <form class="" action="{{ url_for('squawk') }}" method="post">
-        <input type="text" placeholder="Squawk here silly" name="squawkText" value="">
+        <input type="text" maxlength="140" placeholder="Squawk here silly" name="squawkText" value="">
         <input type="submit" />
       </form>
       <ul>
