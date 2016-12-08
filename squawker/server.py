@@ -36,6 +36,7 @@ def close_connection(exception):
         db.close()
 # ------------------------------
 
+
 @app.route('/squawk/', methods=['POST'])
 def squawk():
     s = request.form['squawkText']
@@ -51,6 +52,7 @@ def squawk():
     conn.commit()
     conn.close()
     return redirect(url_for('root'))
+
 
 @app.route('/')
 def root():
