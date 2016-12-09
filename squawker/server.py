@@ -1,4 +1,4 @@
-from flask import Flask, g, request, render_template, abort
+from flask import Flask, g, request, render_template, abort, redirect
 import sqlite3
 
 
@@ -42,21 +42,15 @@ def root():
     conn = get_db()
     c = conn.cursor()
     if request.method == "POST":
-        post = request.form["post"]
-        if len(post) > 140:
-            err = "Message is too long"
+        txt = request.form["post"]
+        if len(txt) > 140:
             abort(400)
         else:
-            result = c.execute("INSERT INTO posts (post) VALUES (?)", [post])
+            c.execute("INSERT INTO posts (msg) VALUES (?)", [txt])
             conn.commit()
-
-    result = c.execute("SELECT * FROM posts ORDER BY timestamp desc")
-    squawks = result.fetchall()
-    rows = []
-    for r in squawks:
-        rows.append(r[0])
-    return render_template('index.html', posts=rows)
-
+    c.execute("SELECT msg FROM posts ORDER BY id DESC")
+    squawks = c.fetchall()
+    return render_template("index.html", rows=squawks)
 
 if __name__ == '__main__':
     app.run(Debug=True)

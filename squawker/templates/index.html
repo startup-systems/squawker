@@ -1,19 +1,28 @@
 <!DOCTYPE html>
  <html>
-        <head>
-        </head>
-        <body>
-                <h1>Your Squawks</h1>
-                <div class="postSquawk">
-                        <form action="/" method="POST">
-                                <p><input type="text" name="post" id="post" maxlength="140" placeholder="Post something!" /></p>
-                                <p><input type="submit" value="Post"></p>
-                        </form>
-                </div>
-                {% for p in posts %}
-                <div class="getSquawk">
-                        {{ p[0] }}
-                </div>
-                {% endfor %}
-        </body>
+   <head>
+     <title>Squawker</title>
+   </head>
+   <body>
+     <h1 for="msg">Post All Squawks Here!</h1>
+     <div class="postMsg">
+       <form action="/" method="POST">
+         <div>
+           <textarea id="message" name="post" maxLength="140"></textarea>
+         </div>
+         <div class="button">
+           <button type="submit">Submit</button>
+         </div>
+       </form>
+     </div>
+     <br>
+     <div class="getMsg">
+       <label for="allPosts">Your posts:</label>
+       {% for post in rows %}
+         <div class="posts">
+           <p>{{ post[0] }}</p> 
+         </div>
+       {% endfor %}
+     </div>
+   </body>
  </html>
