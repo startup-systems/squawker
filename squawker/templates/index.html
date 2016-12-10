@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <title>squaker</title>
+        <title>squawker</title>
         <link rel="stylesheet" href="{{url_for('static', filename='main.css')}}">
     </head>
     <body id="index">
@@ -15,5 +15,8 @@
             <li>{{ item[1] }}</li>
       {% endfor %}
       </ul>
+        <a href="/?start={{ start }}">
+          <button type="submit" name="start">next</button>
+        </a>
     </body>
 </html>

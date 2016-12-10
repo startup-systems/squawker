@@ -54,17 +54,23 @@ def squawk():
     return redirect(url_for('root'))
 
 
-@app.route('/')
+@app.route('/', methods=['GET'])
 def root():
     conn = get_db()
-    cursor = conn.execute("SELECT id, squawk FROM squawks ORDER BY id desc")
+
+    start = request.args.get('start') or '0'
+
+    cursor = conn.execute("SELECT id, squawk FROM squawks ORDER BY id desc limit " + start + ", 20")
     allRows = cursor.fetchall()
 
-    return render_template("index.html", squawks=allRows)
+    start = int(start)
+    start += 20
+
+    return render_template("index.html", squawks=allRows, start=start)
 
     conn = get_db()
     # TODO change this
-    return "Hello vash!"
+    return "Hello avash!"
 
 
 if __name__ == '__main__':
