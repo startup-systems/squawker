@@ -62,15 +62,16 @@ def root():
 
     cursor = conn.execute("SELECT id, squawk FROM squawks ORDER BY id desc limit " + start + ", 20")
     allRows = cursor.fetchall()
+    cursor.close()
+
+    sums = conn.execute("SELECT count(id) FROM squawks")
+    sums = sums.fetchall()
+    cursor.close()
 
     start = int(start)
     start += 20
 
-    return render_template("index.html", squawks=allRows, start=start)
-
-    conn = get_db()
-    # TODO change this
-    return "Hello avash!"
+    return render_template("index.html", squawks=allRows, start=start, sums=sums)
 
 
 if __name__ == '__main__':
