@@ -16,7 +16,7 @@
       {% endfor %}
       </ul>
 
-      {% if start < (sums[0][0])/20 + 20  %}
+      {% if start/20 < (sums[0][0])/20 %}
         <a href="/?start={{ start }}">
           <button type="submit" name="start">next</button>
         </a>
