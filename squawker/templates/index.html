@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>squawker</title>
+        <link rel="stylesheet" href="{{url_for('static', filename='main.css')}}">
+    </head>
+    <body id="index">
+      <form class="" action="{{ url_for('squawk') }}" method="post">
+        <input type="text" maxlength="140" placeholder="Squawk here silly" name="squawkText" value="">
+        <input type="submit" />
+      </form>
+      <ul>
+      {% for item in squawks %}
+            <li>{{ item[1] }}</li>
+      {% endfor %}
+      </ul>
+
+      {% if start/20 < (sums[0][0])/20 %}
+        <a href="/?start={{ start }}">
+          <button type="submit" name="start">next</button>
+        </a>
+      {% endif %}
+
+    </body>
+</html>
