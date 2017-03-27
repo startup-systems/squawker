@@ -6,3 +6,8 @@ __pycache__/
 *.db3
 *.sqlite
 *.sqlite3
+<<<<<<< HEAD
+=======
+*.log
+local_settings.py
+>>>>>>> 1688b0ad1e792c142f9f753754c029e1225d374f
